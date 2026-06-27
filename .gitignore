@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build and framework output
+.nitro/
+.output/
+.tanstack/
+.vercel/
+.vinxi/
+dist/
+dist-ssr/
+
+# Test output
+coverage/
+playwright-report/
+test-results/
+
+# Local environment and tool state
+.env
+.env.*
+!.env.example
+*.local
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS, editor, and local worktrees
+.DS_Store
+.idea/
+.worktrees/

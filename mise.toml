@@ -1,0 +1,11 @@
+[tools]
+node = "24.18.0"
+pnpm = "11.9.0"
+
+[tasks.setup]
+description = "Install locked dependencies and Playwright Chromium"
+run = ["pnpm install --frozen-lockfile", "pnpm exec playwright install chromium"]
+
+[tasks.check]
+description = "Run the complete repository validation suite"
+run = "pnpm check"

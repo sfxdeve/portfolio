@@ -1,0 +1,13 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "ignorePatterns": [".agents/**", "docs/**", "staging/**", "src/routeTree.gen.ts"],
+  "sortImports": {},
+  "sortPackageJson": {
+    "sortScripts": true
+  },
+  "sortTailwindcss": {
+    "stylesheet": "./src/styles.css",
+    "functions": ["clsx", "cn"]
+  }
+}
