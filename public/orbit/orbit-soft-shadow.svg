@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="220" viewBox="0 0 640 220" fill="none">
+  <ellipse cx="320" cy="110" rx="218" ry="38" fill="#9A9684" opacity=".34" filter="url(#orbitSoftShadowBlur)" />
+  <defs>
+    <filter id="orbitSoftShadowBlur" x="0" y="0" width="640" height="220" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="28" />
+    </filter>
+  </defs>
+</svg>

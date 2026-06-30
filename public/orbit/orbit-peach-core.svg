@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220" fill="none">
+  <ellipse cx="110" cy="144" rx="66" ry="23" fill="#D68F63" opacity=".22" filter="url(#orbitPeachCoreShadowBlur)" />
+  <circle cx="110" cy="103" r="42" fill="url(#orbitPeachCoreGradient)" />
+  <circle cx="94" cy="84" r="13" fill="#FFF3EA" opacity=".62" filter="url(#orbitPeachCoreSoftBlur)" />
+  <path d="M136 75c16 13 20 38 8 57-12 18-36 26-56 18 47-1 65-33 48-75Z" fill="#DB7652" opacity=".24" />
+  <defs>
+    <radialGradient id="orbitPeachCoreGradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(91 77) rotate(50) scale(86)">
+      <stop stop-color="#FFF3EA" />
+      <stop offset=".28" stop-color="#F3B08F" />
+      <stop offset=".62" stop-color="#EC8B65" />
+      <stop offset="1" stop-color="#C86643" />
+    </radialGradient>
+    <filter id="orbitPeachCoreSoftBlur" x="60" y="50" width="68" height="68" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="5" />
+    </filter>
+    <filter id="orbitPeachCoreShadowBlur" x="10" y="74" width="200" height="140" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="10" />
+    </filter>
+  </defs>
+</svg>
