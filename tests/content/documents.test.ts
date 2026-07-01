@@ -1,14 +1,14 @@
-import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 
+import sharp from 'sharp'
 import { describe, expect, it } from 'vitest'
 
 import type { DocumentMetadata, DocumentModule } from '@/content/document-schema'
 import {
   documents,
   filterPublicDocuments,
-  getAdjacentPublicDocuments,
-  getPublicDocumentBySlug,
+  getAdjacentPublicWorkDocuments,
+  getPublicWorkDocumentBySlug,
   validateDocuments,
 } from '@/content/documents'
 
@@ -25,13 +25,10 @@ function publicMetadataStrings(metadata: DocumentMetadata): string[] {
     metadata.hero.role,
     metadata.hero.summary,
     metadata.hero.title,
+    metadata.statusLabel,
     metadata.summary,
     metadata.title,
   ]
-
-  if (metadata.statusLabel) {
-    strings.push(metadata.statusLabel)
-  }
 
   for (const evidence of metadata.homepage.evidence) {
     strings.push(evidence.alt, evidence.src)
@@ -99,6 +96,7 @@ function moduleWith(
       kind: 'exploration',
       order: 0,
       slug: 'valid-document',
+      statusLabel: 'Exploration',
       summary: 'A concise summary.',
       title: 'Valid document',
       visibility: 'public',
@@ -135,39 +133,36 @@ describe('repository documents', () => {
     ])
   })
 
-  it('looks up only public documents by slug', () => {
-    expect(getPublicDocumentBySlug('ecobuiltconnect')?.metadata.title).toBe('EcoBuiltConnect')
-    expect(getPublicDocumentBySlug('foundation-smoke-test')).toBeUndefined()
-    expect(getPublicDocumentBySlug('missing-work')).toBeUndefined()
+  it('looks up only public shipped work documents by slug for detail routes', () => {
+    expect(getPublicWorkDocumentBySlug('ecobuiltconnect')?.metadata.title).toBe('EcoBuiltConnect')
+    expect(getPublicWorkDocumentBySlug('fraud-detection-system')).toBeUndefined()
+    expect(getPublicWorkDocumentBySlug('foundation-smoke-test')).toBeUndefined()
+    expect(getPublicWorkDocumentBySlug('missing-work')).toBeUndefined()
   })
 
-  it('returns adjacent public documents in homepage order', () => {
-    expect(getAdjacentPublicDocuments('artisanconnect')).toEqual({
-      previousDocument: expect.objectContaining({
-        slug: 'ecobuiltconnect',
-        title: 'EcoBuiltConnect',
-      }),
-      nextDocument: expect.objectContaining({
-        slug: 'rushuploads',
-        title: 'RushUploads',
-      }),
+  it('returns adjacent public shipped work documents in homepage order', () => {
+    expect(getAdjacentPublicWorkDocuments('artisanconnect')).toEqual({
+      previousDocument: { slug: 'ecobuiltconnect' },
+      nextDocument: { slug: 'rushuploads' },
     })
 
-    expect(getAdjacentPublicDocuments('ecobuiltconnect')).toEqual({
-      nextDocument: expect.objectContaining({
-        slug: 'artisanconnect',
-        title: 'ArtisanConnect',
-      }),
+    expect(getAdjacentPublicWorkDocuments('ecobuiltconnect')).toEqual({
+      nextDocument: { slug: 'artisanconnect' },
       previousDocument: undefined,
     })
 
-    expect(getAdjacentPublicDocuments('missing-work')).toEqual({
+    expect(getAdjacentPublicWorkDocuments('rushuploads')).toEqual({
+      nextDocument: undefined,
+      previousDocument: { slug: 'artisanconnect' },
+    })
+
+    expect(getAdjacentPublicWorkDocuments('missing-work')).toEqual({
       nextDocument: undefined,
       previousDocument: undefined,
     })
   })
 
-  it('requires public shipped work to include homepage and chapter evidence', () => {
+  it('requires public shipped work to include homepage and per-chapter evidence', () => {
     const publicShippedWork = filterPublicDocuments(documents).filter(
       ({ metadata }) => metadata.kind === 'shipped-work',
     )
@@ -176,19 +171,25 @@ describe('repository documents', () => {
 
     for (const document of publicShippedWork) {
       expect(document.metadata.homepage.evidence.length, document.metadata.slug).toBeGreaterThan(0)
-      expect(
-        document.metadata.chapters.some((chapter) => chapter.evidence.length > 0),
-        document.metadata.slug,
-      ).toBe(true)
+      for (const chapter of document.metadata.chapters) {
+        expect(
+          chapter.evidence.length,
+          `${document.metadata.slug}: ${chapter.title}`,
+        ).toBeGreaterThan(0)
+      }
     }
   })
 
-  it('points public evidence images at committed public assets', () => {
+  it('points public evidence at committed images with accurate dimensions', async () => {
     for (const document of filterPublicDocuments(documents)) {
       for (const evidence of publicEvidence(document.metadata)) {
         const publicAssetPath = join(process.cwd(), 'public', evidence.src.slice(1))
+        const imageMetadata = await sharp(publicAssetPath).metadata()
 
-        expect(existsSync(publicAssetPath), `${document.metadata.slug}: ${evidence.src}`).toBe(true)
+        expect(
+          { height: imageMetadata.height, width: imageMetadata.width },
+          `${document.metadata.slug}: ${evidence.src}`,
+        ).toEqual({ height: evidence.height, width: evidence.width })
       }
     }
   })
@@ -259,22 +260,14 @@ describe('repository documents', () => {
     ).toThrow(/duplicate slug.*same-slug.*first\.mdx.*second\.mdx/i)
   })
 
-  it('sorts validated documents by order', () => {
+  it('sorts validated documents by order and slug', () => {
     const validated = validateDocuments({
       './documents/later.mdx': moduleWith({ order: 2, slug: 'later' }),
-      './documents/earlier.mdx': moduleWith({ order: 1, slug: 'earlier' }),
-    })
-
-    expect(validated.map(({ metadata }) => metadata.slug)).toEqual(['earlier', 'later'])
-  })
-
-  it('sorts documents with the same order by slug', () => {
-    const validated = validateDocuments({
       './documents/zulu.mdx': moduleWith({ order: 1, slug: 'zulu' }),
       './documents/alpha.mdx': moduleWith({ order: 1, slug: 'alpha' }),
     })
 
-    expect(validated.map(({ metadata }) => metadata.slug)).toEqual(['alpha', 'zulu'])
+    expect(validated.map(({ metadata }) => metadata.slug)).toEqual(['alpha', 'zulu', 'later'])
   })
 
   it('rejects blank repository copy', () => {
