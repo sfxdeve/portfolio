@@ -1,84 +1,107 @@
+import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
-test('renders every public work detail page linked from selected work', async ({ page }) => {
-  await page.goto('/#work')
+import { expectNoHorizontalOverflow } from './layout-assertions'
 
-  const workPaths = await page.locator('main a[href^="/work/"]').evaluateAll((links) =>
-    Array.from(
-      new Set(
-        links
-          .map((link) => link.getAttribute('href'))
-          .filter((href) => href !== null)
-          .map((href) => new URL(href, window.location.origin).pathname),
-      ),
-    ),
-  )
+const publicWorkPaths = [
+  '/work/ecobuiltconnect',
+  '/work/artisanconnect',
+  '/work/rushuploads',
+] as const
 
-  expect(workPaths).toEqual([
-    '/work/ecobuiltconnect',
-    '/work/artisanconnect',
-    '/work/rushuploads',
-    '/work/fraud-detection-system',
-  ])
-
-  for (const path of workPaths) {
+test('renders every public shipped-work story', async ({ page }) => {
+  for (const path of publicWorkPaths) {
     const response = await page.goto(path)
 
     expect(response?.status(), path).toBe(200)
     await expect(page.getByRole('main').getByRole('heading', { level: 1 }), path).toBeVisible()
-    await expect(page.getByRole('link', { name: /back to selected work/i }), path).toBeVisible()
-    await expect(page.locator('[data-slot="badge"]').first(), path).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Back', exact: true }), path).toBeVisible()
+    await expect(page.getByText('Shipped product', { exact: true }).first(), path).toBeVisible()
   }
 })
 
-test('composes detail evidence fallbacks with shadcn primitives', async ({ page }) => {
-  await page.goto('/work/fraud-detection-system')
+test('renders evidence-led case-study structure and body content', async ({ page }) => {
+  await page.goto('/work/ecobuiltconnect')
 
-  const chapters = page.locator('section[aria-label="Fraud Detection System chapters"]')
+  await expect(page.getByRole('main').getByRole('heading', { level: 1 })).toBeVisible()
+  await expect(page.getByText(/EcoBuiltConnect had to make reclaimed/i)).toBeVisible()
+  await expect(page.getByRole('img', { name: /marketplace browsing/i }).first()).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4)
+  await expect(page.getByText(/what shipped was not just a marketplace surface/i)).toBeVisible()
+})
 
-  for (const title of [
-    'The question was bigger than model accuracy.',
-    'Risk score and severity stayed separate.',
-    'Local channels changed the shape of the product.',
-    'Evidence retention became a product requirement.',
-    'The workflow respected analyst judgment.',
+test('lets readers open evidence images directly', async ({ page }) => {
+  await page.goto('/work/ecobuiltconnect')
+
+  const imageLink = page
+    .getByRole('link', { name: /open image: ecobuiltconnect marketplace browsing/i })
+    .first()
+
+  await expect(imageLink).toHaveAttribute(
+    'href',
+    '/evidence/ecobuiltconnect/01-marketplace-browsing.webp',
+  )
+  await expect(imageLink).toHaveAttribute('target', '_blank')
+})
+
+test('keeps explorations, drafts, and unknown slugs outside public work routes', async ({
+  page,
+}) => {
+  for (const path of [
+    '/work/fraud-detection-system',
+    '/work/foundation-smoke-test',
+    '/work/unknown-work-story',
   ]) {
-    const chapter = chapters.locator('article').filter({ hasText: title })
-    const fallbackCard = chapter.locator('[data-slot="card"]').filter({
-      hasText: 'This exploration chapter is intentionally presented through reasoning',
-    })
+    const response = await page.goto(path)
 
-    await expect(chapter.getByRole('heading', { name: title })).toBeVisible()
-    await expect(fallbackCard.locator('[data-slot="card-title"]')).toContainText(
-      'Evidence standard',
-    )
-    await expect(fallbackCard).toContainText('rather than shipped-product screenshots')
+    expect(response?.status(), path).toBe(404)
+    await expect(page.getByRole('heading', { name: /work story not found/i }), path).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Back', exact: true }), path).toBeVisible()
   }
 })
 
-test('shows the work not-found state for an unknown work slug', async ({ page }) => {
-  const response = await page.goto('/work/unknown-work-story')
+test('links between adjacent work stories', async ({ page }) => {
+  await page.goto('/work/ecobuiltconnect')
 
-  expect(response?.status()).toBe(404)
-  await expect(page.getByRole('heading', { name: /work story not found/i })).toBeVisible()
-  await expect(page.getByRole('link', { name: /back to selected work/i })).toBeVisible()
+  const nextLink = page.getByRole('link', { name: 'Next', exact: true })
+  await expect(nextLink).toHaveAttribute('href', '/work/artisanconnect')
+  await nextLink.click()
+  await expect(page).toHaveURL(/\/work\/artisanconnect$/)
+
+  const previousLink = page.getByRole('link', { name: 'Previous', exact: true })
+  await expect(previousLink).toHaveAttribute('href', '/work/ecobuiltconnect')
 })
 
-test('does not route draft work documents publicly', async ({ page }) => {
-  const response = await page.goto('/work/foundation-smoke-test')
-
-  expect(response?.status()).toBe(404)
-  await expect(page.getByRole('heading', { name: /work story not found/i })).toBeVisible()
-})
-
-test('sets document-specific metadata for public work detail pages', async ({ page }) => {
+test('sets document-specific metadata', async ({ page }) => {
   await page.goto('/work/rushuploads')
 
   await expect(page).toHaveTitle('RushUploads - Shayan Fareed')
-
-  const description = page.locator('meta[name="description"]')
-  await expect(description).toHaveAttribute(
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     'content',
     'A case study about making large-file delivery simple without hiding the product system underneath.',
   )
+})
+
+test('keeps case-study evidence readable on mobile without horizontal overflow', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/work/artisanconnect')
+
+  const chapters = page.getByRole('region', { name: 'ArtisanConnect chapters' })
+  const evidenceBox = await chapters.locator('figure').first().boundingBox()
+
+  expect(evidenceBox?.width).toBeGreaterThan(300)
+  await expectNoHorizontalOverflow(page)
+  await expect(page.getByRole('link', { name: 'Back', exact: true })).toBeVisible()
+})
+
+test('has no automatically detectable accessibility violations on a case study', async ({
+  page,
+}) => {
+  await page.goto('/work/ecobuiltconnect')
+
+  const results = await new AxeBuilder({ page }).analyze()
+
+  expect(results.violations).toEqual([])
 })
