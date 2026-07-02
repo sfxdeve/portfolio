@@ -6,17 +6,19 @@ import { cn } from '@/lib/utils'
 type Evidence = DocumentMetadata['chapters'][number]['evidence'][number]
 
 export function EvidenceFigure({
+  cardClassName,
   className,
   evidence,
   eager = false,
 }: {
+  cardClassName?: string
   className?: string
   evidence: Evidence
   eager?: boolean
 }) {
   return (
     <figure className={cn('group/evidence', className)}>
-      <Card variant="orbit" className="rounded-[1rem] p-1.5">
+      <Card variant="orbit" className={cn('rounded-[1rem] p-1.5', cardClassName)}>
         <a
           href={evidence.src}
           target="_blank"

@@ -14,7 +14,7 @@ export function ExplorationInterlude({ document }: { document: PortfolioDocument
       className="relative overflow-hidden border-y border-orbit-line/80 bg-white/24 px-5 py-14 sm:px-8 sm:py-18 lg:px-12 lg:py-24"
       aria-labelledby="exploration-heading"
     >
-      <div className="mx-auto grid max-w-7xl min-w-0 gap-8 lg:grid-cols-[0.86fr_1.04fr] lg:items-center">
+      <div className="mx-auto grid max-w-7xl min-w-0 gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(20rem,0.9fr)] lg:items-center xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.88fr)]">
         <div>
           <OrbitChip tone="sage">{document.metadata.statusLabel}</OrbitChip>
           <h2
@@ -28,7 +28,7 @@ export function ExplorationInterlude({ document }: { document: PortfolioDocument
           </p>
         </div>
         <div
-          className="relative border-y border-orbit-line/70 py-6"
+          className="relative w-full border-y border-orbit-line/70 py-6 lg:max-w-[38rem] lg:justify-self-end"
           aria-label="Fraud detection exploration signals"
         >
           <div className="grid gap-5 sm:grid-cols-2">

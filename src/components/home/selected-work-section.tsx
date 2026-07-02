@@ -15,11 +15,11 @@ export function SelectedWorkSection({ documents }: { documents: PortfolioDocumen
       aria-labelledby="work-heading"
     >
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <OrbitChip>Selected work</OrbitChip>
           <h2
             id="work-heading"
-            className="mt-4 text-3xl leading-tight font-medium text-balance sm:text-4xl lg:text-5xl"
+            className="mt-4 text-4xl leading-tight font-medium text-balance sm:text-5xl lg:text-6xl"
           >
             Selected work with the evidence close by.
           </h2>
@@ -42,7 +42,7 @@ function WorkChapter({ document, index }: { document: PortfolioDocument; index: 
   const evidence = document.metadata.homepage.evidence[0]
 
   return (
-    <article className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.05fr)] lg:items-center">
+    <article className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,0.95fr)_minmax(20rem,0.9fr)] lg:items-center xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.88fr)]">
       <div className="min-w-0 border-l border-orbit-line/70 pl-5 sm:pl-6">
         <OrbitChip tone={index === 1 ? 'sage' : 'coral'}>{document.metadata.statusLabel}</OrbitChip>
         <h3 className="mt-4 text-3xl leading-tight font-medium sm:text-4xl">
@@ -62,7 +62,12 @@ function WorkChapter({ document, index }: { document: PortfolioDocument; index: 
         </Link>
       </div>
       {evidence ? (
-        <EvidenceFigure evidence={evidence} eager={document.metadata.order === 1} />
+        <EvidenceFigure
+          evidence={evidence}
+          eager={document.metadata.order === 1}
+          className="w-full lg:max-w-[34rem] lg:justify-self-end xl:max-w-[38rem]"
+          cardClassName="p-1.5"
+        />
       ) : null}
     </article>
   )

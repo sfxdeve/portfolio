@@ -15,7 +15,7 @@ export function CaseStudyChapter({
   isFirstPublicWork: boolean
 }) {
   return (
-    <article className="relative grid min-w-0 gap-7 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.05fr)] lg:items-start">
+    <article className="relative grid min-w-0 gap-7 lg:grid-cols-[minmax(0,0.95fr)_minmax(20rem,0.9fr)] lg:items-start xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.88fr)]">
       <div className="lg:sticky lg:top-24">
         <OrbitChip tone="coral">Chapter {chapterIndex + 1}</OrbitChip>
         <h2 className="mt-4 text-2xl leading-tight font-medium text-balance sm:text-3xl lg:text-4xl">
@@ -30,7 +30,7 @@ export function CaseStudyChapter({
         ) : null}
         <p className="mt-4 leading-7 text-muted-foreground">{chapter.reasoning}</p>
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex w-full flex-col gap-5 lg:max-w-[38rem] lg:justify-self-end">
         {chapter.evidence.map((evidence, evidenceIndex) => (
           <EvidenceFigure
             key={evidence.src}
