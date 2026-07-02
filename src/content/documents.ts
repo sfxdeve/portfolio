@@ -47,17 +47,33 @@ export const documents = validateDocuments(documentModules)
 
 export const publicDocuments = filterPublicDocuments(documents)
 
+export const publicShippedWorkDocuments = publicDocuments.filter(
+  ({ metadata }) => metadata.kind === 'shipped-work',
+)
+
+export const publicExplorationDocuments = publicDocuments.filter(
+  ({ metadata }) => metadata.kind === 'exploration',
+)
+
+type AdjacentPublicDocument = Pick<PortfolioDocument['metadata'], 'slug'>
+
 type AdjacentPublicDocuments = {
-  nextDocument?: PortfolioDocument['metadata']
-  previousDocument?: PortfolioDocument['metadata']
+  nextDocument?: AdjacentPublicDocument
+  previousDocument?: AdjacentPublicDocument
 }
 
 export function getPublicDocumentBySlug(slug: string): PortfolioDocument | undefined {
   return publicDocuments.find((document) => document.metadata.slug === slug)
 }
 
-export function getAdjacentPublicDocuments(slug: string): AdjacentPublicDocuments {
-  const documentIndex = publicDocuments.findIndex((document) => document.metadata.slug === slug)
+export function getPublicWorkDocumentBySlug(slug: string): PortfolioDocument | undefined {
+  return publicShippedWorkDocuments.find((document) => document.metadata.slug === slug)
+}
+
+export function getAdjacentPublicWorkDocuments(slug: string): AdjacentPublicDocuments {
+  const documentIndex = publicShippedWorkDocuments.findIndex(
+    (document) => document.metadata.slug === slug,
+  )
 
   if (documentIndex === -1) {
     return {
@@ -67,7 +83,11 @@ export function getAdjacentPublicDocuments(slug: string): AdjacentPublicDocument
   }
 
   return {
-    nextDocument: publicDocuments[documentIndex + 1]?.metadata,
-    previousDocument: publicDocuments[documentIndex - 1]?.metadata,
+    nextDocument: adjacentDocument(publicShippedWorkDocuments[documentIndex + 1]),
+    previousDocument: adjacentDocument(publicShippedWorkDocuments[documentIndex - 1]),
   }
+}
+
+function adjacentDocument(document?: PortfolioDocument): AdjacentPublicDocument | undefined {
+  return document ? { slug: document.metadata.slug } : undefined
 }

@@ -1,0 +1,62 @@
+import { Link } from '@tanstack/react-router'
+import { ArrowRight } from 'lucide-react'
+
+import { PageSection } from '@/components/layout/page-section'
+import { OrbitChip } from '@/components/orbit/orbit-chip'
+import { buttonVariants } from '@/components/ui/button'
+import type { PortfolioDocument } from '@/content/document-schema'
+import { cn } from '@/lib/utils'
+
+const signals = [
+  ['risk-score', 'Risk score'],
+  ['severity', 'Severity'],
+  ['evidence', 'Evidence'],
+  ['analyst-judgment', 'Analyst judgment'],
+] as const
+
+export function ExplorationInterlude({ document }: { document: PortfolioDocument }) {
+  return (
+    <PageSection
+      className="relative overflow-hidden border-y border-orbit-line/80 bg-white/24"
+      aria-labelledby="exploration-heading"
+      containerClassName="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(20rem,0.9fr)] lg:items-center xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.88fr)]"
+    >
+      <div>
+        <OrbitChip tone="sage">{document.metadata.statusLabel}</OrbitChip>
+        <h2
+          id="exploration-heading"
+          className="mt-4 text-2xl leading-tight font-medium text-balance sm:text-3xl lg:text-4xl"
+        >
+          {document.metadata.homepage.claim}
+        </h2>
+        <p className="mt-5 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+          {document.metadata.homepage.summary}
+        </p>
+        <Link
+          to="/work/$slug"
+          params={{ slug: document.metadata.slug }}
+          className={cn(buttonVariants({ variant: 'link', size: 'lg' }), 'mt-7 h-auto p-0')}
+        >
+          {document.metadata.homepage.routeLabel}
+          <ArrowRight aria-hidden="true" data-icon="inline-end" />
+        </Link>
+      </div>
+      <div
+        className="relative w-full border-y border-orbit-line/70 py-6 lg:max-w-[38rem] lg:justify-self-end"
+        aria-label="Fraud detection exploration signals"
+      >
+        <div className="grid gap-5 sm:grid-cols-2">
+          {signals.map(([id, label]) => (
+            <div key={id} className="min-w-0">
+              <p className="font-heading text-xl">{label}</p>
+              <p className="mt-2 max-w-xs text-sm leading-6 text-muted-foreground">
+                Connected to scoring, explanation, review, and retained evidence without implying
+                shipped commercial deployment.
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </PageSection>
+  )
+}
