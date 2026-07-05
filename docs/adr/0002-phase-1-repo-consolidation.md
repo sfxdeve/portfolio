@@ -1,6 +1,6 @@
 # Phase 1 Repository Consolidation
 
-After multiple agent runs built the portfolio, this ADR records the first consolidation pass. Phase 2 (SPEC alignment: cinematic motion, display typography, About nav) is deferred.
+After multiple agent runs built the portfolio, this ADR records the first consolidation pass. Phase 2 (SPEC alignment: cinematic motion, display typography) is deferred.
 
 ## Phase 1 scope (this pass)
 
