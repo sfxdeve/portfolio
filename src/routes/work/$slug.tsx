@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 
+import { CaseStudyNotFound } from '@/components/case-study/case-study-not-found'
 import { CaseStudyPage } from '@/components/case-study/case-study-page'
-import { WorkStoryNotFound } from '@/components/case-study/work-story-not-found'
 import { getAdjacentPublicWorkDocuments, getPublicDocumentBySlug } from '@/content/documents'
 
 export const Route = createFileRoute('/work/$slug')({
@@ -14,34 +14,26 @@ export const Route = createFileRoute('/work/$slug')({
     }
 
     return {
-      description: document.metadata.description,
-      title: document.metadata.title,
+      document,
       ...getAdjacentPublicWorkDocuments(params.slug),
     }
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.title ?? 'Work story not found'} - Shayan Fareed` },
+      { title: `${loaderData?.document.metadata.title ?? 'Case study not found'} - Shayan Fareed` },
       {
         name: 'description',
         content:
-          loaderData?.description ?? 'The requested portfolio work story could not be found.',
+          loaderData?.document.metadata.description ??
+          'The requested portfolio case study could not be found.',
       },
     ],
   }),
-  notFoundComponent: WorkStoryNotFound,
+  notFoundComponent: CaseStudyNotFound,
 })
 
 function WorkDetailPage() {
-  const loaderData = Route.useLoaderData()
-  const { slug } = Route.useParams()
-  const document = getPublicDocumentBySlug(slug)
-
-  if (!document || !loaderData) {
-    throw notFound()
-  }
-
-  const { nextDocument, previousDocument } = loaderData
+  const { document, nextDocument, previousDocument } = Route.useLoaderData()
 
   return (
     <CaseStudyPage

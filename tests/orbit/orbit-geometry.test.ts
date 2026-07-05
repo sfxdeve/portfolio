@@ -7,7 +7,7 @@ import {
   SOLAR_CENTER,
   pointOnRotatedEllipse,
   toOrbitPercent,
-} from '../../src/components/orbit/orbit-geometry'
+} from '@/components/orbit/orbit-geometry'
 
 describe('hero orbit geometry', () => {
   it('uses the supplied path field coordinate system and chosen solar center', () => {

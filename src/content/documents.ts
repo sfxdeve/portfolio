@@ -55,7 +55,7 @@ export const publicExplorationDocuments = publicDocuments.filter(
   ({ metadata }) => metadata.kind === 'exploration',
 )
 
-type AdjacentPublicDocument = Pick<PortfolioDocument['metadata'], 'slug'>
+export type AdjacentPublicDocument = Pick<PortfolioDocument['metadata'], 'slug'>
 
 type AdjacentPublicDocuments = {
   nextDocument?: AdjacentPublicDocument

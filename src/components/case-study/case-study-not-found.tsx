@@ -5,16 +5,16 @@ import { buttonVariants } from '@/components/ui/button'
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty'
 import { cn } from '@/lib/utils'
 
-export function WorkStoryNotFound() {
+export function CaseStudyNotFound() {
   return (
     <main className="grid min-h-svh place-items-center px-6 py-16">
       <Empty className="max-w-xl">
         <EmptyHeader>
           <EmptyTitle role="heading" aria-level={1}>
-            Work story not found.
+            Case study not found.
           </EmptyTitle>
           <EmptyDescription>
-            The requested portfolio work story is not available as public selected work.
+            The requested case study is not available as public selected work.
           </EmptyDescription>
         </EmptyHeader>
         <Link

@@ -1,7 +1,7 @@
 {
   "semi": false,
   "singleQuote": true,
-  "ignorePatterns": [".agents/**", "docs/**", "staging/**", "src/routeTree.gen.ts"],
+  "ignorePatterns": ["docs/**", "src/routeTree.gen.ts"],
   "sortImports": {},
   "sortPackageJson": {
     "sortScripts": true

@@ -1,13 +1,10 @@
-import { Link } from '@tanstack/react-router'
-import { ArrowRight } from 'lucide-react'
-
 import { EvidenceFigure } from '@/components/case-study/evidence-figure'
+import { ClaimEvidenceGrid } from '@/components/layout/claim-evidence-grid'
 import { PageSection } from '@/components/layout/page-section'
 import { SectionIntro } from '@/components/layout/section-intro'
-import { OrbitChip } from '@/components/orbit/orbit-chip'
-import { buttonVariants } from '@/components/ui/button'
+import { StoryRouteLink } from '@/components/layout/story-route-link'
+import { OrbitChip, orbitChipToneForKind } from '@/components/orbit/orbit-chip'
 import type { PortfolioDocument } from '@/content/document-schema'
-import { cn } from '@/lib/utils'
 
 export function SelectedWorkSection({ documents }: { documents: PortfolioDocument[] }) {
   return (
@@ -19,21 +16,23 @@ export function SelectedWorkSection({ documents }: { documents: PortfolioDocumen
         description="Each story connects the product tension, the decisions that shaped it, and the visual proof that makes the work inspectable."
       />
       <div className="mt-10 flex flex-col gap-14 lg:mt-12 lg:gap-[4.5rem]">
-        {documents.map((document, index) => (
-          <WorkChapter key={document.metadata.slug} document={document} index={index} />
+        {documents.map((document) => (
+          <WorkChapter key={document.metadata.slug} document={document} />
         ))}
       </div>
     </PageSection>
   )
 }
 
-function WorkChapter({ document, index }: { document: PortfolioDocument; index: number }) {
+function WorkChapter({ document }: { document: PortfolioDocument }) {
   const evidence = document.metadata.homepage.evidence[0]
 
   return (
-    <article className="grid min-w-0 gap-7 lg:grid-cols-[minmax(0,0.95fr)_minmax(20rem,0.9fr)] lg:items-center xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.88fr)]">
+    <ClaimEvidenceGrid as="article">
       <div className="min-w-0 border-l border-orbit-line/70 pl-5 sm:pl-6">
-        <OrbitChip tone={index === 1 ? 'sage' : 'coral'}>{document.metadata.statusLabel}</OrbitChip>
+        <OrbitChip tone={orbitChipToneForKind(document.metadata.kind)}>
+          {document.metadata.statusLabel}
+        </OrbitChip>
         <h3 className="mt-4 text-3xl leading-tight font-medium sm:text-4xl">
           {document.metadata.title}
         </h3>
@@ -41,14 +40,9 @@ function WorkChapter({ document, index }: { document: PortfolioDocument; index: 
           {document.metadata.homepage.claim}
         </p>
         <p className="mt-4 leading-7 text-muted-foreground">{document.metadata.homepage.summary}</p>
-        <Link
-          to="/work/$slug"
-          params={{ slug: document.metadata.slug }}
-          className={cn(buttonVariants({ variant: 'link', size: 'lg' }), 'mt-7 h-auto p-0')}
-        >
+        <StoryRouteLink slug={document.metadata.slug}>
           {document.metadata.homepage.routeLabel}
-          <ArrowRight aria-hidden="true" data-icon="inline-end" />
-        </Link>
+        </StoryRouteLink>
       </div>
       {evidence ? (
         <EvidenceFigure
@@ -58,6 +52,6 @@ function WorkChapter({ document, index }: { document: PortfolioDocument; index: 
           cardClassName="p-1.5"
         />
       ) : null}
-    </article>
+    </ClaimEvidenceGrid>
   )
 }

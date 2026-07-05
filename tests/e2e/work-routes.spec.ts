@@ -67,7 +67,7 @@ test('keeps drafts and unknown slugs outside public work routes', async ({ page 
     const response = await page.goto(path)
 
     expect(response?.status(), path).toBe(404)
-    await expect(page.getByRole('heading', { name: /work story not found/i }), path).toBeVisible()
+    await expect(page.getByRole('heading', { name: /case study not found/i }), path).toBeVisible()
     await expect(page.getByRole('link', { name: 'Back', exact: true }), path).toBeVisible()
   }
 })

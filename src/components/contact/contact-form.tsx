@@ -36,10 +36,7 @@ export function ContactForm() {
     <Card className="mx-auto mt-8 max-w-2xl py-0 text-left" variant="orbit">
       <CardContent className="p-5 sm:p-6">
         <form
-          action={`mailto:${contactEmail}`}
           className="flex flex-col gap-5"
-          encType="text/plain"
-          method="post"
           onSubmit={(event) => {
             event.preventDefault()
             event.stopPropagation()
