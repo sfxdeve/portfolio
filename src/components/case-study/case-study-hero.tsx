@@ -1,8 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowLeft } from 'lucide-react'
 
-import { HeroSolarSystem } from '@/components/orbit/hero-solar-system'
-import { OrbitChip } from '@/components/orbit/orbit-chip'
+import { HeroOrbitBackdrop } from '@/components/orbit/hero-orbit-backdrop'
+import { OrbitChip, orbitChipToneForKind } from '@/components/orbit/orbit-chip'
 import { buttonVariants } from '@/components/ui/button'
 import type { PortfolioDocument } from '@/content/document-schema'
 import { cn } from '@/lib/utils'
@@ -15,14 +15,7 @@ export function CaseStudyHero({ document }: { document: PortfolioDocument }) {
       className="relative isolate min-h-[calc(82svh-6rem)] overflow-hidden px-5 pt-10 pb-16 sm:px-8 sm:pt-14 sm:pb-20 lg:px-12 lg:pt-16 lg:pb-24"
       aria-labelledby="case-study-heading"
     >
-      <div
-        className="pointer-events-none absolute inset-0 z-0 mx-auto max-w-7xl"
-        aria-hidden="true"
-      >
-        <div className="absolute top-[24%] right-[-11rem] h-72 w-[42rem] opacity-82 sm:right-[-7rem] sm:h-88 lg:right-[-2rem] xl:right-[2rem] xl:h-[28rem]">
-          <HeroSolarSystem />
-        </div>
-      </div>
+      <HeroOrbitBackdrop variant="case-study" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <Link to="/" hash="work" className={cn(buttonVariants({ variant: 'link' }), 'h-auto p-0')}>
@@ -30,9 +23,7 @@ export function CaseStudyHero({ document }: { document: PortfolioDocument }) {
           Back
         </Link>
         <div className="mt-10 max-w-5xl">
-          <OrbitChip tone={metadata.kind === 'exploration' ? 'sage' : 'coral'}>
-            {metadata.statusLabel}
-          </OrbitChip>
+          <OrbitChip tone={orbitChipToneForKind(metadata.kind)}>{metadata.statusLabel}</OrbitChip>
           <h1
             id="case-study-heading"
             className="mt-6 max-w-5xl text-4xl leading-tight font-medium text-balance sm:text-5xl lg:text-6xl"
@@ -42,6 +33,26 @@ export function CaseStudyHero({ document }: { document: PortfolioDocument }) {
           <p className="mt-7 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
             {metadata.hero.claim}
           </p>
+          <dl className="mt-8 grid max-w-3xl gap-5 border-t border-orbit-line/70 pt-6 sm:grid-cols-3">
+            <div>
+              <dt className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+                Role
+              </dt>
+              <dd className="mt-2 leading-7">{metadata.hero.role}</dd>
+            </div>
+            <div>
+              <dt className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+                Scope
+              </dt>
+              <dd className="mt-2 leading-7">{metadata.hero.summary}</dd>
+            </div>
+            <div>
+              <dt className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+                Outcome
+              </dt>
+              <dd className="mt-2 leading-7">{metadata.hero.outcome}</dd>
+            </div>
+          </dl>
         </div>
       </div>
     </section>

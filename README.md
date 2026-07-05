@@ -31,6 +31,10 @@ mise run check
 
 The setup task is safe to run again. It uses the committed pnpm lockfile and installs only the Chromium browser required by the current Playwright configuration.
 
+### Cursor Cloud / Linux VM
+
+For cloud agent or Linux VM environments without Mise, see [AGENTS.md](AGENTS.md#cursor-cloud-specific-instructions) for Node 24 activation, pnpm via corepack, and check commands.
+
 ## Development
 
 After Mise has activated the repository environment:
@@ -38,9 +42,14 @@ After Mise has activated the repository environment:
 ```sh
 pnpm dev
 pnpm check
+pnpm routes:gen   # regenerate src/routeTree.gen.ts after route changes
 ```
 
 `mise run check` is equivalent to `pnpm check` and can be used without relying on shell activation.
+
+## Content and evidence assets
+
+Case-study content lives in `src/content/documents/*.mdx` with validated frontmatter. Public evidence images belong in `public/evidence/<slug>/` and must match the `width` and `height` declared in frontmatter. Run `pnpm validate:content` to verify dimensions and public-safe copy boundaries.
 
 ## Setup troubleshooting
 

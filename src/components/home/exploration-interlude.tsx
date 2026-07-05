@@ -1,9 +1,7 @@
-import { Link } from '@tanstack/react-router'
-import { ArrowRight } from 'lucide-react'
-
+import { claimEvidenceGridClassName } from '@/components/layout/claim-evidence-grid'
 import { PageSection } from '@/components/layout/page-section'
-import { OrbitChip } from '@/components/orbit/orbit-chip'
-import { buttonVariants } from '@/components/ui/button'
+import { StoryRouteLink } from '@/components/layout/story-route-link'
+import { OrbitChip, orbitChipToneForKind } from '@/components/orbit/orbit-chip'
 import type { PortfolioDocument } from '@/content/document-schema'
 import { cn } from '@/lib/utils'
 
@@ -19,10 +17,12 @@ export function ExplorationInterlude({ document }: { document: PortfolioDocument
     <PageSection
       className="relative overflow-hidden border-y border-orbit-line/80 bg-white/24"
       aria-labelledby="exploration-heading"
-      containerClassName="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(20rem,0.9fr)] lg:items-center xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.88fr)]"
+      containerClassName={cn(claimEvidenceGridClassName, 'min-w-0')}
     >
       <div>
-        <OrbitChip tone="sage">{document.metadata.statusLabel}</OrbitChip>
+        <OrbitChip tone={orbitChipToneForKind(document.metadata.kind)}>
+          {document.metadata.statusLabel}
+        </OrbitChip>
         <h2
           id="exploration-heading"
           className="mt-4 text-2xl leading-tight font-medium text-balance sm:text-3xl lg:text-4xl"
@@ -32,14 +32,9 @@ export function ExplorationInterlude({ document }: { document: PortfolioDocument
         <p className="mt-5 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
           {document.metadata.homepage.summary}
         </p>
-        <Link
-          to="/work/$slug"
-          params={{ slug: document.metadata.slug }}
-          className={cn(buttonVariants({ variant: 'link', size: 'lg' }), 'mt-7 h-auto p-0')}
-        >
+        <StoryRouteLink slug={document.metadata.slug}>
           {document.metadata.homepage.routeLabel}
-          <ArrowRight aria-hidden="true" data-icon="inline-end" />
-        </Link>
+        </StoryRouteLink>
       </div>
       <div
         className="relative w-full border-y border-orbit-line/70 py-6 lg:max-w-[38rem] lg:justify-self-end"

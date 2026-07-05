@@ -5,9 +5,7 @@ import { ExplorationInterlude } from './exploration-interlude'
 import { HeroOrbitSection } from './hero-orbit-section'
 import { SelectedWorkSection } from './selected-work-section'
 
-const exploration = publicExplorationDocuments.find(
-  ({ metadata }) => metadata.slug === 'fraud-detection-system',
-)
+const exploration = publicExplorationDocuments[0]
 
 export function HomePage() {
   return (

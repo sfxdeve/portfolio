@@ -1,3 +1,4 @@
+import { ClaimEvidenceGrid } from '@/components/layout/claim-evidence-grid'
 import { OrbitChip } from '@/components/orbit/orbit-chip'
 import type { DocumentMetadata } from '@/content/document-schema'
 
@@ -15,7 +16,7 @@ export function CaseStudyChapter({
   isFirstPublicWork: boolean
 }) {
   return (
-    <article className="relative grid min-w-0 gap-7 lg:grid-cols-[minmax(0,0.95fr)_minmax(20rem,0.9fr)] lg:items-start xl:grid-cols-[minmax(0,1fr)_minmax(22rem,0.88fr)]">
+    <ClaimEvidenceGrid as="article" className="relative lg:items-start">
       <div className="lg:sticky lg:top-24">
         <OrbitChip tone="coral">Chapter {chapterIndex + 1}</OrbitChip>
         <h2 className="mt-4 text-2xl leading-tight font-medium text-balance sm:text-3xl lg:text-4xl">
@@ -39,6 +40,6 @@ export function CaseStudyChapter({
           />
         ))}
       </div>
-    </article>
+    </ClaimEvidenceGrid>
   )
 }

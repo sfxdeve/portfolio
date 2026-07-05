@@ -2,7 +2,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import type { RefObject } from 'react'
 
-import { useReducedMotion } from '@/components/orbit/use-reduced-motion'
+import { useReducedMotion } from '@/components/motion/use-reduced-motion'
 
 const REVEAL_MOTION = {
   from: { autoAlpha: 0, y: 10 },

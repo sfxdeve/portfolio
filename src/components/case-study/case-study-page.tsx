@@ -4,11 +4,10 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { PageSection } from '@/components/layout/page-section'
 import { Separator } from '@/components/ui/separator'
 import type { PortfolioDocument } from '@/content/document-schema'
+import type { AdjacentPublicDocument } from '@/content/documents'
 
 import { CaseStudyChapter } from './case-study-chapter'
 import { CaseStudyHero } from './case-study-hero'
-
-type AdjacentDocument = Pick<PortfolioDocument['metadata'], 'slug'>
 
 export function CaseStudyPage({
   document,
@@ -16,8 +15,8 @@ export function CaseStudyPage({
   previousDocument,
 }: {
   document: PortfolioDocument
-  nextDocument?: AdjacentDocument
-  previousDocument?: AdjacentDocument
+  nextDocument?: AdjacentPublicDocument
+  previousDocument?: AdjacentPublicDocument
 }) {
   const { Content, metadata } = document
 
@@ -32,7 +31,7 @@ export function CaseStudyPage({
       >
         {metadata.chapters.map((chapter, chapterIndex) => (
           <CaseStudyChapter
-            key={chapter.title}
+            key={`${metadata.slug}-${chapterIndex}`}
             chapter={chapter}
             chapterIndex={chapterIndex}
             isFirstPublicWork={metadata.order === 1}
@@ -56,15 +55,15 @@ function CaseStudyPager({
   nextDocument,
   previousDocument,
 }: {
-  nextDocument?: AdjacentDocument
-  previousDocument?: AdjacentDocument
+  nextDocument?: AdjacentPublicDocument
+  previousDocument?: AdjacentPublicDocument
 }) {
   if (!previousDocument && !nextDocument) {
     return null
   }
 
   return (
-    <nav className="px-5 pt-4 pb-10 sm:px-8 lg:px-12" aria-label="Adjacent work stories">
+    <nav className="px-5 pt-4 pb-10 sm:px-8 lg:px-12" aria-label="Adjacent case studies">
       <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2">
         {previousDocument ? (
           <Link

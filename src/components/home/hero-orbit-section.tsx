@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 
 import { useRevealMotion } from '@/components/motion/use-reveal-motion'
-import { HeroSolarSystem } from '@/components/orbit/hero-solar-system'
+import { HeroOrbitBackdrop } from '@/components/orbit/hero-orbit-backdrop'
 import { OrbitChip } from '@/components/orbit/orbit-chip'
 
 export function HeroOrbitSection() {
@@ -15,14 +15,7 @@ export function HeroOrbitSection() {
       className="relative isolate min-h-[calc(100svh-6rem)] overflow-hidden px-5 pt-12 pb-14 sm:px-8 sm:pt-14 sm:pb-16 lg:px-12"
       aria-labelledby="intro-heading"
     >
-      <div
-        className="pointer-events-none absolute inset-0 z-0 mx-auto max-w-7xl"
-        aria-hidden="true"
-      >
-        <div className="absolute top-[18%] right-[-10rem] h-80 w-[46rem] opacity-90 sm:top-[19%] sm:right-[-7rem] sm:h-96 lg:right-[-2rem] xl:right-[3rem] xl:h-[30rem]">
-          <HeroSolarSystem />
-        </div>
-      </div>
+      <HeroOrbitBackdrop variant="home" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="max-w-5xl" data-reveal-motion>
