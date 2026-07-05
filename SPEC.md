@@ -6,7 +6,7 @@ Create a cinematic, evidence-led portfolio for a senior product engineer who bri
 
 The portfolio primarily addresses hiring managers while remaining credible to prospective clients and design or engineering peers. It should communicate senior ownership, sound judgment, collaboration, technical range, and the ability to carry work from business requirements through launch and continued operation.
 
-This document defines the shared portfolio experience. Implementation, deployment, and branch creation are outside the scope of this design phase, except where future implementation constraints are named explicitly.
+This document defines the portfolio experience. Implementation and deployment are outside the scope of this design phase, except where future implementation constraints are named explicitly.
 
 ## 2. Positioning
 
@@ -143,19 +143,7 @@ Introduce the fraud-detection project as a change of tempo.
 - Use diagrams, signals, or conceptual evidence where appropriate.
 - Do not describe it as shipped commercial work.
 
-### Scene 4 — Working philosophy
-
-Connect seniority to observable behavior rather than years or adjectives.
-
-Potential anchors:
-
-- Close to the problem.
-- Clear about decisions.
-- Responsible for the outcome.
-
-This scene should address ambiguity, collaboration, trade-offs, and continued responsibility after launch.
-
-### Scene 5 — Contact invitation
+### Scene 4 — Contact invitation
 
 Close with a warm and direct invitation.
 
@@ -265,13 +253,11 @@ Motion carries the narrative rather than decorating controls.
 - Respect `prefers-reduced-motion` with a complete, readable alternative.
 - Core content and navigation must remain available without animation.
 
-## 11. Shared visual direction
+## 11. Visual direction — Orbit
 
-The shared art-direction family is:
+The portfolio uses **Orbit**: polished cinematic digitalism with human warmth, expressed through concentric curves and connected spatial movement.
 
-**Polished cinematic digitalism with human warmth**
-
-Shared characteristics:
+Characteristics:
 
 - Expressive serif or display-serif headings.
 - Clean, highly readable supporting sans-serif text.
@@ -281,6 +267,7 @@ Shared characteristics:
 - Controlled dimensional effects.
 - Confident color with deliberate restraint.
 - Strong stages for screenshots and product evidence.
+- Concentric curves, orbital motion, and connected spatial movement in hero and narrative transitions.
 
 Explicitly avoid:
 
@@ -293,22 +280,7 @@ Explicitly avoid:
 - Sharp, severe grids.
 - Generic neon “developer portfolio” aesthetics.
 
-## 12. Eight parallel art directions
-
-All eight directions are approved for later implementation as independent visual variants. They share the same content, information architecture, responsive behavior, accessibility requirements, and core motion choreography.
-
-1. **Orbit** — concentric curves and connected spatial movement.
-2. **Afterglow** — restrained darkness and warm luminous stages.
-3. **Prismatic Lens** — refracted light and dimensional glass-like focus.
-4. **Grand Stage** — quiet space interrupted by broad theatrical project scenes.
-5. **Signal Garden** — vertical living signals and structured movement.
-6. **Infinite Pool** — open light surfaces with deep rounded evidence areas.
-7. **Solar Halo** — warm clarity and controlled spectral circular motion.
-8. **Soft Frames** — cool precision and layered rounded frames.
-
-These should eventually be compared as full-page implementations, not merely palette swatches.
-
-## 13. Typography
+## 12. Typography
 
 ### Display type
 
@@ -336,7 +308,7 @@ Use a restrained sans-serif for:
 
 The supporting type should quietly improve clarity and allow the display face to carry personality.
 
-## 14. Screenshot and evidence treatment
+## 13. Screenshot and evidence treatment
 
 - Preserve original screenshot clarity and aspect ratio.
 - Use one homepage image and a selected subset of detailed images per project.
@@ -346,7 +318,7 @@ The supporting type should quietly improve clarity and allow the display face to
 - Use annotations sparingly and only when they clarify a decision or behavior.
 - Avoid ornamental device mockups unless a device context is necessary to understand the product.
 
-## 15. Responsive behavior
+## 14. Responsive behavior
 
 The experience must remain narratively coherent on mobile.
 
@@ -358,19 +330,19 @@ The experience must remain narratively coherent on mobile.
 - Keep the navigation direct and compact.
 - Do not hide essential evidence behind hover interactions.
 
-## 16. Accessibility and usability
+## 15. Accessibility and usability
 
 - Meet WCAG AA contrast for text and essential controls.
 - Use semantic headings and landmarks.
 - Provide meaningful alternative text for screenshots.
 - Ensure full keyboard navigation.
-- Provide visible focus states suited to each art direction.
+- Provide visible focus states suited to the Orbit visual direction.
 - Avoid motion that flashes, disorients, or obscures content.
 - Respect reduced-motion preferences.
 - Keep reading order correct when desktop layouts become stacked layouts.
 - Ensure interactive controls have clear labels and adequate target sizes.
 
-## 17. Performance expectations
+## 16. Performance expectations
 
 The cinematic quality must not undermine credibility.
 
@@ -382,7 +354,7 @@ The cinematic quality must not undermine credibility.
 - Prevent layout shifts.
 - Ensure the opening content becomes readable quickly.
 
-## 18. Content production workflow
+## 17. Content production workflow
 
 For each project:
 
@@ -396,33 +368,20 @@ For each project:
 8. Write the homepage teaser after the full story is understood.
 9. Select only the screenshots that advance the narrative.
 
-## 19. Future implementation strategy
-
-Implementation is not part of this chat.
+## 18. Implementation strategy
 
 When implementation begins:
 
 - Follow the ADR-approved foundation: TanStack Start, TanStack Router, React, TypeScript, MDX detail routes, and Vercel-friendly delivery.
 - Use MDX with structured frontmatter for sourced case-study and exploration content; keep homepage summaries derived from those MDX files rather than a separate registry.
 - Use GSAP and `@gsap/react` only where motion clarifies hierarchy, progression, relationship, or change.
-- Use Tailwind CSS, art-direction tokens, `class-variance-authority`, `clsx`, and `tailwind-merge` to keep variants expressive without duplicating component logic.
+- Use Tailwind CSS, Orbit design tokens, `class-variance-authority`, `clsx`, and `tailwind-merge` to keep styling expressive without duplicating component logic.
 - Use Base UI, shadcn conventions, and lucide-react for accessible interface primitives and icons where the portfolio needs controls, navigation, dialogs, or form affordances.
 - Use Zod, Vitest, Playwright, and axe checks to protect content shape, routed behavior, visual evidence flows, and accessibility.
 - Treat these libraries as the Portfolio Implementation stack, not as claims about the technologies used in the selected work.
-- Build one shared content and component foundation.
-- Keep art-direction tokens and visual treatments isolated.
-- Create eight independent branches or equivalent isolated variants.
-- Start with **Orbit** as the first implementation target because it best tests the shared cinematic scroll choreography, connected movement, and evidence sequencing.
-- Keep content, accessibility, responsive behavior, and functional interactions consistent.
-- Compare complete homepage and representative case-study views before selecting a final direction.
+- Keep Orbit visual tokens and treatments behind dedicated components rather than scattering one-off styling across pages.
 
-Avoid eight unrelated codebases. The variants should test art direction, not introduce accidental differences in content or functionality.
-
-The variants must also remain independent sibling implementations. A variant may share only the approved foundation from `main`: content, routes, accessibility requirements, responsive expectations, and shared functional behavior. Variants must not depend on, import from, merge from, or evolve through each other. If a shared improvement emerges while building one variant, promote that improvement back to `main` first, then apply it independently where each variant needs it.
-
-Orbit is first in sequence, not a parent implementation. Later variants must still start from `main`, not from Orbit or any other completed variant.
-
-## 20. Success criteria
+## 19. Success criteria
 
 The portfolio succeeds when a hiring manager can quickly understand:
 
@@ -432,5 +391,3 @@ The portfolio succeeds when a hiring manager can quickly understand:
 - The author takes responsibility without erasing collaborators.
 - The author’s claims are supported by visible evidence.
 - The experience is memorable and cinematic without becoming difficult to use.
-
-It also succeeds when the same project content can be evaluated fairly across all eight visual directions.
