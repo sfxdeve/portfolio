@@ -72,8 +72,20 @@ test('exposes compact primary navigation', async ({ page }) => {
   const nav = page.getByRole('navigation', { name: 'Primary' })
   await expect(nav.getByRole('link', { name: /shayan fareed/i })).toHaveAttribute('href', '/')
   await expect(nav.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '/#work')
+  await expect(nav.getByRole('link', { name: 'Approach' })).toHaveAttribute('href', '/#approach')
   await expect(nav.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/#contact')
-  await expect(nav.getByRole('link')).toHaveCount(3)
+  await expect(nav.getByRole('link')).toHaveCount(4)
+})
+
+test('introduces the approach before selected work', async ({ page }) => {
+  await page.goto('/#approach')
+
+  await expect(
+    page.getByRole('heading', { name: /product engineering as accountable human work/i }),
+  ).toBeVisible()
+  await expect(
+    page.getByText(/evidence-led case studies rather than a project gallery/i),
+  ).toBeVisible()
 })
 
 test('has no automatically detectable accessibility violations on the homepage', async ({

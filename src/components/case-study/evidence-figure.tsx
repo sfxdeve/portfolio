@@ -32,6 +32,9 @@ export function EvidenceFigure({
               alt={evidence.alt}
               width={evidence.width}
               height={evidence.height}
+              sizes="(min-width: 1280px) 38rem, (min-width: 1024px) 34rem, 100vw"
+              decoding="async"
+              fetchPriority={eager ? 'high' : 'auto'}
               className="size-full object-cover transition duration-300 group-hover/evidence:scale-[1.01]"
               loading={eager ? 'eager' : 'lazy'}
             />

@@ -41,7 +41,7 @@ export function CaseStudyPage({
 
       <Separator className="bg-orbit-line" />
       <PageSection className="py-16 sm:py-16 lg:py-16" containerClassName="max-w-3xl">
-        <div className="prose prose-neutral prose-headings:font-heading prose-headings:font-medium">
+        <div className="mdx-body">
           <Content />
         </div>
       </PageSection>

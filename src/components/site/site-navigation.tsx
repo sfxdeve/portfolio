@@ -30,6 +30,9 @@ export function SiteNavigation() {
           <Link to="/" hash="work" className={navLinkClass}>
             Work
           </Link>
+          <Link to="/" hash="approach" className={navLinkClass}>
+            Approach
+          </Link>
           <Link
             to="/"
             hash="contact"

@@ -25,6 +25,8 @@ test('renders evidence-led case-study structure and body content', async ({ page
 
   await expect(page.getByRole('main').getByRole('heading', { level: 1 })).toBeVisible()
   await expect(page.getByText(/EcoBuiltConnect had to make reclaimed/i)).toBeVisible()
+  await expect(page.getByRole('term', { name: 'Role' })).toBeVisible()
+  await expect(page.getByRole('term', { name: 'Outcome' })).toBeVisible()
   await expect(page.getByRole('img', { name: /marketplace browsing/i }).first()).toBeVisible()
   await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4)
   await expect(page.getByText(/what shipped was not just a marketplace surface/i)).toBeVisible()
