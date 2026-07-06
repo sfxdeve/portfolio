@@ -7,6 +7,7 @@ import {
   getPublicDocumentBySlug,
   getPublicDocumentLoaderDataBySlug,
 } from '@/content/documents'
+import { createWorkHead } from '@/lib/site-meta'
 
 export const Route = createFileRoute('/work/$slug')({
   component: WorkDetailPage,
@@ -22,17 +23,25 @@ export const Route = createFileRoute('/work/$slug')({
       ...getAdjacentPublicWorkDocuments(params.slug),
     }
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.document.metadata.title ?? 'Case study not found'} - Shayan Fareed` },
-      {
-        name: 'description',
-        content:
-          loaderData?.document.metadata.description ??
-          'The requested portfolio case study could not be found.',
-      },
-    ],
-  }),
+  head: ({ loaderData }) => {
+    const document = loaderData?.document
+    const head = document
+      ? createWorkHead({
+          description: document.metadata.description,
+          slug: document.metadata.slug,
+          title: document.metadata.title,
+        })
+      : createWorkHead({
+          description: 'The requested portfolio case study could not be found.',
+          slug: 'not-found',
+          title: 'Case study not found',
+        })
+
+    return {
+      links: head.links,
+      meta: [{ title: head.title }, ...head.meta],
+    }
+  },
   notFoundComponent: CaseStudyNotFound,
 })
 

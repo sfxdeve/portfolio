@@ -15,7 +15,7 @@
     "routes:gen": "tsr generate",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:e2e": "playwright test",
-    "test:unit": "vitest run tests/orbit",
+    "test:unit": "vitest run tests/orbit tests/lib",
     "typecheck": "tsc --noEmit",
     "validate:content": "vitest run tests/content"
   },

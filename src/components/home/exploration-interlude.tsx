@@ -46,7 +46,7 @@ export function ExplorationInterlude({ document }: { document: PortfolioDocument
       </div>
       <div
         className="relative w-full border-y border-orbit-line/70 py-6 lg:max-w-[38rem] lg:justify-self-end"
-        aria-label="Fraud detection exploration signals"
+        aria-label="Exploration signal grid"
       >
         <div className="grid gap-5 sm:grid-cols-2">
           {signals.map(([id, label]) => (

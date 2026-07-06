@@ -129,7 +129,7 @@ Each featured project becomes a narrative chapter.
 - Reveal enough context to establish relevance without reproducing the detailed case study.
 - Provide a clear route into the full story.
 
-The chapter pattern can repeat, but each project should receive a distinct transition or visual behavior derived from its content.
+The chapter pattern can repeat with the shared homepage scroll-reveal treatment.
 
 ### Scene 3 — Exploration interlude
 
@@ -137,7 +137,7 @@ Introduce the fraud-detection project as a change of tempo.
 
 - Clearly label it as an exploration.
 - Focus on curiosity, systems thinking, collaboration, and the uniqueness of the investigated problem.
-- Use diagrams, signals, or conceptual evidence where appropriate.
+- Use the homepage interlude’s compact conceptual signal grid rather than screenshot evidence.
 - Do not describe it as shipped commercial work.
 
 ### Scene 4 — Contact invitation
@@ -190,10 +190,6 @@ On smaller screens:
 - Keep the explanation adjacent to its supporting evidence.
 - Do not recreate desktop pinning when it harms readability or performance.
 
-### Narrative turning points
-
-Use occasional full-width statements to change pace and mark an important realization or trade-off. These should be derived from the actual project story, not fabricated quotations.
-
 ### Ending
 
 Conclude with:
@@ -207,7 +203,7 @@ Avoid a generic “what I learned” section.
 
 ## 9. Exploration case study
 
-The exploration page uses the same narrative foundation but a different evidence standard.
+The exploration page uses the same narrative foundation but a text-led evidence standard. Screenshot or diagram evidence is not required.
 
 Focus on:
 
@@ -217,7 +213,6 @@ Focus on:
 - Assumptions and constraints.
 - The proposed fraud-detection approach.
 - System or data reasoning.
-- Experiments, diagrams, prototypes, or findings.
 - What was unresolved.
 - What the exploration changed in the author’s thinking.
 
@@ -236,8 +231,8 @@ Motion carries the narrative rather than decorating controls.
 - Pinned claims with changing evidence.
 - Screenshot sequencing, zooming, or cropping.
 - Scene transitions between projects.
-- Diagram assembly for the exploration.
-- Quiet pauses and full-width turning points.
+- Signal grid reveal for the exploration interlude.
+- Quiet pauses at chapter boundaries.
 - A calm landing at the contact invitation.
 
 ### Motion principles
