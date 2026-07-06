@@ -9,6 +9,7 @@ import {
   filterPublicDocuments,
   getAdjacentPublicWorkDocuments,
   getPublicDocumentBySlug,
+  getPublicDocumentLoaderDataBySlug,
   getPublicWorkDocumentBySlug,
   publicExplorationDocuments,
   publicShippedWorkDocuments,
@@ -146,6 +147,16 @@ describe('repository documents', () => {
     expect(getPublicWorkDocumentBySlug('fraud-detection-system')).toBeUndefined()
     expect(getPublicWorkDocumentBySlug('foundation-smoke-test')).toBeUndefined()
     expect(getPublicWorkDocumentBySlug('missing-work')).toBeUndefined()
+  })
+
+  it('returns serializable public metadata for route loader data', () => {
+    const document = getPublicDocumentLoaderDataBySlug('ecobuiltconnect')
+
+    expect(document?.metadata.title).toBe('EcoBuiltConnect')
+    expect(document).not.toHaveProperty('Content')
+    expect(JSON.parse(JSON.stringify(document))).toEqual(document)
+    expect(getPublicDocumentLoaderDataBySlug('foundation-smoke-test')).toBeUndefined()
+    expect(getPublicDocumentLoaderDataBySlug('missing-work')).toBeUndefined()
   })
 
   it('returns adjacent public shipped work documents in homepage order', () => {

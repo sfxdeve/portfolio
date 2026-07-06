@@ -57,6 +57,8 @@ export const publicExplorationDocuments = publicDocuments.filter(
 
 export type AdjacentPublicDocument = Pick<PortfolioDocument['metadata'], 'slug'>
 
+export type PublicDocumentLoaderData = Pick<PortfolioDocument, 'metadata' | 'sourcePath'>
+
 type AdjacentPublicDocuments = {
   nextDocument?: AdjacentPublicDocument
   previousDocument?: AdjacentPublicDocument
@@ -64,6 +66,14 @@ type AdjacentPublicDocuments = {
 
 export function getPublicDocumentBySlug(slug: string): PortfolioDocument | undefined {
   return publicDocuments.find((document) => document.metadata.slug === slug)
+}
+
+export function getPublicDocumentLoaderDataBySlug(
+  slug: string,
+): PublicDocumentLoaderData | undefined {
+  const document = getPublicDocumentBySlug(slug)
+
+  return document ? { metadata: document.metadata, sourcePath: document.sourcePath } : undefined
 }
 
 export function getPublicWorkDocumentBySlug(slug: string): PortfolioDocument | undefined {

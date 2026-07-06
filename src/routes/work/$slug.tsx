@@ -2,12 +2,16 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 
 import { CaseStudyNotFound } from '@/components/case-study/case-study-not-found'
 import { CaseStudyPage } from '@/components/case-study/case-study-page'
-import { getAdjacentPublicWorkDocuments, getPublicDocumentBySlug } from '@/content/documents'
+import {
+  getAdjacentPublicWorkDocuments,
+  getPublicDocumentBySlug,
+  getPublicDocumentLoaderDataBySlug,
+} from '@/content/documents'
 
 export const Route = createFileRoute('/work/$slug')({
   component: WorkDetailPage,
   loader: ({ params }) => {
-    const document = getPublicDocumentBySlug(params.slug)
+    const document = getPublicDocumentLoaderDataBySlug(params.slug)
 
     if (!document) {
       throw notFound()
@@ -33,7 +37,12 @@ export const Route = createFileRoute('/work/$slug')({
 })
 
 function WorkDetailPage() {
-  const { document, nextDocument, previousDocument } = Route.useLoaderData()
+  const { document: loaderDocument, nextDocument, previousDocument } = Route.useLoaderData()
+  const document = getPublicDocumentBySlug(loaderDocument.metadata.slug)
+
+  if (!document) {
+    throw notFound()
+  }
 
   return (
     <CaseStudyPage

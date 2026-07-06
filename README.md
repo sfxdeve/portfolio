@@ -42,10 +42,19 @@ After Mise has activated the repository environment:
 ```sh
 pnpm dev
 pnpm check
+pnpm clean       # remove generated build/test output
 pnpm routes:gen   # regenerate src/routeTree.gen.ts after route changes
 ```
 
 `mise run check` is equivalent to `pnpm check` and can be used without relying on shell activation.
+
+## Maintenance baseline
+
+- Use Node 24 and pnpm 11. Exact local versions are pinned in `mise.toml`; package-manager and engine constraints live in `package.json` and `.npmrc`.
+- Keep dependencies on the current major lines unless a repo-wide upgrade intentionally updates the toolchain docs and ADRs.
+- Run `pnpm check` before handoff. It covers typecheck, lint, format check, unit tests, Playwright tests, and production build.
+- Run `pnpm clean` when generated output obscures a review or before comparing the worktree after multiple agent runs.
+- Treat `src/routeTree.gen.ts`, `.output/`, `.tanstack/`, `test-results/`, and Playwright reports as generated output. Regenerate the route tree with `pnpm routes:gen` only after route file changes.
 
 ## Content and evidence assets
 

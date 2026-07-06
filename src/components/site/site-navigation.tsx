@@ -14,7 +14,7 @@ export function SiteNavigation() {
       >
         <Link
           to="/"
-          className="inline-flex items-center gap-2 rounded-full pr-3 text-sm font-semibold tracking-tight underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+          className="inline-flex items-center gap-2 rounded-full pr-3 text-sm font-semibold underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
         >
           <img
             src="/orbit/orbit-logo-mark.svg"

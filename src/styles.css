@@ -117,7 +117,7 @@
     font-variation-settings:
       'SOFT' 25,
       'WONK' 1;
-    letter-spacing: -0.015em !important;
+    letter-spacing: 0;
   }
 
   .mdx-body {

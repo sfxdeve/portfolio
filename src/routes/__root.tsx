@@ -1,4 +1,3 @@
-import '@/components/motion/gsap-setup'
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 
