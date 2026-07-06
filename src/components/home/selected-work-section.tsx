@@ -1,14 +1,21 @@
+import { useRef } from 'react'
+
 import { EvidenceFigure } from '@/components/case-study/evidence-figure'
 import { ClaimEvidenceGrid } from '@/components/layout/claim-evidence-grid'
 import { PageSection } from '@/components/layout/page-section'
 import { SectionIntro } from '@/components/layout/section-intro'
 import { StoryRouteLink } from '@/components/layout/story-route-link'
+import { useScrollReveal } from '@/components/motion/use-scroll-reveal'
 import { OrbitChip, orbitChipToneForKind } from '@/components/orbit/orbit-chip'
 import type { PortfolioDocument } from '@/content/document-schema'
 
 export function SelectedWorkSection({ documents }: { documents: PortfolioDocument[] }) {
+  const scope = useRef<HTMLElement>(null)
+
+  useScrollReveal(scope)
+
   return (
-    <PageSection id="work" aria-labelledby="work-heading">
+    <PageSection id="work" aria-labelledby="work-heading" ref={scope}>
       <SectionIntro
         chip="Selected work"
         heading="Selected work with the evidence close by."
@@ -28,7 +35,7 @@ function WorkChapter({ document }: { document: PortfolioDocument }) {
   const evidence = document.metadata.homepage.evidence[0]
 
   return (
-    <ClaimEvidenceGrid as="article">
+    <ClaimEvidenceGrid as="article" data-scroll-reveal>
       <div className="min-w-0 border-l border-orbit-line/70 pl-5 sm:pl-6">
         <OrbitChip tone={orbitChipToneForKind(document.metadata.kind)}>
           {document.metadata.statusLabel}

@@ -1,6 +1,6 @@
 # Phase 1 Repository Consolidation
 
-After multiple agent runs built the portfolio, this ADR records the first consolidation pass. Phase 2 (SPEC alignment: cinematic motion, display typography, About nav) is deferred.
+After multiple agent runs built the portfolio, this ADR records the first consolidation pass. Phase 2 (SPEC alignment: cinematic motion, display typography) is deferred.
 
 ## Phase 1 scope (this pass)
 
@@ -23,10 +23,6 @@ After multiple agent runs built the portfolio, this ADR records the first consol
 - Standardize "case study" terminology in 404 and route metadata
 - Simplify contact form to JS-only mailto submission
 
-## Phase 2 scope (deferred)
+## Phase 2 scope (completed in ADR 0003)
 
-- SPEC cinematic scroll motion (ScrollTrigger chapter transitions)
-- Display serif typography per SPEC §12
-- About/Approach nav section
-- `@tailwindcss/typography` or explicit MDX body styling
-- Responsive image pipeline and deeper shadcn pruning
+See [0003-phase-2-spec-alignment.md](./0003-phase-2-spec-alignment.md).

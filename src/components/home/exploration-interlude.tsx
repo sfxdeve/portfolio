@@ -1,6 +1,9 @@
+import { useRef } from 'react'
+
 import { claimEvidenceGridClassName } from '@/components/layout/claim-evidence-grid'
 import { PageSection } from '@/components/layout/page-section'
 import { StoryRouteLink } from '@/components/layout/story-route-link'
+import { useScrollReveal } from '@/components/motion/use-scroll-reveal'
 import { OrbitChip, orbitChipToneForKind } from '@/components/orbit/orbit-chip'
 import type { PortfolioDocument } from '@/content/document-schema'
 import { cn } from '@/lib/utils'
@@ -13,13 +16,18 @@ const signals = [
 ] as const
 
 export function ExplorationInterlude({ document }: { document: PortfolioDocument }) {
+  const scope = useRef<HTMLElement>(null)
+
+  useScrollReveal(scope)
+
   return (
     <PageSection
+      ref={scope}
       className="relative overflow-hidden border-y border-orbit-line/80 bg-white/24"
       aria-labelledby="exploration-heading"
       containerClassName={cn(claimEvidenceGridClassName, 'min-w-0')}
     >
-      <div>
+      <div data-scroll-reveal>
         <OrbitChip tone={orbitChipToneForKind(document.metadata.kind)}>
           {document.metadata.statusLabel}
         </OrbitChip>
@@ -42,7 +50,7 @@ export function ExplorationInterlude({ document }: { document: PortfolioDocument
       >
         <div className="grid gap-5 sm:grid-cols-2">
           {signals.map(([id, label]) => (
-            <div key={id} className="min-w-0">
+            <div key={id} className="min-w-0" data-scroll-reveal>
               <p className="font-heading text-xl">{label}</p>
               <p className="mt-2 max-w-xs text-sm leading-6 text-muted-foreground">
                 Connected to scoring, explanation, review, and retained evidence without implying

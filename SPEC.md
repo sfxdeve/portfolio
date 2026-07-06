@@ -91,15 +91,12 @@ The narrative is:
 2. Individual shipped-product case studies
 3. Fraud-detection exploration page
 
-An independent About page is optional. The initial version may place the essential about material on the homepage to keep the experience focused.
-
 ### Global navigation
 
 Keep navigation small and stable:
 
 - Name or identity
 - Work
-- About or Approach
 - Contact
 
 Case-study pages also provide:

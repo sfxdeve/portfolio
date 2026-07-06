@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/geist';
+@import '@fontsource-variable/fraunces';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -31,7 +32,7 @@
 }
 
 @theme inline {
-  --font-heading: Georgia, 'Times New Roman', ui-serif, serif;
+  --font-heading: 'Fraunces Variable', Georgia, 'Times New Roman', ui-serif, serif;
   --font-sans: 'Geist Variable', sans-serif;
   --color-orbit-pearl: var(--orbit-pearl);
   --color-orbit-coral: var(--orbit-coral);
@@ -111,7 +112,38 @@
   h3,
   .font-heading {
     font-family: var(--font-heading);
-    letter-spacing: 0 !important;
+    font-variation-settings:
+      'SOFT' 25,
+      'WONK' 1;
+    letter-spacing: -0.015em !important;
+  }
+
+  .mdx-body {
+    @apply space-y-5 text-base leading-7 text-muted-foreground;
+  }
+
+  .mdx-body :is(h2, h3) {
+    @apply font-heading text-foreground;
+  }
+
+  .mdx-body h2 {
+    @apply text-2xl leading-tight font-medium;
+  }
+
+  .mdx-body h3 {
+    @apply text-xl leading-snug font-medium;
+  }
+
+  .mdx-body p {
+    @apply text-base leading-7;
+  }
+
+  .mdx-body ul {
+    @apply list-disc space-y-2 pl-5;
+  }
+
+  .mdx-body strong {
+    @apply font-semibold text-foreground;
   }
 
   ::selection {
