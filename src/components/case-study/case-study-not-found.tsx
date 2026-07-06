@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowLeft } from 'lucide-react'
 
 import { buttonVariants } from '@/components/ui/button'
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from '@/components/ui/empty'
+import { Empty, EmptyDescription, EmptyHeader } from '@/components/ui/empty'
 import { cn } from '@/lib/utils'
 
 export function CaseStudyNotFound() {
@@ -10,9 +10,7 @@ export function CaseStudyNotFound() {
     <main className="grid min-h-svh place-items-center px-6 py-16">
       <Empty className="max-w-xl">
         <EmptyHeader>
-          <EmptyTitle role="heading" aria-level={1}>
-            Case study not found.
-          </EmptyTitle>
+          <h1 className="font-heading text-sm font-medium">Case study not found.</h1>
           <EmptyDescription>
             The requested case study is not available as public selected work.
           </EmptyDescription>

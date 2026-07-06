@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm validate:content && vite build",
+    "build": "vite build",
     "build:vercel": "NITRO_PRESET=vercel pnpm build",
-    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test:unit && pnpm test:e2e && pnpm build",
-    "clean": "rm -rf .output .tanstack .vinxi dist dist-ssr coverage playwright-report test-results node_modules/.vite node_modules/.nitro",
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm validate:content && pnpm test:unit && pnpm test:e2e && pnpm build",
+    "clean": "rm -rf .output .tanstack dist dist-ssr coverage playwright-report test-results node_modules/.vite node_modules/.nitro",
     "dev": "vite dev --port 3000",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
@@ -15,7 +15,7 @@
     "routes:gen": "tsr generate",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:e2e": "playwright test",
-    "test:unit": "vitest run",
+    "test:unit": "vitest run tests/orbit",
     "typecheck": "tsc --noEmit",
     "validate:content": "vitest run tests/content"
   },

@@ -17,7 +17,10 @@ export const Route = createRootRoute({
           'Shayan Fareed is a senior product engineer who brings complex digital products from idea to reality.',
       },
     ],
-    links: [{ rel: 'stylesheet', href: styles }],
+    links: [
+      { rel: 'stylesheet', href: styles },
+      { rel: 'icon', href: '/orbit/orbit-logo-mark.svg', type: 'image/svg+xml' },
+    ],
   }),
   shellComponent: RootDocument,
   component: Outlet,

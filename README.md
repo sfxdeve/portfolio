@@ -52,13 +52,21 @@ pnpm routes:gen   # regenerate src/routeTree.gen.ts after route changes
 
 - Use Node 24 and pnpm 11. Exact local versions are pinned in `mise.toml`; package-manager and engine constraints live in `package.json` and `.npmrc`.
 - Keep dependencies on the current major lines unless a repo-wide upgrade intentionally updates the toolchain docs and ADRs.
-- Run `pnpm check` before handoff. It covers typecheck, lint, format check, unit tests, Playwright tests, and production build.
+- Run `pnpm check` before handoff. It covers typecheck, lint, format check, content validation, unit tests, Playwright tests, and production build.
 - Run `pnpm clean` when generated output obscures a review or before comparing the worktree after multiple agent runs.
 - Treat `src/routeTree.gen.ts`, `.output/`, `.tanstack/`, `test-results/`, and Playwright reports as generated output. Regenerate the route tree with `pnpm routes:gen` only after route file changes.
+- GitHub Actions runs `pnpm check` on every push to `main` and on pull requests (see `.github/workflows/check.yml`).
+- Deploy with `pnpm build:vercel` on Vercel using the committed `vercel.json` settings.
 
 ## Content and evidence assets
 
-Case-study content lives in `src/content/documents/*.mdx` with validated frontmatter. Public evidence images belong in `public/evidence/<slug>/` and must match the `width` and `height` declared in frontmatter. Run `pnpm validate:content` to verify dimensions and public-safe copy boundaries.
+Case-study content lives in `src/content/documents/*.mdx` with validated frontmatter. Public evidence images belong in `public/evidence/<slug>/` and must match the `width` and `height` declared in frontmatter.
+
+To add or replace evidence:
+
+1. Place optimized `.webp` files under `public/evidence/<slug>/` using the `NN-description.webp` naming pattern.
+2. Declare each image in the document frontmatter with matching `src`, `width`, `height`, and `alt`.
+3. Run `pnpm validate:content` to verify dimensions and public-safe copy boundaries.
 
 ## Setup troubleshooting
 

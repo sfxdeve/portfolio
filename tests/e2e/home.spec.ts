@@ -48,7 +48,7 @@ test('presents selected shipped work separately from the exploration', async ({ 
 })
 
 test('validates the contact form and exposes the public email fallback', async ({ page }) => {
-  await page.goto('/#contact', { waitUntil: 'networkidle' })
+  await page.goto('/#contact')
 
   await expect(page.getByRole('link', { name: 'sfx.pers@gmail.com' })).toHaveAttribute(
     'href',
