@@ -15,7 +15,7 @@ export function CaseStudyHero({ document }: { document: PortfolioDocument }) {
       className="relative isolate min-h-[calc(82svh-6rem)] overflow-hidden px-5 pt-10 pb-16 sm:px-8 sm:pt-14 sm:pb-20 lg:px-12 lg:pt-16 lg:pb-24"
       aria-labelledby="case-study-heading"
     >
-      <HeroOrbitBackdrop variant="case-study" />
+      <HeroOrbitBackdrop variant="case-study" placement="overlay" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <Link to="/" hash="work" className={cn(buttonVariants({ variant: 'link' }), 'h-auto p-0')}>

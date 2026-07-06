@@ -4,6 +4,8 @@
 @import '@fontsource-variable/fraunces';
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant portrait-tall (@media (orientation: portrait));
+@custom-variant landscape-wide (@media (orientation: landscape));
 
 :root {
   --background: oklch(0.965 0.026 82);

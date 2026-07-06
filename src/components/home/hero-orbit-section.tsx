@@ -12,12 +12,10 @@ export function HeroOrbitSection() {
   return (
     <section
       ref={scope}
-      className="relative isolate min-h-[calc(100svh-6rem)] overflow-hidden px-5 pt-12 pb-14 sm:px-8 sm:pt-14 sm:pb-16 lg:px-12"
+      className="relative isolate overflow-hidden px-5 pt-12 pb-14 sm:px-8 sm:pt-14 sm:pb-16 lg:px-12 portrait-tall:flex portrait-tall:flex-col landscape-wide:mx-auto landscape-wide:grid landscape-wide:max-w-7xl landscape-wide:grid-cols-[minmax(0,1fr)_minmax(16rem,46rem)] landscape-wide:items-center landscape-wide:gap-6"
       aria-labelledby="intro-heading"
     >
-      <HeroOrbitBackdrop variant="home" />
-
-      <div className="relative z-10 mx-auto max-w-7xl">
+      <div className="relative z-10 portrait-tall:mx-auto portrait-tall:max-w-7xl landscape-wide:min-w-0">
         <div className="max-w-5xl" data-reveal-motion>
           <OrbitChip tone="coral">Senior Product Engineer</OrbitChip>
           <h1
@@ -32,6 +30,17 @@ export function HeroOrbitSection() {
           </p>
         </div>
       </div>
+
+      <HeroOrbitBackdrop
+        variant="home"
+        placement="stacked"
+        className="portrait-tall:mx-auto portrait-tall:mt-10 portrait-tall:max-w-7xl landscape-wide:hidden"
+      />
+      <HeroOrbitBackdrop
+        variant="home"
+        placement="aside"
+        className="portrait-tall:hidden landscape-wide:relative landscape-wide:z-0"
+      />
     </section>
   )
 }
