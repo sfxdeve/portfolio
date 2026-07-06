@@ -4,17 +4,13 @@ import { cn } from '@/lib/utils'
 const backdropVariants = {
   home: {
     overlay:
-      'absolute top-[18%] right-[-10rem] h-80 w-[46rem] opacity-90 sm:top-[19%] sm:right-[-7rem] sm:h-96 lg:right-[-2rem] xl:right-[3rem] xl:h-[30rem]',
-    aside:
-      'relative h-72 w-full max-w-[46rem] opacity-90 sm:h-80 lg:h-96 xl:h-[30rem] landscape-wide:justify-self-end',
+      'absolute top-6 right-[-10rem] h-80 w-[46rem] opacity-90 sm:top-8 sm:right-[-7rem] sm:h-96 lg:top-10 lg:right-[-2rem] xl:right-[3rem] xl:h-[30rem]',
     stacked:
       'relative mx-auto h-56 w-full max-w-[28rem] opacity-90 sm:h-64 sm:max-w-[32rem] md:max-w-[36rem]',
   },
   'case-study': {
     overlay:
-      'absolute top-[24%] right-[-11rem] h-72 w-[42rem] opacity-82 sm:right-[-7rem] sm:h-88 lg:right-[-2rem] xl:right-[2rem] xl:h-[28rem]',
-    aside:
-      'relative h-64 w-full max-w-[42rem] opacity-82 sm:h-80 lg:h-[28rem] landscape-wide:justify-self-end',
+      'absolute top-8 right-[-11rem] h-72 w-[42rem] opacity-82 sm:top-10 sm:right-[-7rem] sm:h-88 lg:top-12 lg:right-[-2rem] xl:right-[2rem] xl:h-[28rem]',
     stacked:
       'relative mx-auto h-52 w-full max-w-[26rem] opacity-82 sm:h-60 sm:max-w-[30rem] md:max-w-[34rem]',
   },
