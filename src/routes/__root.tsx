@@ -2,23 +2,28 @@ import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-r
 import type { ReactNode } from 'react'
 
 import { SiteNavigation } from '@/components/site/site-navigation'
+import { createSiteHead } from '@/lib/site-meta'
 
 import styles from '../styles.css?url'
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'Shayan Fareed — Senior Product Engineer' },
-      {
-        name: 'description',
-        content:
-          'Shayan Fareed is a senior product engineer who brings complex digital products from idea to reality.',
-      },
-    ],
-    links: [{ rel: 'stylesheet', href: styles }],
-  }),
+  head: () => {
+    const { links, meta, title } = createSiteHead()
+
+    return {
+      meta: [
+        { charSet: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { title },
+        ...meta,
+      ],
+      links: [
+        { rel: 'stylesheet', href: styles },
+        { rel: 'icon', href: '/orbit/orbit-logo-mark.svg', type: 'image/svg+xml' },
+        ...links,
+      ],
+    }
+  },
   shellComponent: RootDocument,
   component: Outlet,
 })

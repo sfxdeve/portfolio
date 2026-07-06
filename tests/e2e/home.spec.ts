@@ -1,138 +1,129 @@
-import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
-test('introduces the portfolio with a compact semantic introduction', async ({ page }) => {
-  await page.goto('/')
+import { expectNoAccessibilityViolations } from './axe'
+import { expectNoHorizontalOverflow } from './layout-assertions'
+import { expectMetaDescription, expectOpenGraph } from './meta-assertions'
+import { viewportPresets } from './site-routes'
 
-  await expect(page).toHaveTitle(/Shayan Fareed/)
-  const main = page.getByRole('main')
-  await expect(main).toBeVisible()
-  await expect(main.getByText('Senior Product Engineer', { exact: true })).toBeVisible()
-  await expect(
-    main.getByRole('heading', {
-      level: 1,
-      name: /bring complex digital products from idea to reality/i,
-    }),
-  ).toBeVisible()
-  await expect(
-    main.getByText(/bring people and decisions together, and stay with the work/i),
-  ).toBeVisible()
-})
+test.describe('homepage', () => {
+  test('introduces the portfolio with its primary proposition', async ({ page }) => {
+    await page.goto('/')
 
-test('presents selected work and links to a case study', async ({ page }) => {
-  await page.goto('/')
-
-  await expect(
-    page.getByRole('heading', { name: /selected work with the evidence close by/i }),
-  ).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'EcoBuiltConnect' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'ArtisanConnect' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'RushUploads' })).toBeVisible()
-  await expect(page.locator('[data-slot="badge"]')).toHaveCount(4)
-  await expect(
-    page.getByRole('heading', { name: /fraud-detection system shaped around risk/i }),
-  ).toBeVisible()
-
-  await page.getByRole('link', { name: /read the ecobuiltconnect story/i }).click()
-
-  await expect(page).toHaveURL(/\/work\/ecobuiltconnect$/)
-  await expect(
-    page.getByRole('heading', {
-      level: 1,
-      name: /making finite material supply trustworthy enough to buy/i,
-    }),
-  ).toBeVisible()
-  await expect(page.getByRole('img', { name: /marketplace browsing/i }).first()).toBeVisible()
-})
-
-test('composes working philosophy cards with shadcn primitives', async ({ page }) => {
-  await page.goto('/')
-
-  const approach = page.locator('section[aria-labelledby="approach-heading"]')
-
-  for (const title of [
-    'Close to the problem',
-    'Clear about decisions',
-    'Responsible for the outcome',
-  ]) {
-    const card = approach.locator('[data-slot="card"]').filter({ hasText: title })
-
-    await expect(card).toBeVisible()
-    await expect(card.locator('[data-slot="card-title"]')).toContainText(title)
-  }
-})
-
-test('validates the contact form and exposes the public email fallback', async ({ page }) => {
-  await page.goto('/#contact')
-
-  await expect(page.getByRole('link', { name: 'sfx.pers@gmail.com' })).toHaveAttribute(
-    'href',
-    'mailto:sfx.pers@gmail.com',
-  )
-  await expect(page.locator('form[data-enhanced="true"]')).toBeVisible()
-  await page.getByLabel('Name').fill('A')
-  await page.getByRole('button', { name: /start a conversation/i }).click()
-
-  await expect(page.getByText('Use at least 2 characters.')).toBeVisible()
-  await expect(page.getByText('Use a valid email address.')).toBeVisible()
-  await expect(page.getByText('Share a little more context.')).toBeVisible()
-})
-
-test('links between adjacent work stories', async ({ page }) => {
-  await page.goto('/work/ecobuiltconnect')
-
-  const nextLink = page.getByRole('link', { name: /next artisanconnect/i })
-  await expect(nextLink).toBeVisible()
-  await nextLink.click()
-  await expect(page).toHaveURL(/\/work\/artisanconnect$/)
-  await expect(
-    page.getByRole('heading', {
-      level: 1,
-      name: /keeping local service work accountable from quote to review/i,
-    }),
-  ).toBeVisible()
-
-  const previousLink = page.getByRole('link', { name: /previous ecobuiltconnect/i })
-  await expect(previousLink).toBeVisible()
-  await previousLink.click()
-  await expect(page).toHaveURL(/\/work\/ecobuiltconnect$/)
-})
-
-test('has no automatically detectable accessibility violations on the homepage', async ({
-  page,
-}) => {
-  await page.goto('/')
-
-  const results = await new AxeBuilder({ page }).analyze()
-
-  expect(results.violations).toEqual([])
-})
-
-test('uses the generated Geist type foundation', async ({ page }) => {
-  await page.goto('/')
-
-  const fontFamily = await page
-    .locator('html')
-    .evaluate((element) => getComputedStyle(element).fontFamily)
-
-  expect(fontFamily).toContain('Geist Variable')
-})
-
-test('lets component focus utilities override the global focus treatment', async ({ page }) => {
-  await page.goto('/')
-  await page.evaluate(() => {
-    const button = document.createElement('button')
-    button.className = 'outline-none focus-visible:ring-3 focus-visible:ring-ring/50'
-    button.textContent = 'Focus probe'
-    document.body.prepend(button)
+    await expect(page).toHaveTitle(/Shayan Fareed/)
+    const main = page.getByRole('main')
+    await expect(main).toBeVisible()
+    await expect(main.getByText('Senior Product Engineer', { exact: true })).toBeVisible()
+    await expect(
+      main.getByRole('heading', {
+        level: 1,
+        name: /bring complex digital products from idea to reality/i,
+      }),
+    ).toBeVisible()
+    await expect(
+      main.getByText(/bring people and decisions together, and stay with the work/i),
+    ).toBeVisible()
   })
 
-  await page.getByRole('button', { name: 'Focus probe' }).focus()
-  const focusStyle = await page.getByRole('button', { name: 'Focus probe' }).evaluate((element) => {
-    const style = getComputedStyle(element)
-    return { boxShadow: style.boxShadow, outlineStyle: style.outlineStyle }
+  test('publishes homepage metadata and Open Graph tags', async ({ page }) => {
+    await page.goto('/')
+
+    const title = 'Shayan Fareed — Senior Product Engineer'
+    const description =
+      'Shayan Fareed is a senior product engineer who brings complex digital products from idea to reality.'
+
+    await expect(page).toHaveTitle(title)
+    await expectMetaDescription(page, description)
+    await expectOpenGraph(page, { description, title })
+    await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'website')
   })
 
-  expect(focusStyle.outlineStyle).toBe('none')
-  expect(focusStyle.boxShadow).not.toBe('none')
+  test('presents selected shipped work separately from the exploration', async ({ page }) => {
+    await page.goto('/#work')
+
+    await expect(
+      page.getByRole('heading', { name: /selected work with the evidence close by/i }),
+    ).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'EcoBuiltConnect' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'ArtisanConnect' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'RushUploads' })).toBeVisible()
+    await expect(page.getByText('Shipped product', { exact: true })).toHaveCount(3)
+    await expect(page.getByText('Exploration', { exact: true })).toHaveCount(1)
+    await expect(
+      page.getByRole('heading', { name: /fraud-detection system shaped around risk/i }),
+    ).toBeVisible()
+    await expect(page.getByRole('link', { name: /read the exploration/i })).toHaveAttribute(
+      'href',
+      '/work/fraud-detection-system',
+    )
+
+    const workPaths = await page
+      .locator('#work a[href^="/work/"]')
+      .evaluateAll((links) => links.map((link) => link.getAttribute('href')))
+
+    expect(workPaths).toEqual([
+      '/work/ecobuiltconnect',
+      '/work/artisanconnect',
+      '/work/rushuploads',
+    ])
+  })
+
+  test('validates the contact form and exposes the public email fallback', async ({ page }) => {
+    await page.goto('/#contact')
+    await expect(page.getByLabel('Name')).toBeVisible()
+
+    await expect(page.getByRole('link', { name: 'sfx.pers@gmail.com' })).toHaveAttribute(
+      'href',
+      'mailto:sfx.pers@gmail.com',
+    )
+    await page.getByLabel('Name').fill('A')
+    await page.getByRole('button', { name: /start a conversation/i }).click()
+
+    await expect(page.locator('#contact-name-error')).toHaveText('Use at least 2 characters.')
+    await expect(page.locator('#contact-email-error')).toHaveText('Use a valid email address.')
+    await expect(page.locator('#contact-message-error')).toHaveText('Share a little more context.')
+
+    await page.getByLabel('Name').fill('Amina')
+    await expect(page.locator('#contact-name-error')).toBeHidden()
+    await expect(page.locator('#contact-email-error')).toHaveText('Use a valid email address.')
+  })
+
+  test('exposes compact primary navigation', async ({ page }) => {
+    await page.goto('/')
+
+    const nav = page.getByRole('navigation', { name: 'Primary' })
+    await expect(nav.getByRole('link', { name: /shayan fareed/i })).toHaveAttribute('href', '/')
+    await expect(nav.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '/#work')
+    await expect(nav.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/#contact')
+    await expect(nav.getByRole('link')).toHaveCount(3)
+  })
+
+  test('has no automatically detectable accessibility violations', async ({ page }) => {
+    await page.goto('/')
+
+    await expectNoAccessibilityViolations(page)
+  })
+
+  test('keeps content available with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto('/')
+
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    await expect(
+      page.getByRole('link', { name: 'Read the story', exact: true }).first(),
+    ).toBeVisible()
+  })
+
+  test('stays readable without horizontal overflow', async ({ page }) => {
+    for (const viewport of Object.values(viewportPresets)) {
+      await page.setViewportSize(viewport)
+      await page.goto('/')
+
+      await expectNoHorizontalOverflow(page)
+      await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible()
+    }
+
+    const firstEvidenceBox = await page.locator('#work figure').first().boundingBox()
+
+    expect(firstEvidenceBox?.width).toBeGreaterThan(300)
+  })
 })

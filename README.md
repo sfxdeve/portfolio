@@ -31,6 +31,10 @@ mise run check
 
 The setup task is safe to run again. It uses the committed pnpm lockfile and installs only the Chromium browser required by the current Playwright configuration.
 
+### Cursor Cloud / Linux VM
+
+For cloud agent or Linux VM environments without Mise, see [AGENTS.md](AGENTS.md#cursor-cloud-specific-instructions) for Node 24 activation, pnpm via corepack, and check commands.
+
 ## Development
 
 After Mise has activated the repository environment:
@@ -38,9 +42,31 @@ After Mise has activated the repository environment:
 ```sh
 pnpm dev
 pnpm check
+pnpm clean       # remove generated build/test output
+pnpm routes:gen   # regenerate src/routeTree.gen.ts after route changes
 ```
 
 `mise run check` is equivalent to `pnpm check` and can be used without relying on shell activation.
+
+## Maintenance baseline
+
+- Use Node 24 and pnpm 11. Exact local versions are pinned in `mise.toml`; package-manager and engine constraints live in `package.json` and `.npmrc`.
+- Keep dependencies on the current major lines unless a repo-wide upgrade intentionally updates the toolchain docs and ADRs.
+- Run `pnpm check` before handoff. It covers typecheck, lint, format check, content validation, unit tests, Playwright tests, and production build.
+- Run `pnpm clean` when generated output obscures a review or before comparing the worktree after multiple agent runs.
+- Treat `src/routeTree.gen.ts`, `.output/`, `.tanstack/`, `test-results/`, and Playwright reports as generated output. Regenerate the route tree with `pnpm routes:gen` only after route file changes.
+- Deploy with `pnpm build:vercel` on Vercel using the committed `vercel.json` settings.
+- Set `SITE_URL` in production for canonical and Open Graph URLs (see `.env.example`).
+
+## Content and evidence assets
+
+Case-study content lives in `src/content/documents/*.mdx` with validated frontmatter. Public evidence images belong in `public/evidence/<slug>/` and must match the `width` and `height` declared in frontmatter.
+
+To add or replace evidence:
+
+1. Place optimized `.webp` files under `public/evidence/<slug>/` using the `NN-description.webp` naming pattern.
+2. Declare each image in the document frontmatter with matching `src`, `width`, `height`, and `alt`.
+3. Run `pnpm validate:content` to verify dimensions and public-safe copy boundaries.
 
 ## Setup troubleshooting
 

@@ -76,10 +76,6 @@ _Avoid_: Mock data, placeholder, approximation
 A supported result, enablement, or change from the work. Do not imply adoption, scale, revenue, performance, or business impact unless the source material supports it.
 _Avoid_: Metric, impact, result
 
-**Working Philosophy**:
-The homepage section that connects seniority to observable behavior: staying close to the problem, making clear decisions, handling trade-offs, and remaining responsible for the outcome.
-_Avoid_: Values, principles, manifesto
-
 **Contact Invitation**:
 The closing invitation for hiring managers, technical founders, product leads, or engineering managers to discuss difficult product work. It should filter for meaningful product context without sounding defensive.
 _Avoid_: CTA, availability, hire me

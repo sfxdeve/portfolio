@@ -1,74 +1,63 @@
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { ArrowLeft } from 'lucide-react'
+import { createFileRoute, notFound } from '@tanstack/react-router'
 
+import { CaseStudyNotFound } from '@/components/case-study/case-study-not-found'
 import { CaseStudyPage } from '@/components/case-study/case-study-page'
-import { buttonVariants } from '@/components/ui/button'
-import { getAdjacentPublicDocuments, getPublicDocumentBySlug } from '@/content/documents'
-import { cn } from '@/lib/utils'
+import {
+  getAdjacentPublicWorkDocuments,
+  getPublicDocumentBySlug,
+  getPublicDocumentLoaderDataBySlug,
+} from '@/content/documents'
+import { createWorkHead } from '@/lib/site-meta'
 
 export const Route = createFileRoute('/work/$slug')({
   component: WorkDetailPage,
   loader: ({ params }) => {
-    const document = getPublicDocumentBySlug(params.slug)
+    const document = getPublicDocumentLoaderDataBySlug(params.slug)
 
     if (!document) {
       throw notFound()
     }
 
     return {
-      metadata: document.metadata,
-      ...getAdjacentPublicDocuments(params.slug),
+      document,
+      ...getAdjacentPublicWorkDocuments(params.slug),
     }
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.metadata.title ?? 'Work story not found'} - Shayan Fareed` },
-      {
-        name: 'description',
-        content:
-          loaderData?.metadata.description ??
-          'The requested portfolio work story could not be found.',
-      },
-    ],
-  }),
-  notFoundComponent: WorkStoryNotFound,
+  head: ({ loaderData }) => {
+    const document = loaderData?.document
+    const head = document
+      ? createWorkHead({
+          description: document.metadata.description,
+          slug: document.metadata.slug,
+          title: document.metadata.title,
+        })
+      : createWorkHead({
+          description: 'The requested portfolio case study could not be found.',
+          slug: 'not-found',
+          title: 'Case study not found',
+        })
+
+    return {
+      links: head.links,
+      meta: [{ title: head.title }, ...head.meta],
+    }
+  },
+  notFoundComponent: CaseStudyNotFound,
 })
 
 function WorkDetailPage() {
-  const loaderData = Route.useLoaderData()
-  const { slug } = Route.useParams()
-  const document = getPublicDocumentBySlug(slug)
+  const { document: loaderDocument, nextDocument, previousDocument } = Route.useLoaderData()
+  const document = getPublicDocumentBySlug(loaderDocument.metadata.slug)
 
-  if (!document || !loaderData) {
+  if (!document) {
     throw notFound()
   }
 
-  const { nextDocument, previousDocument } = loaderData
-  const { Content, metadata, sourcePath } = document
-
   return (
     <CaseStudyPage
-      document={{ Content, metadata, sourcePath }}
+      document={document}
       nextDocument={nextDocument}
       previousDocument={previousDocument}
     />
-  )
-}
-
-function WorkStoryNotFound() {
-  return (
-    <main className="grid min-h-svh place-items-center px-6 py-16">
-      <div className="max-w-xl text-center">
-        <h1 className="text-3xl font-semibold">Work story not found.</h1>
-        <Link
-          to="/"
-          hash="work"
-          className={cn(buttonVariants({ variant: 'link', size: 'lg' }), 'mt-6 h-auto p-0')}
-        >
-          <ArrowLeft aria-hidden="true" data-icon="inline-start" />
-          Back to selected work
-        </Link>
-      </div>
-    </main>
   )
 }
