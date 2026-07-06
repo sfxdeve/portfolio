@@ -1,3 +1,4 @@
+import type { HeroOrbitVariant } from '@/components/orbit/hero-orbit-layout'
 import { HeroSolarSystem } from '@/components/orbit/hero-solar-system'
 import { cn } from '@/lib/utils'
 
@@ -21,8 +22,8 @@ export function HeroOrbitBackdrop({
   placement,
   className,
 }: {
-  variant: keyof typeof backdropVariants
-  placement: keyof (typeof backdropVariants)[typeof variant]
+  variant: HeroOrbitVariant
+  placement: keyof (typeof backdropVariants)[HeroOrbitVariant]
   className?: string
 }) {
   if (placement === 'overlay') {
