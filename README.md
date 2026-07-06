@@ -55,7 +55,6 @@ pnpm routes:gen   # regenerate src/routeTree.gen.ts after route changes
 - Run `pnpm check` before handoff. It covers typecheck, lint, format check, content validation, unit tests, Playwright tests, and production build.
 - Run `pnpm clean` when generated output obscures a review or before comparing the worktree after multiple agent runs.
 - Treat `src/routeTree.gen.ts`, `.output/`, `.tanstack/`, `test-results/`, and Playwright reports as generated output. Regenerate the route tree with `pnpm routes:gen` only after route file changes.
-- GitHub Actions runs `pnpm check` on every push to `main` and on pull requests (see `.github/workflows/check.yml`).
 - Deploy with `pnpm build:vercel` on Vercel using the committed `vercel.json` settings.
 - Set `SITE_URL` in production for canonical and Open Graph URLs (see `.env.example`).
 
