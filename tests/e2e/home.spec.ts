@@ -41,7 +41,7 @@ test.describe('homepage', () => {
     await page.goto('/#work')
 
     await expect(
-      page.getByRole('heading', { name: /selected work with the evidence close by/i }),
+      page.getByRole('heading', { name: /products built through the difficult middle/i }),
     ).toBeVisible()
     await expect(page.getByRole('heading', { name: 'EcoBuiltConnect' })).toBeVisible()
     await expect(page.getByRole('heading', { name: 'ArtisanConnect' })).toBeVisible()
@@ -49,14 +49,16 @@ test.describe('homepage', () => {
     await expect(page.getByText('Shipped product', { exact: true })).toHaveCount(3)
     await expect(page.getByText('Exploration', { exact: true })).toHaveCount(1)
     await expect(
-      page.getByRole('heading', { name: /fraud-detection system shaped around risk/i }),
+      page.getByRole('heading', { name: /what would it take for an analyst/i }),
     ).toBeVisible()
-    await expect(page.getByText(/reviewable measure without presenting the number/i)).toBeVisible()
-    await expect(page.getByText(/retains review outcomes and notes/i)).toBeVisible()
-    await expect(page.getByText(/in a group university project, we explored/i)).toBeVisible()
-    await expect(page.getByText(/none were treated as production-ready/i)).toBeVisible()
-    await expect(page.getByText(/evidence standard for deployment remained open/i)).toBeVisible()
-    await expect(page.getByText(/model output only becomes useful/i)).toBeVisible()
+    await expect(page.getByText(/estimates how unusual a transaction appears/i)).toBeVisible()
+    await expect(page.getByText(/instead of treating the model as final/i)).toBeVisible()
+    await expect(page.getByText(/in a group university exploration/i)).toBeVisible()
+    await expect(
+      page.getByText(/none of these were treated as ready for production/i),
+    ).toBeVisible()
+    await expect(page.getByText(/proof required for deployment all remained open/i)).toBeVisible()
+    await expect(page.getByText(/a model score is only the beginning/i)).toBeVisible()
     await expect(page.getByRole('link', { name: /read the exploration/i })).toHaveCount(0)
 
     const workPaths = await page
@@ -77,7 +79,7 @@ test.describe('homepage', () => {
 
     const nameInputBox = await page.getByLabel('Name').boundingBox()
     const submitButtonBox = await page
-      .getByRole('button', { name: /open email draft/i })
+      .getByRole('button', { name: /start an email/i })
       .boundingBox()
 
     expect(nameInputBox?.height).toBeGreaterThanOrEqual(44)
@@ -89,7 +91,7 @@ test.describe('homepage', () => {
     )
     await page.getByLabel('Name').fill('A')
     await expect(page.getByText(/opens a prefilled draft in your email app/i)).toBeVisible()
-    await page.getByRole('button', { name: /open email draft/i }).click()
+    await page.getByRole('button', { name: /start an email/i }).click()
 
     await expect(page.locator('#contact-name-error')).toHaveText('Use at least 2 characters.')
     await expect(page.locator('#contact-email-error')).toHaveText('Use a valid email address.')
@@ -128,8 +130,8 @@ test.describe('homepage', () => {
       )
 
     expect(hiddenRevealElements).toEqual([])
-    await expect(page.getByRole('link', { name: /read the .+ case study/i })).toHaveCount(3)
-    await expect(page.getByRole('button', { name: /open email draft/i })).toBeAttached()
+    await expect(page.locator('#work a[href^="/work/"]')).toHaveCount(3)
+    await expect(page.getByRole('button', { name: /start an email/i })).toBeAttached()
   })
 
   test('keeps content available with reduced motion', async ({ page }) => {
@@ -138,7 +140,7 @@ test.describe('homepage', () => {
 
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(
-      page.getByRole('link', { name: 'Read the EcoBuiltConnect case study', exact: true }),
+      page.getByRole('link', { name: 'See how EcoBuiltConnect came together', exact: true }),
     ).toBeVisible()
   })
 

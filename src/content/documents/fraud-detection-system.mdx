@@ -1,61 +1,65 @@
 ---
 title: Fraud Detection System
 slug: fraud-detection-system
-description: A group university exploration of a Pakistan-calibrated real-time transaction risk platform.
+description: A group university exploration of how a Pakistan-calibrated fraud system could support evidence-led human decisions.
 kind: exploration
 order: 4
 visibility: public
 statusLabel: Exploration
 homepage:
-  claim: A fraud-detection system shaped around risk, evidence, and analyst trust.
-  summary: In a group university project, we explored how a financial institution could score local transactions quickly, explain why an alert was created, and give analysts a review path they could trust during a pilot.
+  claim: What would it take for an analyst to trust a fraud alert without blindly trusting the model behind it?
+  summary: In a group university exploration, we designed a Pakistan-calibrated pilot that connected transaction risk, an understandable explanation, and a human review path.
   evidence: []
   interlude:
-    constraints: The proposal assumed institution-specific pilot data, thresholds, governance, and analyst review; none were treated as production-ready.
-    unresolved: Calibration, production hardening, regulatory review, and the evidence standard for deployment remained open.
-    reflection: The work changed my view of fraud detection; model output only becomes useful when explanation, policy, retained evidence, and human judgment stay connected.
+    constraints: We assumed access to institution-specific pilot data, thresholds, governance, and analyst review. None of these were treated as ready for production.
+    unresolved: Model calibration, production hardening, regulatory review, and the proof required for deployment all remained open.
+    reflection: I left the project convinced that a model score is only the beginning. It becomes useful when people can understand it, challenge it, and see the evidence behind the final decision.
 hero:
-  title: Designing transaction risk around evidence, severity, and analyst trust.
-  claim: The exploration treated fraud detection as a product and operations problem, not only a model-accuracy problem.
-  summary: The proposed system scores transactions, detects suspicious behavior across local channels, produces explainable alerts, and gives fraud operations teams a lightweight review and case path.
-  role: I explored the product and system reasoning for risk scoring, alert explainability, evidence retention, and analyst workflow.
+  title: Helping analysts question a fraud alert, not just receive one.
+  claim: A strong model would not be enough. The proposed pilot also had to explain its alerts, support human review, and preserve the reasoning behind every decision.
+  summary: The proposal connected transaction scoring across local channels to understandable alerts, review work, and a durable record of what happened.
+  role: I focused on how risk scoring, explanation, retained evidence, and analyst decisions should work together.
   teamContext: This was a group university exploration.
-  outcome: The work clarified how signal, explanation, human decision, and retained evidence need to connect before any commercial deployment claim would be appropriate.
+  outcome: We produced a pilot proposal that made the distance between a model score and a defensible operational decision explicit.
 chapters:
-  - title: The question was bigger than model accuracy.
-    claim: Fraud detection could not be framed only as producing a model score. The system also had to explain alerts and support reviewable operational outcomes.
-    decision: Define the scoring response around risk score, alert status, severity, reason codes, recommended action, and enough evidence for downstream systems and analysts to act.
-    reasoning: A score alone does not tell an analyst what happened, why it matters, or what should happen next. The exploration treated explainability and workflow as part of the product, not a reporting layer added later.
+  - title: A score could raise a question, but not answer it.
+    claim: Fraud detection could not stop at producing a number. Analysts also needed to know what happened, why it mattered, and what the system expected them to consider next.
+    decision: Return the score with alert state, severity, reason codes, a recommended action, and the supporting transaction evidence.
+    reasoning: Explanation and review became part of the proposed product rather than a reporting layer to add after the model was complete.
     evidence: []
-  - title: Risk score and severity stayed separate.
-    claim: The model's risk score and the operational severity of an alert are related but not the same decision.
+  - title: Risk and urgency answered different questions.
+    claim: A model’s estimate of risk and an institution’s decision about urgency influence each other, but they are not interchangeable.
     decision: Let supervised models, anomaly models, and rules produce scoring outputs, then let policy derive severity using base alert type, escalation reason codes, linked-family severity, compliance severity, and dispute severity.
     reasoning: >-
-      This separation made room for business and regulatory judgment. A
-      transaction can have a score, but an alert also carries context: channel,
-      family, account history, complaint or dispute links, and whether
-      regulatory review is required.
+      Keeping them separate left room for institutional and regulatory judgment.
+      A transaction may carry a score, while an alert also carries its channel,
+      related activity, account history, complaint or dispute links, and the need
+      for regulatory review.
     evidence: []
-  - title: Local channels changed the shape of the product.
-    claim: The product had to account for local transaction channels instead of assuming a generic card-fraud model would cover the pilot.
+  - title: Local payment behavior could not be treated as configuration.
+    claim: A generic card-fraud model would miss how people in Pakistan move money across banking, wallet, agent, and RAAST-linked channels.
     decision: Support mobile app, internet banking, USSD, ATM, POS, e-commerce, wallet, branchless agent, and RAAST-linked flows. Treat alert taxonomy by fraud pattern, with channel as metadata.
-    reasoning: Channel differences matter for signals, missing metadata, review context, and recommended action. The exploration kept Pakistan calibration visible in the domain model rather than hiding it as configuration.
+    reasoning: Each channel changes the signals available, the information that may be missing, and the context an analyst needs. We kept those differences visible in the proposal instead of hiding them behind a generic transaction type.
     evidence: []
-  - title: Evidence retention became a product requirement.
-    claim: Fraud operations need to reconstruct why a decision happened, not only see the current status.
+  - title: The current status could not erase how it was reached.
+    claim: An analyst investigating a complaint or override needed to reconstruct the original alert and every decision that followed.
     decision: Use current-state tables plus append-only audit and evidence history. Preserve scoring inputs, scoring outputs, reason codes, workflow decisions, handling history, and overrides.
-    reasoning: Append-only evidence made review, dispute handling, calibration, and compliance support possible without committing to full event sourcing for the whole system.
+    reasoning: An append-only history supported later review, disputes, calibration, and compliance without requiring the entire proposed platform to use event sourcing.
     evidence: []
-  - title: The workflow respected analyst judgment.
-    claim: Analysts needed a prioritized queue and a focused detail view, not a full enterprise case-management platform.
+  - title: The pilot had to leave room for human judgment.
+    claim: Analysts needed a focused queue and review path, not an oversized case-management platform or a model that presented its output as final.
     decision: >-
       Design lightweight alert and case workflows: alerts move from open to
       under review to resolved, high-severity alerts may open cases by policy,
       and related alerts can attach to a coherent case.
-    reasoning: The exploration aimed for pilot fit. It included complaint and dispute-linked re-evaluation, feedback and outcome capture, and lightweight pilot summaries without pretending to be a complete enterprise risk platform.
+    reasoning: >-
+      We kept the proposal small enough for a pilot while preserving the
+      decisions that would matter later: re-evaluation after complaints or
+      disputes, captured outcomes, analyst feedback, and a coherent history of
+      related alerts.
     evidence: []
 ---
 
-This was not shipped commercial work. Its value is in the product and system reasoning: what information a financial institution would need, how a score becomes an alert, how evidence stays inspectable, and how analysts act without treating model output as unquestionable truth.
+This was not shipped commercial work. Its value was in following the chain from a model’s output to a decision a financial institution could explain: what raised the alert, what made it urgent, what the analyst saw, and what history had to remain afterward.
 
-What remains unresolved is deliberately visible: model calibration, institution-specific thresholds, governance, production hardening, regulatory review, and the evidence standard required before any commercial deployment claim.
+The unresolved work remained deliberately visible. Calibration, institution-specific thresholds, governance, production hardening, regulatory review, and the proof required for deployment would all have to be established before making any commercial claim.

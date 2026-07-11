@@ -14,7 +14,7 @@ export function CaseStudyHero({ document }: { document: PortfolioDocument }) {
     <HeroOrbitLayout variant="case-study" labelledBy="case-study-heading">
       <Link to="/" hash="work" className={cn(buttonVariants({ variant: 'link' }), 'h-auto p-0')}>
         <ArrowLeft aria-hidden="true" data-icon="inline-start" />
-        Back
+        Back to selected work
       </Link>
       <div className="mt-10 max-w-5xl">
         <OrbitChip tone={orbitChipToneForKind(metadata.kind)}>{metadata.statusLabel}</OrbitChip>

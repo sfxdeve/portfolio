@@ -93,7 +93,7 @@ export function ContactForm() {
             </a>
             <Button type="submit" size="lg" aria-describedby="contact-draft-hint">
               <Send aria-hidden="true" data-icon="inline-start" />
-              Open email draft
+              Start an email
             </Button>
           </div>
         </form>

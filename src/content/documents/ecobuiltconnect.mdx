@@ -1,91 +1,94 @@
 ---
 title: EcoBuiltConnect
 slug: ecobuiltconnect
-description: A case study about making finite building-material supply trustworthy enough to buy.
+description: How I built a marketplace that made reclaimed and surplus building materials safer to buy and sell.
 kind: shipped-work
 order: 1
 visibility: public
 statusLabel: Shipped product
 homepage:
-  claim: I helped shape a marketplace where finite building-material supply could be listed, reviewed, ordered, handed off, disputed, and paid out without blurring who was responsible for each step.
-  summary: EcoBuiltConnect needed more than browse-and-buy. Sellers had to make credible material claims, buyers needed enough confidence to act on limited supply, and the system had to keep marketplace trust, fulfillment, and quantity-based money movement clear from discovery through payout.
-  routeLabel: Read the EcoBuiltConnect case study
+  claim: I turned the requirements for EcoBuiltConnect into a marketplace where people could buy reclaimed and surplus materials with confidence—even when stock was finite and fulfillment happened in pieces.
+  summary: Sellers had to stand behind their material claims. Buyers had to know what they could actually receive. I designed the marketplace rules that kept those responsibilities clear from listing review through payout.
+  routeLabel: See how EcoBuiltConnect came together
   evidence:
     - src: /evidence/ecobuiltconnect/01-marketplace-browsing.webp
       alt: EcoBuiltConnect marketplace browsing screen showing sustainable and surplus material listings.
       width: 1200
       height: 768
-      caption: Marketplace browsing made finite material supply inspectable before checkout.
+      caption: Buyers could see condition, location, supply, and sustainability context before committing.
     - src: /evidence/ecobuiltconnect/02-listing-detail.webp
       alt: EcoBuiltConnect listing detail screen with material information, price, condition, and sustainability context.
       width: 1200
       height: 768
-      caption: Listing detail carried structured claims buyers could evaluate.
+      caption: Structured listing details made seller claims easier to understand and compare.
     - src: /evidence/ecobuiltconnect/06-operator-review.webp
       alt: EcoBuiltConnect operator review screen for marketplace governance and listing review.
       width: 1200
       height: 768
-      caption: Operator review protected trust without rewriting seller-owned claims.
+      caption: Operators could question or hide a listing while its claims remained the seller’s responsibility.
 hero:
-  title: Making finite material supply trustworthy enough to buy.
-  claim: EcoBuiltConnect had to make reclaimed and surplus construction supply inspectable, accountable, and payable without pretending every order would be simple.
-  summary: The product connected seller verification, listing review, buyer discovery, checkout, seller-scoped orders, fulfillment, disputes, and quantity-based payouts into one marketplace system.
-  role: I shaped the product system around seller responsibility, operator governance, checkout boundaries, fulfillment, disputes, and payout logic.
-  teamContext: I independently carried the product and engineering work from requirements through delivery.
-  outcome: A shipped marketplace surface became a controlled product system for trust-sensitive material commerce.
+  title: Making reclaimed materials dependable enough to trade.
+  claim: EcoBuiltConnect had to earn confidence in materials that varied in condition, quantity, and availability—then preserve that confidence when an order did not go exactly to plan.
+  summary: The marketplace brought seller verification, listing review, discovery, checkout, fulfillment, disputes, and payouts into one accountable journey.
+  role: My responsibility covered the marketplace rules, order boundaries, fulfillment, payout behavior, and the engineering work that made them function.
+  teamContext: This was an independent product-and-engineering delivery.
+  outcome: Buyers could judge limited material supply before ordering, while sellers and operators had clear responsibilities when fulfilling or reviewing an order.
 chapters:
-  - title: Discovery had to carry trust, not just inventory.
-    claim: Buyers needed to inspect materials with enough context to act, while sellers needed controlled ways to describe condition, sustainability attributes, price, quantity, and fulfillment expectations.
-    decision: Use structured listing fields, controlled units, controlled conditions, and controlled sustainability attributes rather than letting the marketplace depend on free-text claims.
-    reasoning: Finite and reclaimed supply is only useful when the buyer understands what is available, where it is generally located, what condition it is in, and why a sustainability claim is credible. Operators could review claims and evidence, but sellers remained responsible for what they asserted.
+  - title: A listing had to earn a buyer’s confidence.
+    claim: A photograph and a price were not enough. Buyers needed to understand the material’s condition, available quantity, location, and sustainability context before they could act.
+    decision: Give sellers structured fields for units, condition, sustainability attributes, price, quantity, and fulfillment expectations instead of relying on free text alone.
+    reasoning: The structure made important differences visible without speaking for the seller. Operators could review the supporting material, but the seller remained responsible for every claim.
     evidence:
       - src: /evidence/ecobuiltconnect/01-marketplace-browsing.webp
         alt: EcoBuiltConnect marketplace browsing screen showing sustainable and surplus material listings.
         width: 1200
         height: 768
-        caption: Browsing emphasized material type, location, condition, and supply context.
+        caption: Browsing brought the details that shaped a buying decision into view early.
       - src: /evidence/ecobuiltconnect/02-listing-detail.webp
         alt: EcoBuiltConnect listing detail screen with material information, price, condition, and sustainability context.
         width: 1200
         height: 768
-        caption: Listing detail gave buyers a structured way to evaluate seller claims.
-  - title: Review protected the marketplace without rewriting sellers.
-    claim: The marketplace needed a governance layer that could review identity, claims, media, privacy, safety, and unsupported materials without turning operators into co-authors of seller claims.
-    decision: Make listing review a visibility and feedback process. Operators can give feedback, hide visible listings without deleting history, and block unsupported materials, but they do not rewrite seller-owned claims.
-    reasoning: This kept accountability clear. Sellers owned their descriptions and evidence. Operators governed whether those claims were safe and supported enough to show.
+        caption: Listing detail kept the seller’s claims and supporting context together.
+  - title: Review could protect trust without taking ownership away.
+    claim: Operators needed to challenge unsafe or unsupported listings, but editing a seller’s words would make responsibility harder to see.
+    decision: Let operators provide feedback, block unsupported materials, and hide a listing without deleting its history. Keep the description and claims under the seller’s control.
+    reasoning: >-
+      This separated two important jobs: sellers stood behind what they
+      published, while operators decided what was responsible to show in the
+      marketplace.
     evidence:
       - src: /evidence/ecobuiltconnect/03-seller-listing-management.webp
         alt: EcoBuiltConnect seller listing management screen showing listings and review state.
         width: 1200
         height: 768
-        caption: Sellers retained ownership of listing details and review state.
+        caption: Sellers could respond to review feedback without losing ownership of the listing.
       - src: /evidence/ecobuiltconnect/06-operator-review.webp
         alt: EcoBuiltConnect operator review screen for marketplace governance and listing review.
         width: 1200
         height: 768
-        caption: Operators governed publication and feedback rather than editing claims.
-  - title: Checkout separated one buyer action from many seller responsibilities.
-    claim: A buyer could check out with materials from multiple sellers, but each seller needed a separate responsibility boundary.
-    decision: Let one checkout session include multiple sellers, then create seller-scoped orders so confirmation, fulfillment, cancellation, dispute handling, and payout remain clear.
-    reasoning: The buyer experience stayed simple without making the operational model vague. Each seller confirmed or rejected within the expected window, owned one fulfillment window, and remained accountable for the order lines they fulfilled.
+        caption: Review controlled whether a listing appeared without turning the operator into its author.
+  - title: One checkout could not mean one shared responsibility.
+    claim: Buyers wanted one checkout, even when their basket contained materials from several sellers. After payment, however, each seller had to answer for their own part of the order.
+    decision: Keep checkout unified for the buyer, then create a separate order for each seller’s confirmation, fulfillment, cancellation, dispute, and payout.
+    reasoning: The buyer got a simpler purchase without leaving the operational responsibility vague. Each seller could accept and fulfill only the lines they actually owned.
     evidence:
       - src: /evidence/ecobuiltconnect/04-seller-order.webp
         alt: EcoBuiltConnect seller order screen showing order details and fulfillment responsibility.
         width: 1200
         height: 768
-        caption: Seller-scoped orders kept responsibility clear after checkout.
-  - title: Payout followed quantity, not optimism.
-    claim: Surplus-material fulfillment can happen in pieces, so payout logic had to follow handed-off quantities rather than assume a whole order succeeded at once.
-    decision: Use quantity-based handoffs, hold only disputed quantities, and make undisputed handed-off quantities eligible for payout after the review window.
-    reasoning: This made partial fulfillment and dispute handling practical without adding unnecessary workflow objects. The product could protect buyers while still allowing sellers to receive payout for quantities that were actually handed off.
+        caption: Each seller received a focused order containing only the material they were responsible for.
+  - title: Payment followed what actually changed hands.
+    claim: Reclaimed and surplus materials are not always fulfilled all at once. Treating a partial handoff as a complete success—or a complete failure—would be unfair to both sides.
+    decision: Record handoffs by quantity, hold only the disputed amount, and release eligible payment for the undisputed material after the review window.
+    reasoning: The money now followed the real-world handoff. Buyers retained protection where something went wrong, while sellers did not have to wait on an entire order when part of it was complete.
     evidence:
       - src: /evidence/ecobuiltconnect/05-partial-fulfillment-payout.webp
         alt: EcoBuiltConnect payout screen showing partial fulfillment and quantity-based payout state.
         width: 1200
         height: 768
-        caption: Payout logic followed handed-off quantities instead of the optimistic whole order.
+        caption: Completed and disputed quantities could move through payout independently.
 ---
 
-What shipped was not just a marketplace surface. It was a controlled product system for seller verification, listing review, buyer discovery, checkout, seller-scoped orders, fulfillment, disputes, and quantity-based payouts.
+EcoBuiltConnect shipped as a marketplace that could carry a transaction beyond discovery. A buyer could evaluate limited supply, purchase across several sellers, record what was handed over, and dispute only the part that went wrong.
 
-The work reinforced a principle I keep returning to: when a product handles finite supply and trust-sensitive claims, the interface has to make responsibility visible before the edge cases arrive.
+The judgment I carried forward is simple: when supply is finite and claims matter, responsibility has to be visible before the happy path ends—not added after the first difficult order.

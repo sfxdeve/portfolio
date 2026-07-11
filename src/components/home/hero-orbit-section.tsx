@@ -21,7 +21,7 @@ export function HeroOrbitSection() {
         </h1>
         <p className="mt-7 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
           I take on the difficult parts, bring people and decisions together, and stay with the work
-          until it is out in the world and working as it should.
+          until it’s out in the world—and working as it should.
         </p>
       </div>
     </HeroOrbitLayout>

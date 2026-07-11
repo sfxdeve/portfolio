@@ -11,22 +11,18 @@ const signals = [
   [
     'risk-score',
     'Risk score',
-    'Combines transaction signals into a reviewable measure without presenting the number as a verdict.',
+    'Estimates how unusual a transaction appears without presenting the number as a verdict.',
   ],
   [
     'severity',
     'Severity',
-    'Turns score bands into triage priority so analyst attention can be directed consistently.',
+    'Adds policy and context to decide which alerts deserve attention first.',
   ],
-  [
-    'evidence',
-    'Evidence',
-    'Keeps contributing signals beside each alert so reviewers can inspect why it was raised.',
-  ],
+  ['evidence', 'Evidence', 'Keeps the reasons and transaction context beside every alert.'],
   [
     'analyst-judgment',
     'Analyst judgment',
-    'Retains review outcomes and notes so human decisions remain part of the record.',
+    'Keeps review outcomes and notes in the record instead of treating the model as final.',
   ],
 ] as const
 

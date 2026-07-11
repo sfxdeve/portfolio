@@ -18,9 +18,9 @@ export function SelectedWorkSection({ documents }: { documents: PortfolioDocumen
     <PageSection id="work" aria-labelledby="work-heading" ref={scope}>
       <SectionIntro
         chip="Selected work"
-        heading="Selected work with the evidence close by."
+        heading="Products built through the difficult middle."
         headingId="work-heading"
-        description="Each story connects the product tension, the decisions that shaped it, and the visual proof that makes the work inspectable."
+        description="These products had trust, money, or operational complexity at their core. Each story shows the problem I took on, the decisions I made, and what reached the world."
       />
       <div className="mt-10 flex flex-col gap-14 lg:mt-12 lg:gap-[4.5rem]">
         {documents.map((document, documentIndex) => (

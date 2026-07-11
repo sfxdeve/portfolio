@@ -12,7 +12,10 @@ test.describe('public shipped work', () => {
 
       expect(response?.status(), path).toBe(200)
       await expect(page.getByRole('main').getByRole('heading', { level: 1 }), path).toBeVisible()
-      await expect(page.getByRole('link', { name: 'Back', exact: true }), path).toBeVisible()
+      await expect(
+        page.getByRole('link', { name: 'Back to selected work', exact: true }),
+        path,
+      ).toBeVisible()
       await expect(page.getByText('Shipped product', { exact: true }).first(), path).toBeVisible()
     })
   }
@@ -21,16 +24,14 @@ test.describe('public shipped work', () => {
     await page.goto('/work/ecobuiltconnect')
 
     await expect(page.getByRole('main').getByRole('heading', { level: 1 })).toBeVisible()
-    await expect(page.getByText(/EcoBuiltConnect had to make reclaimed/i)).toBeVisible()
+    await expect(page.getByText(/EcoBuiltConnect had to earn confidence/i)).toBeVisible()
     await expect(page.locator('dt').filter({ hasText: 'Role' })).toBeVisible()
     await expect(page.locator('dt').filter({ hasText: 'Team' })).toBeVisible()
-    await expect(
-      page.getByText(/independently carried the product and engineering work/i),
-    ).toBeVisible()
+    await expect(page.getByText(/independent product-and-engineering delivery/i)).toBeVisible()
     await expect(page.locator('dt').filter({ hasText: 'Outcome' })).toBeVisible()
     await expect(page.getByRole('img', { name: /marketplace browsing/i }).first()).toBeVisible()
     await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4)
-    await expect(page.getByText(/what shipped was not just a marketplace surface/i)).toBeVisible()
+    await expect(page.getByText(/shipped as a marketplace that could carry/i)).toBeVisible()
   })
 
   test('lets readers open evidence images directly', async ({ page }) => {
@@ -72,7 +73,7 @@ test.describe('public shipped work', () => {
 
     const title = 'RushUploads — Shayan Fareed'
     const description =
-      'A case study about making large-file delivery simple without hiding the product system underneath.'
+      'How I built a large-file delivery product that stayed simple for recipients and manageable behind the scenes.'
 
     await expect(page).toHaveTitle(title)
     await expectMetaDescription(page, description)
@@ -93,7 +94,9 @@ test.describe('public shipped work', () => {
       .poll(() => evidenceImage.evaluate((image: HTMLImageElement) => image.currentSrc))
       .toMatch(/-480w\.webp$/)
     await expectNoHorizontalOverflow(page)
-    await expect(page.getByRole('link', { name: 'Back', exact: true })).toBeVisible()
+    await expect(
+      page.getByRole('link', { name: 'Back to selected work', exact: true }),
+    ).toBeVisible()
   })
 
   test('has no automatically detectable accessibility violations on EcoBuiltConnect', async ({
