@@ -38,7 +38,9 @@ test.describe('public shipped work', () => {
     await page.goto('/work/ecobuiltconnect')
 
     const imageLink = page
-      .getByRole('link', { name: /open image: ecobuiltconnect marketplace browsing/i })
+      .getByRole('link', {
+        name: /view full-size image: ecobuiltconnect marketplace browsing.+opens in a new tab/i,
+      })
       .first()
 
     await expect(imageLink).toHaveAttribute(
@@ -51,12 +53,15 @@ test.describe('public shipped work', () => {
   test('links between adjacent work stories', async ({ page }) => {
     await page.goto('/work/ecobuiltconnect')
 
-    const nextLink = page.getByRole('link', { name: 'Next', exact: true })
+    const nextLink = page.getByRole('link', { name: 'Next ArtisanConnect', exact: true })
     await expect(nextLink).toHaveAttribute('href', '/work/artisanconnect')
     await nextLink.click()
     await expect(page).toHaveURL(/\/work\/artisanconnect$/)
 
-    const previousLink = page.getByRole('link', { name: 'Previous', exact: true })
+    const previousLink = page.getByRole('link', {
+      name: 'Previous EcoBuiltConnect',
+      exact: true,
+    })
     await expect(previousLink).toHaveAttribute('href', '/work/ecobuiltconnect')
   })
 
@@ -92,6 +97,21 @@ test.describe('public shipped work', () => {
 
     await expectNoAccessibilityViolations(page)
   })
+
+  test('keeps off-screen evidence available before scrolling', async ({ page }) => {
+    await page.goto('/work/ecobuiltconnect')
+
+    const hiddenEvidenceItems = await page
+      .locator('[data-evidence-item]')
+      .evaluateAll((elements) =>
+        elements
+          .filter((element) => getComputedStyle(element).visibility !== 'visible')
+          .map((element) => element.tagName),
+      )
+
+    expect(hiddenEvidenceItems).toEqual([])
+    await expect(page.getByRole('link', { name: /view full-size image:/i })).toHaveCount(6)
+  })
 })
 
 test.describe('exploration route', () => {
@@ -124,8 +144,21 @@ test.describe('route boundaries', () => {
       const response = await page.goto(path)
 
       expect(response?.status(), path).toBe(404)
-      await expect(page.getByRole('heading', { name: /case study not found/i }), path).toBeVisible()
-      await expect(page.getByRole('link', { name: 'Back', exact: true }), path).toBeVisible()
+      const heading = page.getByRole('heading', { name: /case study not found/i })
+      await expect(heading, path).toBeVisible()
+      const headingFontSize = await heading.evaluate((element) =>
+        Number.parseFloat(getComputedStyle(element).fontSize),
+      )
+      expect(headingFontSize, path).toBeGreaterThanOrEqual(30)
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+        'content',
+        'noindex, nofollow',
+      )
+      await expect(page.locator('link[rel="canonical"]')).toHaveCount(0)
+      await expect(
+        page.getByRole('link', { name: 'Back to selected work', exact: true }),
+        path,
+      ).toBeVisible()
     })
   }
 })

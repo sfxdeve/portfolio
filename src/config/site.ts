@@ -4,10 +4,11 @@ export const siteConfig = {
   description:
     'Shayan Fareed is a senior product engineer who brings complex digital products from idea to reality.',
   locale: 'en_US',
+  socialImage: '/og/portfolio-card.png',
 } as const
 
 export function resolveSiteUrl(): string | undefined {
-  const configured = import.meta.env.SITE_URL ?? import.meta.env.VITE_SITE_URL
+  const configured = import.meta.env.VITE_SITE_URL
 
   if (typeof configured !== 'string' || configured.length === 0) {
     return undefined

@@ -2,40 +2,32 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 
 import { CaseStudyNotFound } from '@/components/case-study/case-study-not-found'
 import { CaseStudyPage } from '@/components/case-study/case-study-page'
-import {
-  getAdjacentPublicWorkDocuments,
-  getPublicDocumentBySlug,
-  getPublicDocumentLoaderDataBySlug,
-} from '@/content/documents'
-import { createWorkHead } from '@/lib/site-meta'
+import { getAdjacentPublicWorkDocuments, getPublicDocumentBySlug } from '@/content/documents'
+import { createNotFoundHead, createWorkHead } from '@/lib/site-meta'
 
 export const Route = createFileRoute('/work/$slug')({
   component: WorkDetailPage,
   loader: ({ params }) => {
-    const document = getPublicDocumentLoaderDataBySlug(params.slug)
+    const document = getPublicDocumentBySlug(params.slug)
 
     if (!document) {
       throw notFound()
     }
 
     return {
-      document,
+      metadata: document.metadata,
       ...getAdjacentPublicWorkDocuments(params.slug),
     }
   },
   head: ({ loaderData }) => {
-    const document = loaderData?.document
-    const head = document
+    const metadata = loaderData?.metadata
+    const head = metadata
       ? createWorkHead({
-          description: document.metadata.description,
-          slug: document.metadata.slug,
-          title: document.metadata.title,
+          description: metadata.description,
+          slug: metadata.slug,
+          title: metadata.title,
         })
-      : createWorkHead({
-          description: 'The requested portfolio case study could not be found.',
-          slug: 'not-found',
-          title: 'Case study not found',
-        })
+      : createNotFoundHead()
 
     return {
       links: head.links,
@@ -46,8 +38,8 @@ export const Route = createFileRoute('/work/$slug')({
 })
 
 function WorkDetailPage() {
-  const { document: loaderDocument, nextDocument, previousDocument } = Route.useLoaderData()
-  const document = getPublicDocumentBySlug(loaderDocument.metadata.slug)
+  const { metadata, nextDocument, previousDocument } = Route.useLoaderData()
+  const document = getPublicDocumentBySlug(metadata.slug)
 
   if (!document) {
     throw notFound()

@@ -14,9 +14,23 @@ export async function expectOpenGraph(
     description,
   )
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', /.*/)
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+    'content',
+    '/og/portfolio-card.png',
+  )
+  await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200')
+  await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute('content', '630')
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+    'content',
+    'summary_large_image',
+  )
   await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', title)
   await expect(page.locator('meta[name="twitter:description"]')).toHaveAttribute(
     'content',
     description,
+  )
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
+    'content',
+    '/og/portfolio-card.png',
   )
 }

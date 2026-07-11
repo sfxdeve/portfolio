@@ -3,28 +3,29 @@ import { Link } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
 
 const navLinkClass =
-  'rounded-full px-3 py-1.5 text-sm font-medium text-foreground/75 underline-offset-4 transition hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none'
+  'inline-flex min-h-11 items-center rounded-full px-3 py-1.5 text-sm font-medium text-foreground/75 underline-offset-4 transition hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none'
 
 export function SiteNavigation() {
   return (
-    <header className="sticky top-0 z-30 px-4 py-4">
+    <header className="sticky top-0 z-30 px-3 py-4 min-[360px]:px-4">
       <nav
         className="mx-auto flex h-12 max-w-7xl items-center justify-between rounded-full border border-orbit-bronze/20 bg-orbit-pearl/85 px-3 shadow-orbit-soft backdrop-blur-xl sm:px-4"
         aria-label="Primary"
       >
         <Link
           to="/"
-          className="inline-flex items-center gap-2 rounded-full pr-3 text-sm font-semibold underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full pr-2 text-sm font-semibold whitespace-nowrap underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none sm:pr-3"
         >
           <img
             src="/orbit/orbit-logo-mark.svg"
-            alt="Orbit mark"
+            alt=""
             className="size-8"
             width={42}
             height={42}
             loading="eager"
           />
-          <span>Shayan Fareed</span>
+          <span className="min-[360px]:hidden">Shayan</span>
+          <span className="hidden min-[360px]:inline">Shayan Fareed</span>
         </Link>
         <div className="flex items-center gap-1 text-sm">
           <Link to="/" hash="work" className={navLinkClass}>

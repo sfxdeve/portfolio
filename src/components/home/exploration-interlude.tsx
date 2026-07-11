@@ -9,10 +9,26 @@ import type { PortfolioDocument } from '@/content/document-schema'
 import { cn } from '@/lib/utils'
 
 const signals = [
-  ['risk-score', 'Risk score'],
-  ['severity', 'Severity'],
-  ['evidence', 'Evidence'],
-  ['analyst-judgment', 'Analyst judgment'],
+  [
+    'risk-score',
+    'Risk score',
+    'Combines transaction signals into a reviewable measure without presenting the number as a verdict.',
+  ],
+  [
+    'severity',
+    'Severity',
+    'Turns score bands into triage priority so analyst attention can be directed consistently.',
+  ],
+  [
+    'evidence',
+    'Evidence',
+    'Keeps contributing signals beside each alert so reviewers can inspect why it was raised.',
+  ],
+  [
+    'analyst-judgment',
+    'Analyst judgment',
+    'Retains review outcomes and notes so human decisions remain part of the record.',
+  ],
 ] as const
 
 export function ExplorationInterlude({ document }: { document: PortfolioDocument }) {
@@ -49,13 +65,10 @@ export function ExplorationInterlude({ document }: { document: PortfolioDocument
         aria-label="Exploration signal grid"
       >
         <div className="grid gap-5 sm:grid-cols-2">
-          {signals.map(([id, label]) => (
+          {signals.map(([id, label, description]) => (
             <div key={id} className="min-w-0" data-scroll-reveal>
               <p className="font-heading text-xl">{label}</p>
-              <p className="mt-2 max-w-xs text-sm leading-6 text-muted-foreground">
-                Connected to scoring, explanation, review, and retained evidence without implying
-                shipped commercial deployment.
-              </p>
+              <p className="mt-2 max-w-xs text-sm leading-6 text-muted-foreground">{description}</p>
             </div>
           ))}
         </div>

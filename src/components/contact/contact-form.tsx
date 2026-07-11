@@ -90,6 +90,9 @@ export function ContactForm() {
               )}
             </form.Field>
           </FieldGroup>
+          <p id="contact-draft-hint" className="text-sm leading-6 text-muted-foreground">
+            This opens a prefilled draft in your email app. Nothing is sent automatically.
+          </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <a
               href={`mailto:${contactEmail}`}
@@ -97,9 +100,9 @@ export function ContactForm() {
             >
               {contactEmail}
             </a>
-            <Button type="submit" size="lg">
+            <Button type="submit" size="lg" aria-describedby="contact-draft-hint">
               <Send aria-hidden="true" data-icon="inline-start" />
-              Start a conversation
+              Open email draft
             </Button>
           </div>
         </form>

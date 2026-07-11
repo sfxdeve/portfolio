@@ -13,11 +13,11 @@ type Chapter = DocumentMetadata['chapters'][number]
 export function CaseStudyChapter({
   chapter,
   chapterIndex,
-  isFirstPublicWork,
+  prioritizeEvidence,
 }: {
   chapter: Chapter
   chapterIndex: number
-  isFirstPublicWork: boolean
+  prioritizeEvidence: boolean
 }) {
   const articleRef = useRef<HTMLElement>(null)
   const claimRef = useRef<HTMLDivElement>(null)
@@ -46,10 +46,7 @@ export function CaseStudyChapter({
       >
         {chapter.evidence.map((evidence, evidenceIndex) => (
           <div key={evidence.src} data-evidence-item>
-            <EvidenceFigure
-              evidence={evidence}
-              eager={isFirstPublicWork && chapterIndex === 0 && evidenceIndex === 0}
-            />
+            <EvidenceFigure evidence={evidence} eager={prioritizeEvidence && evidenceIndex === 0} />
           </div>
         ))}
       </div>

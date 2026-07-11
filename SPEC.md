@@ -1,8 +1,8 @@
-# Senior Product Engineer Portfolio — Design Specification
+# Product Engineer Portfolio — Design Specification
 
 ## 1. Purpose
 
-Create a cinematic, evidence-led portfolio for a senior product engineer who brings complex digital products from idea to reality.
+Create a cinematic, evidence-led portfolio for a product engineer who brings complex digital products from idea to reality.
 
 The portfolio primarily addresses hiring managers while remaining credible to prospective clients and design or engineering peers. It should communicate senior ownership, sound judgment, collaboration, technical range, and the ability to carry work from business requirements through launch and continued operation.
 
@@ -12,7 +12,7 @@ This document defines the portfolio experience. Implementation and deployment ar
 
 ### Primary title
 
-**Senior Product Engineer**
+**Product Engineer**
 
 ### Core proposition
 
@@ -35,7 +35,7 @@ The final copy may be refined after reviewing the supplied project PRDs. It must
 
 ## 3. Audience and desired impression
 
-The primary audience is hiring managers considering the author for senior product engineering roles.
+The primary audience is hiring managers considering the author for product engineering roles.
 
 The intended impression is:
 
@@ -377,7 +377,7 @@ When implementation begins:
 
 The portfolio succeeds when a hiring manager can quickly understand:
 
-- The author is a senior product engineer.
+- The author is a product engineer.
 - The author can turn difficult product ideas into real, maintained products.
 - The author understands business problems, product decisions, and engineering.
 - The author takes responsibility without erasing collaborators.

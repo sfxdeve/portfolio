@@ -50,7 +50,6 @@ export const documentSchema = z
       .trim()
       .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
     statusLabel: z.string().trim().min(1),
-    summary: z.string().trim().min(1),
     title: z.string().trim().min(1),
     visibility: z.enum(['draft', 'public']),
   })

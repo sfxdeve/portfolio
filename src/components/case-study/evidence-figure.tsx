@@ -1,3 +1,5 @@
+import { ExternalLink } from 'lucide-react'
+
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Card } from '@/components/ui/card'
 import type { DocumentMetadata } from '@/content/document-schema'
@@ -23,7 +25,7 @@ export function EvidenceFigure({
           href={evidence.src}
           target="_blank"
           rel="noreferrer"
-          aria-label={`Open image: ${evidence.alt}`}
+          aria-label={`View full-size image: ${evidence.alt} (opens in a new tab)`}
           className="block overflow-hidden rounded-[0.75rem] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
         >
           <AspectRatio ratio={evidence.width / evidence.height}>
@@ -39,6 +41,10 @@ export function EvidenceFigure({
               loading={eager ? 'eager' : 'lazy'}
             />
           </AspectRatio>
+          <span className="flex items-center justify-end gap-1.5 px-3 py-2 text-xs font-semibold text-muted-foreground transition group-hover/evidence:text-foreground">
+            View full size
+            <ExternalLink aria-hidden="true" className="size-3.5" />
+          </span>
         </a>
         {evidence.caption ? (
           <figcaption className="px-3 pt-3 pb-2 text-sm leading-6 text-muted-foreground">

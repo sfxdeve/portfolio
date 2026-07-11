@@ -6,6 +6,25 @@
   },
   "ignorePatterns": ["docs/**", "src/routeTree.gen.ts"],
   "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "regex": "^@base-ui/react(?:/|$)",
+            "message": "Import the local shadcn component from @/components/ui instead."
+          }
+        ]
+      }
+    ],
     "react/react-in-jsx-scope": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/components/ui/**/*.ts", "src/components/ui/**/*.tsx"],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ]
 }

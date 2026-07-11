@@ -23,15 +23,25 @@ export function SelectedWorkSection({ documents }: { documents: PortfolioDocumen
         description="Each story connects the product tension, the decisions that shaped it, and the visual proof that makes the work inspectable."
       />
       <div className="mt-10 flex flex-col gap-14 lg:mt-12 lg:gap-[4.5rem]">
-        {documents.map((document) => (
-          <WorkChapter key={document.metadata.slug} document={document} />
+        {documents.map((document, documentIndex) => (
+          <WorkChapter
+            key={document.metadata.slug}
+            document={document}
+            prioritizeEvidence={documentIndex === 0}
+          />
         ))}
       </div>
     </PageSection>
   )
 }
 
-function WorkChapter({ document }: { document: PortfolioDocument }) {
+function WorkChapter({
+  document,
+  prioritizeEvidence,
+}: {
+  document: PortfolioDocument
+  prioritizeEvidence: boolean
+}) {
   const evidence = document.metadata.homepage.evidence[0]
 
   return (
@@ -54,7 +64,7 @@ function WorkChapter({ document }: { document: PortfolioDocument }) {
       {evidence ? (
         <EvidenceFigure
           evidence={evidence}
-          eager={document.metadata.order === 1}
+          eager={prioritizeEvidence}
           className="w-full lg:max-w-[34rem] lg:justify-self-end xl:max-w-[38rem]"
           cardClassName="p-1.5"
         />

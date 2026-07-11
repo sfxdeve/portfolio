@@ -17,7 +17,11 @@ export function StoryRouteLink({
     <Link
       to="/work/$slug"
       params={{ slug }}
-      className={cn(buttonVariants({ variant: 'link', size: 'lg' }), 'mt-7 h-auto p-0', className)}
+      className={cn(
+        buttonVariants({ variant: 'link', size: 'lg' }),
+        'mt-7 h-auto max-w-full p-0 text-left whitespace-normal',
+        className,
+      )}
     >
       {children}
       <ArrowRight aria-hidden="true" data-icon="inline-end" />

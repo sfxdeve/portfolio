@@ -51,6 +51,8 @@ test.describe('homepage', () => {
     await expect(
       page.getByRole('heading', { name: /fraud-detection system shaped around risk/i }),
     ).toBeVisible()
+    await expect(page.getByText(/reviewable measure without presenting the number/i)).toBeVisible()
+    await expect(page.getByText(/retains review outcomes and notes/i)).toBeVisible()
     await expect(page.getByRole('link', { name: /read the exploration/i })).toHaveAttribute(
       'href',
       '/work/fraud-detection-system',
@@ -68,15 +70,25 @@ test.describe('homepage', () => {
   })
 
   test('validates the contact form and exposes the public email fallback', async ({ page }) => {
+    await page.setViewportSize(viewportPresets.mobile)
     await page.goto('/#contact')
     await expect(page.getByLabel('Name')).toBeVisible()
+
+    const nameInputBox = await page.getByLabel('Name').boundingBox()
+    const submitButtonBox = await page
+      .getByRole('button', { name: /open email draft/i })
+      .boundingBox()
+
+    expect(nameInputBox?.height).toBeGreaterThanOrEqual(44)
+    expect(submitButtonBox?.height).toBeGreaterThanOrEqual(44)
 
     await expect(page.getByRole('link', { name: 'sfx.pers@gmail.com' })).toHaveAttribute(
       'href',
       'mailto:sfx.pers@gmail.com',
     )
     await page.getByLabel('Name').fill('A')
-    await page.getByRole('button', { name: /start a conversation/i }).click()
+    await expect(page.getByText(/opens a prefilled draft in your email app/i)).toBeVisible()
+    await page.getByRole('button', { name: /open email draft/i }).click()
 
     await expect(page.locator('#contact-name-error')).toHaveText('Use at least 2 characters.')
     await expect(page.locator('#contact-email-error')).toHaveText('Use a valid email address.')
@@ -103,13 +115,29 @@ test.describe('homepage', () => {
     await expectNoAccessibilityViolations(page)
   })
 
+  test('keeps scroll-reveal content available before scrolling', async ({ page }) => {
+    await page.goto('/')
+
+    const hiddenRevealElements = await page
+      .locator('[data-scroll-reveal]')
+      .evaluateAll((elements) =>
+        elements
+          .filter((element) => getComputedStyle(element).visibility !== 'visible')
+          .map((element) => element.tagName),
+      )
+
+    expect(hiddenRevealElements).toEqual([])
+    await expect(page.getByRole('link', { name: /read the .+ case study/i })).toHaveCount(3)
+    await expect(page.getByRole('button', { name: /open email draft/i })).toBeAttached()
+  })
+
   test('keeps content available with reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.goto('/')
 
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(
-      page.getByRole('link', { name: 'Read the story', exact: true }).first(),
+      page.getByRole('link', { name: 'Read the EcoBuiltConnect case study', exact: true }),
     ).toBeVisible()
   })
 
@@ -122,6 +150,8 @@ test.describe('homepage', () => {
       await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible()
     }
 
+    await page.setViewportSize(viewportPresets.mobile)
+    await page.goto('/')
     const firstEvidenceBox = await page.locator('#work figure').first().boundingBox()
 
     expect(firstEvidenceBox?.width).toBeGreaterThan(300)

@@ -31,10 +31,6 @@ mise run check
 
 The setup task is safe to run again. It uses the committed pnpm lockfile and installs only the Chromium browser required by the current Playwright configuration.
 
-### Cursor Cloud / Linux VM
-
-For cloud agent or Linux VM environments without Mise, see [AGENTS.md](AGENTS.md#cursor-cloud-specific-instructions) for Node 24 activation, pnpm via corepack, and check commands.
-
 ## Development
 
 After Mise has activated the repository environment:
@@ -56,7 +52,7 @@ pnpm routes:gen   # regenerate src/routeTree.gen.ts after route changes
 - Run `pnpm clean` when generated output obscures a review or before comparing the worktree after multiple agent runs.
 - Treat `src/routeTree.gen.ts`, `.output/`, `.tanstack/`, `test-results/`, and Playwright reports as generated output. Regenerate the route tree with `pnpm routes:gen` only after route file changes.
 - Deploy with `pnpm build:vercel` on Vercel using the committed `vercel.json` settings.
-- Set `SITE_URL` in production for canonical and Open Graph URLs (see `.env.example`).
+- Set `VITE_SITE_URL` in production for canonical and Open Graph URLs (see `.env.example`).
 
 ## Content and evidence assets
 

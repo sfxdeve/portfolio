@@ -2,12 +2,11 @@ import { useGSAP } from '@gsap/react'
 import type { RefObject } from 'react'
 
 import { gsap } from '@/components/motion/gsap-setup'
-import { useReducedMotion } from '@/components/motion/use-reduced-motion'
 
 const REVEAL_MOTION = {
-  from: { autoAlpha: 0, y: 10 },
+  from: { opacity: 0, y: 10 },
   to: {
-    autoAlpha: 1,
+    opacity: 1,
     duration: 0.48,
     ease: 'power2.out',
     stagger: 0.035,
@@ -16,18 +15,23 @@ const REVEAL_MOTION = {
 } as const
 
 export function useRevealMotion(scope: RefObject<HTMLElement | null>) {
-  const prefersReducedMotion = useReducedMotion()
-
   useGSAP(
     () => {
-      if (prefersReducedMotion || !scope.current) {
-        return
+      if (!scope.current) {
+        return () => undefined
       }
 
-      const elements = scope.current.querySelectorAll('[data-reveal-motion]')
+      const scopeElement = scope.current
+      const matchMedia = gsap.matchMedia()
 
-      gsap.fromTo(elements, REVEAL_MOTION.from, REVEAL_MOTION.to)
+      matchMedia.add('(prefers-reduced-motion: no-preference)', () => {
+        const elements = scopeElement.querySelectorAll('[data-reveal-motion]')
+
+        gsap.fromTo(elements, REVEAL_MOTION.from, REVEAL_MOTION.to)
+      })
+
+      return () => matchMedia.revert()
     },
-    { dependencies: [prefersReducedMotion], scope },
+    { scope },
   )
 }

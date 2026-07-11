@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 import { PageSection } from '@/components/layout/page-section'
+import { Item, ItemContent, ItemTitle } from '@/components/ui/item'
 import { Separator } from '@/components/ui/separator'
 import type { PortfolioDocument } from '@/content/document-schema'
 import type { AdjacentPublicDocument } from '@/content/documents'
@@ -34,7 +35,7 @@ export function CaseStudyPage({
             key={`${metadata.slug}-${chapterIndex}`}
             chapter={chapter}
             chapterIndex={chapterIndex}
-            isFirstPublicWork={metadata.order === 1}
+            prioritizeEvidence={chapterIndex === 0}
           />
         ))}
       </PageSection>
@@ -66,30 +67,40 @@ function CaseStudyPager({
     <nav className="px-5 pt-4 pb-10 sm:px-8 lg:px-12" aria-label="Adjacent case studies">
       <div className="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2">
         {previousDocument ? (
-          <Link
-            to="/work/$slug"
-            params={{ slug: previousDocument.slug }}
-            className="block text-left underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+          <Item
+            render={<Link to="/work/$slug" params={{ slug: previousDocument.slug }} />}
+            variant="outline"
+            className="rounded-xl border-orbit-line/70 bg-orbit-pearl/45 p-5 text-left shadow-orbit-soft hover:border-orbit-bronze/45 [a]:hover:bg-orbit-pearl/70"
           >
-            <span className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground">
-              <ArrowLeft aria-hidden="true" className="size-4" />
-              Previous
-            </span>
-          </Link>
+            <ItemContent className="gap-2">
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+                <ArrowLeft aria-hidden="true" className="size-4" />
+                Previous
+              </span>
+              <ItemTitle className="font-heading text-xl text-foreground">
+                {previousDocument.title}
+              </ItemTitle>
+            </ItemContent>
+          </Item>
         ) : (
-          <span />
+          <span className="hidden sm:block" />
         )}
         {nextDocument ? (
-          <Link
-            to="/work/$slug"
-            params={{ slug: nextDocument.slug }}
-            className="block text-left underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none sm:text-right"
+          <Item
+            render={<Link to="/work/$slug" params={{ slug: nextDocument.slug }} />}
+            variant="outline"
+            className="rounded-xl border-orbit-line/70 bg-orbit-pearl/45 p-5 text-left shadow-orbit-soft hover:border-orbit-bronze/45 sm:text-right [a]:hover:bg-orbit-pearl/70"
           >
-            <span className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground sm:justify-end">
-              Next
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </span>
-          </Link>
+            <ItemContent className="gap-2 sm:items-end">
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+                Next
+                <ArrowRight aria-hidden="true" className="size-4" />
+              </span>
+              <ItemTitle className="font-heading text-xl text-foreground">
+                {nextDocument.title}
+              </ItemTitle>
+            </ItemContent>
+          </Item>
         ) : null}
       </div>
     </nav>

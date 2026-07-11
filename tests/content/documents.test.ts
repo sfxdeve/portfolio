@@ -9,8 +9,6 @@ import {
   filterPublicDocuments,
   getAdjacentPublicWorkDocuments,
   getPublicDocumentBySlug,
-  getPublicDocumentLoaderDataBySlug,
-  getPublicWorkDocumentBySlug,
   publicExplorationDocuments,
   publicShippedWorkDocuments,
   validateDocuments,
@@ -30,7 +28,6 @@ function publicMetadataStrings(metadata: DocumentMetadata): string[] {
     metadata.hero.summary,
     metadata.hero.title,
     metadata.statusLabel,
-    metadata.summary,
     metadata.title,
   ]
 
@@ -101,7 +98,6 @@ function moduleWith(
       order: 0,
       slug: 'valid-document',
       statusLabel: 'Exploration',
-      summary: 'A concise summary.',
       title: 'Valid document',
       visibility: 'public',
       ...frontmatter,
@@ -137,42 +133,33 @@ describe('repository documents', () => {
     ])
   })
 
-  it('looks up public detail documents while keeping shipped-work lookup scoped', () => {
+  it('looks up public detail documents without exposing drafts', () => {
     expect(getPublicDocumentBySlug('ecobuiltconnect')?.metadata.title).toBe('EcoBuiltConnect')
     expect(getPublicDocumentBySlug('fraud-detection-system')?.metadata.kind).toBe('exploration')
     expect(getPublicDocumentBySlug('foundation-smoke-test')).toBeUndefined()
     expect(getPublicDocumentBySlug('missing-work')).toBeUndefined()
-
-    expect(getPublicWorkDocumentBySlug('ecobuiltconnect')?.metadata.title).toBe('EcoBuiltConnect')
-    expect(getPublicWorkDocumentBySlug('fraud-detection-system')).toBeUndefined()
-    expect(getPublicWorkDocumentBySlug('foundation-smoke-test')).toBeUndefined()
-    expect(getPublicWorkDocumentBySlug('missing-work')).toBeUndefined()
   })
 
-  it('returns serializable public metadata for route loader data', () => {
-    const document = getPublicDocumentLoaderDataBySlug('ecobuiltconnect')
-
-    expect(document?.metadata.title).toBe('EcoBuiltConnect')
-    expect(document).not.toHaveProperty('Content')
-    expect(JSON.parse(JSON.stringify(document))).toEqual(document)
-    expect(getPublicDocumentLoaderDataBySlug('foundation-smoke-test')).toBeUndefined()
-    expect(getPublicDocumentLoaderDataBySlug('missing-work')).toBeUndefined()
+  it('keeps public metadata serializable for route loader data', () => {
+    for (const { metadata } of filterPublicDocuments(documents)) {
+      expect(JSON.parse(JSON.stringify(metadata))).toEqual(metadata)
+    }
   })
 
   it('returns adjacent public shipped work documents in homepage order', () => {
     expect(getAdjacentPublicWorkDocuments('artisanconnect')).toEqual({
-      previousDocument: { slug: 'ecobuiltconnect' },
-      nextDocument: { slug: 'rushuploads' },
+      previousDocument: { slug: 'ecobuiltconnect', title: 'EcoBuiltConnect' },
+      nextDocument: { slug: 'rushuploads', title: 'RushUploads' },
     })
 
     expect(getAdjacentPublicWorkDocuments('ecobuiltconnect')).toEqual({
-      nextDocument: { slug: 'artisanconnect' },
+      nextDocument: { slug: 'artisanconnect', title: 'ArtisanConnect' },
       previousDocument: undefined,
     })
 
     expect(getAdjacentPublicWorkDocuments('rushuploads')).toEqual({
       nextDocument: undefined,
-      previousDocument: { slug: 'artisanconnect' },
+      previousDocument: { slug: 'artisanconnect', title: 'ArtisanConnect' },
     })
 
     expect(getAdjacentPublicWorkDocuments('missing-work')).toEqual({
