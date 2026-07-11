@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react'
 import type { RefObject } from 'react'
 
+import { createMotionMatchMedia } from '@/components/motion/create-motion-match-media'
 import { gsap } from '@/components/motion/gsap-setup'
 
 const REVEAL_MOTION = {
@@ -22,15 +23,12 @@ export function useRevealMotion(scope: RefObject<HTMLElement | null>) {
       }
 
       const scopeElement = scope.current
-      const matchMedia = gsap.matchMedia()
 
-      matchMedia.add('(prefers-reduced-motion: no-preference)', () => {
+      return createMotionMatchMedia(() => {
         const elements = scopeElement.querySelectorAll('[data-reveal-motion]')
 
         gsap.fromTo(elements, REVEAL_MOTION.from, REVEAL_MOTION.to)
       })
-
-      return () => matchMedia.revert()
     },
     { scope },
   )

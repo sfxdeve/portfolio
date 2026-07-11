@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react'
 import type { RefObject } from 'react'
 
+import { createMotionMatchMedia } from '@/components/motion/create-motion-match-media'
 import { gsap } from '@/components/motion/gsap-setup'
 
 const SCROLL_REVEAL = {
@@ -13,10 +14,7 @@ const SCROLL_REVEAL = {
   },
 } as const
 
-export function useScrollReveal(
-  scope: RefObject<HTMLElement | null>,
-  selector = '[data-scroll-reveal]',
-) {
+export function useScrollReveal(scope: RefObject<HTMLElement | null>) {
   useGSAP(
     () => {
       if (!scope.current) {
@@ -24,10 +22,11 @@ export function useScrollReveal(
       }
 
       const scopeElement = scope.current
-      const matchMedia = gsap.matchMedia()
 
-      matchMedia.add('(prefers-reduced-motion: no-preference)', () => {
-        const elements = gsap.utils.toArray<HTMLElement>(scopeElement.querySelectorAll(selector))
+      return createMotionMatchMedia(() => {
+        const elements = gsap.utils.toArray<HTMLElement>(
+          scopeElement.querySelectorAll('[data-scroll-reveal]'),
+        )
 
         for (const element of elements) {
           gsap.fromTo(
@@ -44,9 +43,7 @@ export function useScrollReveal(
           )
         }
       })
-
-      return () => matchMedia.revert()
     },
-    { dependencies: [selector], scope },
+    { scope },
   )
 }

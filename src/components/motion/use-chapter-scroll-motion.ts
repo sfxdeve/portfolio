@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react'
 import type { RefObject } from 'react'
 
+import { createMotionMatchMedia } from '@/components/motion/create-motion-match-media'
 import { gsap, ScrollTrigger } from '@/components/motion/gsap-setup'
 
 export function useChapterScrollMotion(
@@ -16,20 +17,10 @@ export function useChapterScrollMotion(
 
       const evidenceColumn = articleRef.current.querySelector('[data-evidence-column]')
       const evidenceItems = articleRef.current.querySelectorAll('[data-evidence-item]')
-      const matchMedia = gsap.matchMedia()
 
-      matchMedia.add(
-        {
-          desktop: '(min-width: 1024px)',
-          motion: '(prefers-reduced-motion: no-preference)',
-        },
+      return createMotionMatchMedia(
         (context) => {
           const desktop = context.conditions?.desktop ?? false
-          const motion = context.conditions?.motion ?? false
-
-          if (!motion) {
-            return
-          }
 
           if (evidenceItems.length > 0) {
             gsap.fromTo(
@@ -65,11 +56,8 @@ export function useChapterScrollMotion(
             trigger: articleRef.current,
           })
         },
+        { desktop: '(min-width: 1024px)' },
       )
-
-      return () => {
-        matchMedia.revert()
-      }
     },
     { dependencies: [evidenceCount], scope: articleRef },
   )

@@ -23,6 +23,27 @@ const defaultValues: ContactFormValues = {
   name: '',
 }
 
+type ContactFieldDefinition = {
+  id: string
+  inputMode?: 'email'
+  label: string
+  multiline?: boolean
+  name: keyof ContactFormValues
+  type?: string
+}
+
+const contactFields: ContactFieldDefinition[] = [
+  { id: 'contact-name', label: 'Name', name: 'name' },
+  {
+    id: 'contact-email',
+    inputMode: 'email',
+    label: 'Email',
+    name: 'email',
+    type: 'email',
+  },
+  { id: 'contact-message', label: 'Message', multiline: true, name: 'message' },
+]
+
 export function ContactForm() {
   const form = useForm({
     defaultValues,
@@ -44,51 +65,21 @@ export function ContactForm() {
           }}
         >
           <FieldGroup>
-            <form.Field name="name">
-              {(field) => (
-                <FieldControl
-                  errors={field.state.meta.errors}
-                  id="contact-name"
-                  isInvalid={field.state.meta.isTouched && !field.state.meta.isValid}
-                  label="Name"
-                  name={field.name}
-                  onBlur={field.handleBlur}
-                  onChange={field.handleChange}
-                  value={field.state.value}
-                />
-              )}
-            </form.Field>
-            <form.Field name="email">
-              {(field) => (
-                <FieldControl
-                  errors={field.state.meta.errors}
-                  id="contact-email"
-                  inputMode="email"
-                  isInvalid={field.state.meta.isTouched && !field.state.meta.isValid}
-                  label="Email"
-                  name={field.name}
-                  onBlur={field.handleBlur}
-                  onChange={field.handleChange}
-                  type="email"
-                  value={field.state.value}
-                />
-              )}
-            </form.Field>
-            <form.Field name="message">
-              {(field) => (
-                <FieldControl
-                  errors={field.state.meta.errors}
-                  id="contact-message"
-                  isInvalid={field.state.meta.isTouched && !field.state.meta.isValid}
-                  label="Message"
-                  multiline
-                  name={field.name}
-                  onBlur={field.handleBlur}
-                  onChange={field.handleChange}
-                  value={field.state.value}
-                />
-              )}
-            </form.Field>
+            {contactFields.map((definition) => (
+              <form.Field key={definition.name} name={definition.name}>
+                {(field) => (
+                  <FieldControl
+                    {...definition}
+                    errors={field.state.meta.errors}
+                    isInvalid={field.state.meta.isTouched && !field.state.meta.isValid}
+                    name={field.name}
+                    onBlur={field.handleBlur}
+                    onChange={field.handleChange}
+                    value={field.state.value}
+                  />
+                )}
+              </form.Field>
+            ))}
           </FieldGroup>
           <p id="contact-draft-hint" className="text-sm leading-6 text-muted-foreground">
             This opens a prefilled draft in your email app. Nothing is sent automatically.
