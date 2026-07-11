@@ -1,4 +1,6 @@
-import type { CSSProperties } from 'react'
+import { useRef, type CSSProperties } from 'react'
+
+import { useHeroOrbitMotion } from '@/components/motion/use-hero-orbit-motion'
 
 import {
   HERO_PLANETS,
@@ -11,8 +13,13 @@ import {
 const solarCenterStyle = pointStyle(SOLAR_CENTER)
 
 export function HeroSolarSystem() {
+  const scope = useRef<HTMLDivElement>(null)
+
+  useHeroOrbitMotion(scope)
+
   return (
     <div
+      ref={scope}
       data-orbit-coordinate-space
       className="absolute top-[46%] left-[55%] aspect-video w-160 -translate-x-1/2 -translate-y-1/2 sm:w-3xl md:w-216 lg:w-240 xl:w-272"
     >

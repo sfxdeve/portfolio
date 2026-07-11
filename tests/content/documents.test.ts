@@ -3,12 +3,13 @@ import { join } from 'node:path'
 import sharp from 'sharp'
 import { describe, expect, it } from 'vitest'
 
+import { responsiveEvidenceWidths, variantPath } from '@/config/evidence-images'
 import type { DocumentMetadata, DocumentModule } from '@/content/document-schema'
 import {
   documents,
   filterPublicDocuments,
   getAdjacentPublicWorkDocuments,
-  getPublicDocumentBySlug,
+  getPublicShippedWorkDocumentBySlug,
   publicExplorationDocuments,
   publicShippedWorkDocuments,
   validateDocuments,
@@ -20,16 +21,28 @@ function publicMetadataStrings(metadata: DocumentMetadata): string[] {
   const strings: string[] = [
     metadata.description,
     metadata.homepage.claim,
-    metadata.homepage.routeLabel,
     metadata.homepage.summary,
     metadata.hero.claim,
     metadata.hero.outcome,
     metadata.hero.role,
     metadata.hero.summary,
+    metadata.hero.teamContext,
     metadata.hero.title,
     metadata.statusLabel,
     metadata.title,
   ]
+
+  if (metadata.homepage.routeLabel) {
+    strings.push(metadata.homepage.routeLabel)
+  }
+
+  if (metadata.homepage.interlude) {
+    strings.push(
+      metadata.homepage.interlude.constraints,
+      metadata.homepage.interlude.reflection,
+      metadata.homepage.interlude.unresolved,
+    )
+  }
 
   for (const evidence of metadata.homepage.evidence) {
     strings.push(evidence.alt, evidence.src)
@@ -86,6 +99,7 @@ function moduleWith(
         outcome: 'The app renders from typed content instead of route-local copy.',
         role: 'Content validation',
         summary: 'A typed hero summary for tests.',
+        teamContext: 'A test-owned fixture.',
         title: 'Valid document',
       },
       homepage: {
@@ -134,10 +148,12 @@ describe('repository documents', () => {
   })
 
   it('looks up public detail documents without exposing drafts', () => {
-    expect(getPublicDocumentBySlug('ecobuiltconnect')?.metadata.title).toBe('EcoBuiltConnect')
-    expect(getPublicDocumentBySlug('fraud-detection-system')?.metadata.kind).toBe('exploration')
-    expect(getPublicDocumentBySlug('foundation-smoke-test')).toBeUndefined()
-    expect(getPublicDocumentBySlug('missing-work')).toBeUndefined()
+    expect(getPublicShippedWorkDocumentBySlug('ecobuiltconnect')?.metadata.title).toBe(
+      'EcoBuiltConnect',
+    )
+    expect(getPublicShippedWorkDocumentBySlug('fraud-detection-system')).toBeUndefined()
+    expect(getPublicShippedWorkDocumentBySlug('foundation-smoke-test')).toBeUndefined()
+    expect(getPublicShippedWorkDocumentBySlug('missing-work')).toBeUndefined()
   })
 
   it('keeps public metadata serializable for route loader data', () => {
@@ -176,6 +192,7 @@ describe('repository documents', () => {
     expect(publicShippedWork.length).toBeGreaterThan(0)
 
     for (const document of publicShippedWork) {
+      expect(document.metadata.homepage.routeLabel, document.metadata.slug).toBeTruthy()
       expect(document.metadata.homepage.evidence.length, document.metadata.slug).toBeGreaterThan(0)
       for (const chapter of document.metadata.chapters) {
         expect(
@@ -200,6 +217,24 @@ describe('repository documents', () => {
     }
   })
 
+  it('provides committed responsive variants for public evidence', async () => {
+    for (const document of filterPublicDocuments(documents)) {
+      for (const evidence of publicEvidence(document.metadata)) {
+        for (const width of responsiveEvidenceWidths) {
+          if (width >= evidence.width) {
+            continue
+          }
+
+          const variantSrc = variantPath(evidence.src, width)
+          const publicAssetPath = join(process.cwd(), 'public', variantSrc.slice(1))
+          const imageMetadata = await sharp(publicAssetPath).metadata()
+
+          expect(imageMetadata.width, `${document.metadata.slug}: ${variantSrc}`).toBe(width)
+        }
+      }
+    }
+  })
+
   it('keeps public shipped work and public explorations in explicit collections', () => {
     expect(publicShippedWorkDocuments.map(({ metadata }) => metadata.slug)).toEqual([
       'ecobuiltconnect',
@@ -210,6 +245,7 @@ describe('repository documents', () => {
       'fraud-detection-system',
     ])
     expect(publicExplorationDocuments[0]?.metadata.statusLabel).toMatch(/exploration/i)
+    expect(publicExplorationDocuments[0]?.metadata.homepage.interlude).toBeDefined()
   })
 
   it('keeps public metadata inside the public-safe content boundary', () => {

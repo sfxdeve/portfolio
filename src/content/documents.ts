@@ -62,8 +62,8 @@ type AdjacentPublicDocuments = {
   previousDocument?: AdjacentPublicDocument
 }
 
-export function getPublicDocumentBySlug(slug: string): PortfolioDocument | undefined {
-  return publicDocuments.find((document) => document.metadata.slug === slug)
+export function getPublicShippedWorkDocumentBySlug(slug: string): PortfolioDocument | undefined {
+  return publicShippedWorkDocuments.find((document) => document.metadata.slug === slug)
 }
 
 export function getAdjacentPublicWorkDocuments(slug: string): AdjacentPublicDocuments {

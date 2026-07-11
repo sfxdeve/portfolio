@@ -51,7 +51,7 @@ The intended impression is:
 The initial editorial selection contains:
 
 - Three shipped products supported by supplied screenshots and PRDs.
-- One university exploration involving a banking fraud-detection system.
+- One group university exploration involving a banking fraud-detection system.
 
 These numbers must not appear as a statement about the author’s total experience. The homepage should lead naturally into selected work without copy such as “three shipped products and one exploration.”
 
@@ -89,7 +89,6 @@ The narrative is:
 
 1. Homepage
 2. Individual shipped-product case studies
-3. Fraud-detection exploration page
 
 ### Global navigation
 
@@ -99,7 +98,7 @@ Keep navigation small and stable:
 - Work
 - Contact
 
-Case-study pages also provide:
+Shipped-product case-study pages also provide:
 
 - Back to selected work
 - Previous or next project
@@ -139,6 +138,7 @@ Introduce the fraud-detection project as a change of tempo.
 - Focus on curiosity, systems thinking, collaboration, and the uniqueness of the investigated problem.
 - Use the homepage interlude’s compact conceptual signal grid rather than screenshot evidence.
 - Do not describe it as shipped commercial work.
+- Keep the exploration contained to this homepage interlude without a detail-page link.
 
 ### Scene 4 — Contact invitation
 
@@ -201,9 +201,9 @@ Conclude with:
 
 Avoid a generic “what I learned” section.
 
-## 9. Exploration case study
+## 9. Exploration interlude
 
-The exploration page uses the same narrative foundation but a text-led evidence standard. Screenshot or diagram evidence is not required.
+The homepage exploration interlude uses the same narrative foundation but a compact, text-led evidence standard. Screenshot or diagram evidence is not required, and the exploration does not have a public detail route.
 
 Focus on:
 
@@ -365,7 +365,7 @@ For each project:
 When implementation begins:
 
 - Follow the ADR-approved foundation: TanStack Start, TanStack Router, React, TypeScript, MDX detail routes, and Vercel-friendly delivery.
-- Use MDX with structured frontmatter for sourced case-study and exploration content; keep homepage summaries derived from those MDX files rather than a separate registry.
+- Use MDX with structured frontmatter for sourced case-study and exploration content; keep homepage summaries derived from those MDX files rather than a separate registry. Publish detail routes for shipped case studies only.
 - Use GSAP and `@gsap/react` only where motion clarifies hierarchy, progression, relationship, or change.
 - Use Tailwind CSS, Orbit design tokens, `class-variance-authority`, `clsx`, and `tailwind-merge` to keep styling expressive without duplicating component logic.
 - Use Base UI, shadcn conventions, and lucide-react for accessible interface primitives and icons where the portfolio needs controls, navigation, dialogs, or form affordances.

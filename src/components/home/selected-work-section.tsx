@@ -5,14 +5,14 @@ import { ClaimEvidenceGrid } from '@/components/layout/claim-evidence-grid'
 import { PageSection } from '@/components/layout/page-section'
 import { SectionIntro } from '@/components/layout/section-intro'
 import { StoryRouteLink } from '@/components/layout/story-route-link'
-import { useScrollReveal } from '@/components/motion/use-scroll-reveal'
+import { useProjectSceneMotion } from '@/components/motion/use-project-scene-motion'
 import { OrbitChip, orbitChipToneForKind } from '@/components/orbit/orbit-chip'
 import type { PortfolioDocument } from '@/content/document-schema'
 
 export function SelectedWorkSection({ documents }: { documents: PortfolioDocument[] }) {
   const scope = useRef<HTMLElement>(null)
 
-  useScrollReveal(scope)
+  useProjectSceneMotion(scope)
 
   return (
     <PageSection id="work" aria-labelledby="work-heading" ref={scope}>
@@ -43,10 +43,11 @@ function WorkChapter({
   prioritizeEvidence: boolean
 }) {
   const evidence = document.metadata.homepage.evidence[0]
+  const routeLabel = document.metadata.homepage.routeLabel
 
   return (
-    <ClaimEvidenceGrid as="article" data-scroll-reveal>
-      <div className="min-w-0 border-l border-orbit-line/70 pl-5 sm:pl-6">
+    <ClaimEvidenceGrid as="article" data-project-scene>
+      <div className="min-w-0 border-l border-orbit-line/70 pl-5 sm:pl-6" data-project-claim>
         <OrbitChip tone={orbitChipToneForKind(document.metadata.kind)}>
           {document.metadata.statusLabel}
         </OrbitChip>
@@ -57,9 +58,9 @@ function WorkChapter({
           {document.metadata.homepage.claim}
         </p>
         <p className="mt-4 leading-7 text-muted-foreground">{document.metadata.homepage.summary}</p>
-        <StoryRouteLink slug={document.metadata.slug}>
-          {document.metadata.homepage.routeLabel}
-        </StoryRouteLink>
+        {routeLabel ? (
+          <StoryRouteLink slug={document.metadata.slug}>{routeLabel}</StoryRouteLink>
+        ) : null}
       </div>
       {evidence ? (
         <EvidenceFigure
@@ -67,6 +68,7 @@ function WorkChapter({
           eager={prioritizeEvidence}
           className="w-full lg:max-w-[34rem] lg:justify-self-end xl:max-w-[38rem]"
           cardClassName="p-1.5"
+          data-project-evidence
         />
       ) : null}
     </ClaimEvidenceGrid>

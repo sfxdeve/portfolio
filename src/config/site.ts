@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: 'Shayan Fareed',
-  title: 'Shayan Fareed — Senior Product Engineer',
+  title: 'Shayan Fareed — Product Engineer',
   description:
-    'Shayan Fareed is a senior product engineer who brings complex digital products from idea to reality.',
+    'Shayan Fareed is a product engineer who brings complex digital products from idea to reality.',
   locale: 'en_US',
   socialImage: '/og/portfolio-card.png',
 } as const

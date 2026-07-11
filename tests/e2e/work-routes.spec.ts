@@ -3,12 +3,7 @@ import { expect, test } from '@playwright/test'
 import { expectNoAccessibilityViolations } from './axe'
 import { expectNoHorizontalOverflow } from './layout-assertions'
 import { expectMetaDescription, expectOpenGraph } from './meta-assertions'
-import {
-  hiddenWorkPaths,
-  publicExplorationPath,
-  publicShippedWorkPaths,
-  viewportPresets,
-} from './site-routes'
+import { hiddenWorkPaths, publicShippedWorkPaths, viewportPresets } from './site-routes'
 
 test.describe('public shipped work', () => {
   for (const path of publicShippedWorkPaths) {
@@ -28,6 +23,10 @@ test.describe('public shipped work', () => {
     await expect(page.getByRole('main').getByRole('heading', { level: 1 })).toBeVisible()
     await expect(page.getByText(/EcoBuiltConnect had to make reclaimed/i)).toBeVisible()
     await expect(page.locator('dt').filter({ hasText: 'Role' })).toBeVisible()
+    await expect(page.locator('dt').filter({ hasText: 'Team' })).toBeVisible()
+    await expect(
+      page.getByText(/independently carried the product and engineering work/i),
+    ).toBeVisible()
     await expect(page.locator('dt').filter({ hasText: 'Outcome' })).toBeVisible()
     await expect(page.getByRole('img', { name: /marketplace browsing/i }).first()).toBeVisible()
     await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4)
@@ -48,6 +47,9 @@ test.describe('public shipped work', () => {
       '/evidence/ecobuiltconnect/01-marketplace-browsing.webp',
     )
     await expect(imageLink).toHaveAttribute('target', '_blank')
+
+    const image = imageLink.getByRole('img')
+    await expect(image).toHaveAttribute('srcset', /-480w\.webp 480w, .*?-768w\.webp 768w/)
   })
 
   test('links between adjacent work stories', async ({ page }) => {
@@ -84,8 +86,12 @@ test.describe('public shipped work', () => {
 
     const chapters = page.getByRole('region', { name: 'ArtisanConnect chapters' })
     const evidenceBox = await chapters.locator('figure').first().boundingBox()
+    const evidenceImage = chapters.getByRole('img').first()
 
     expect(evidenceBox?.width).toBeGreaterThan(300)
+    await expect
+      .poll(() => evidenceImage.evaluate((image: HTMLImageElement) => image.currentSrc))
+      .toMatch(/-480w\.webp$/)
     await expectNoHorizontalOverflow(page)
     await expect(page.getByRole('link', { name: 'Back', exact: true })).toBeVisible()
   })
@@ -111,30 +117,6 @@ test.describe('public shipped work', () => {
 
     expect(hiddenEvidenceItems).toEqual([])
     await expect(page.getByRole('link', { name: /view full-size image:/i })).toHaveCount(6)
-  })
-})
-
-test.describe('exploration route', () => {
-  test('renders without shipped-work pager links', async ({ page }) => {
-    const response = await page.goto(publicExplorationPath)
-
-    expect(response?.status()).toBe(200)
-    await expect(
-      page.getByRole('heading', {
-        level: 1,
-        name: /designing transaction risk around evidence, severity, and analyst trust/i,
-      }),
-    ).toBeVisible()
-    await expect(page.getByText('Exploration', { exact: true }).first()).toBeVisible()
-    await expect(page.getByText(/this was not shipped commercial work/i)).toBeVisible()
-    await expect(page.getByRole('link', { name: 'Previous', exact: true })).toHaveCount(0)
-    await expect(page.getByRole('link', { name: 'Next', exact: true })).toHaveCount(0)
-  })
-
-  test('has no automatically detectable accessibility violations', async ({ page }) => {
-    await page.goto(publicExplorationPath)
-
-    await expectNoAccessibilityViolations(page)
   })
 })
 

@@ -62,7 +62,8 @@ To add or replace evidence:
 
 1. Place optimized `.webp` files under `public/evidence/<slug>/` using the `NN-description.webp` naming pattern.
 2. Declare each image in the document frontmatter with matching `src`, `width`, `height`, and `alt`.
-3. Run `pnpm validate:content` to verify dimensions and public-safe copy boundaries.
+3. Run `pnpm images:generate` to create the committed 480px and 768px responsive variants.
+4. Run `pnpm validate:content` to verify dimensions, responsive variants, and public-safe copy boundaries.
 
 ## Setup troubleshooting
 

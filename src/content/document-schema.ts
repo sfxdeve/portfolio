@@ -32,6 +32,7 @@ export const documentSchema = z
         outcome: z.string().trim().min(1),
         role: z.string().trim().min(1),
         summary: z.string().trim().min(1),
+        teamContext: z.string().trim().min(1),
         title: z.string().trim().min(1),
       })
       .strict(),
@@ -39,7 +40,15 @@ export const documentSchema = z
       .object({
         claim: z.string().trim().min(1),
         evidence: z.array(evidenceSchema).default([]),
-        routeLabel: z.string().trim().min(1),
+        interlude: z
+          .object({
+            constraints: z.string().trim().min(1),
+            reflection: z.string().trim().min(1),
+            unresolved: z.string().trim().min(1),
+          })
+          .strict()
+          .optional(),
+        routeLabel: z.string().trim().min(1).optional(),
         summary: z.string().trim().min(1),
       })
       .strict(),

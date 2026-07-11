@@ -1,7 +1,9 @@
 import { ExternalLink } from 'lucide-react'
+import type { ComponentPropsWithoutRef } from 'react'
 
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Card } from '@/components/ui/card'
+import { createEvidenceSrcSet } from '@/config/evidence-images'
 import type { DocumentMetadata } from '@/content/document-schema'
 import { cn } from '@/lib/utils'
 
@@ -12,14 +14,15 @@ export function EvidenceFigure({
   className,
   evidence,
   eager = false,
-}: {
+  ...figureProps
+}: ComponentPropsWithoutRef<'figure'> & {
   cardClassName?: string
   className?: string
   evidence: Evidence
   eager?: boolean
 }) {
   return (
-    <figure className={cn('group/evidence', className)}>
+    <figure className={cn('group/evidence', className)} {...figureProps}>
       <Card variant="orbit" className={cn('rounded-[1rem] p-1.5', cardClassName)}>
         <a
           href={evidence.src}
@@ -31,6 +34,7 @@ export function EvidenceFigure({
           <AspectRatio ratio={evidence.width / evidence.height}>
             <img
               src={evidence.src}
+              srcSet={createEvidenceSrcSet(evidence.src, evidence.width)}
               alt={evidence.alt}
               width={evidence.width}
               height={evidence.height}

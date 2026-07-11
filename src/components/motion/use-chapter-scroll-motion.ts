@@ -22,19 +22,23 @@ export function useChapterScrollMotion(
         (context) => {
           const desktop = context.conditions?.desktop ?? false
 
-          if (evidenceItems.length > 0) {
+          for (const [evidenceIndex, evidenceItem] of evidenceItems.entries()) {
             gsap.fromTo(
-              evidenceItems,
-              { opacity: 0, immediateRender: false, y: 18 },
+              evidenceItem,
               {
-                opacity: 1,
-                duration: 0.48,
+                immediateRender: false,
+                opacity: 0.56,
+                scale: desktop ? 0.94 : 0.98,
+                y: desktop ? 24 : 10,
+              },
+              {
+                duration: 0.62,
                 ease: 'power2.out',
-                stagger: 0.14,
+                opacity: 1,
+                scale: 1,
                 scrollTrigger: {
-                  trigger: articleRef.current,
-                  start: 'top 72%',
-                  once: true,
+                  start: `top ${82 - Math.min(evidenceIndex, 2) * 4}%`,
+                  trigger: evidenceItem,
                 },
                 y: 0,
               },

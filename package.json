@@ -10,6 +10,7 @@
     "dev": "vite dev --port 3000",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
+    "images:generate": "node scripts/generate-evidence-variants.ts",
     "lint": "oxlint --type-aware",
     "preview": "vite preview --port 4173",
     "routes:gen": "tsr generate",

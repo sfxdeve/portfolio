@@ -4,9 +4,11 @@ export const publicShippedWorkPaths = [
   '/work/rushuploads',
 ] as const
 
-export const publicExplorationPath = '/work/fraud-detection-system' as const
-
-export const hiddenWorkPaths = ['/work/foundation-smoke-test', '/work/unknown-work-story'] as const
+export const hiddenWorkPaths = [
+  '/work/foundation-smoke-test',
+  '/work/fraud-detection-system',
+  '/work/unknown-work-story',
+] as const
 
 export const viewportPresets = {
   desktop: { height: 720, width: 1280 },

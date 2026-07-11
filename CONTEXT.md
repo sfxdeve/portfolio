@@ -9,10 +9,10 @@ Hiring managers considering the author for senior product engineering roles. Pro
 _Avoid_: Everyone, visitors, users
 
 **Portfolio**:
-The public evidence-led site for a senior product engineer. It should present selected work, judgment, collaboration, and contact fit without becoming a generic project gallery or resume replacement.
+The public evidence-led site for a product engineer. It should present selected work, judgment, collaboration, and contact fit without becoming a generic project gallery or resume replacement.
 _Avoid_: Personal site, agency brochure, project gallery
 
-**Senior Product Engineer**:
+**Product Engineer**:
 The role presented by the portfolio: someone who shapes complex product work and implements it through launch or operation. Use it when the copy needs the primary professional identity.
 _Avoid_: Full-stack developer, software engineer, freelancer
 

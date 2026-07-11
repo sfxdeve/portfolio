@@ -12,7 +12,7 @@ export function HeroOrbitSection() {
   return (
     <HeroOrbitLayout ref={scope} variant="home" labelledBy="intro-heading">
       <div className="max-w-5xl" data-reveal-motion>
-        <OrbitChip tone="coral">Senior Product Engineer</OrbitChip>
+        <OrbitChip tone="coral">Product Engineer</OrbitChip>
         <h1
           id="intro-heading"
           className="mt-6 max-w-5xl text-5xl leading-[1.02] font-medium text-balance max-[379px]:text-[2.6rem] max-[379px]:leading-[1.04] sm:text-6xl lg:text-7xl xl:text-[5.35rem]"

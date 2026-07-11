@@ -12,7 +12,7 @@ test.describe('homepage', () => {
     await expect(page).toHaveTitle(/Shayan Fareed/)
     const main = page.getByRole('main')
     await expect(main).toBeVisible()
-    await expect(main.getByText('Senior Product Engineer', { exact: true })).toBeVisible()
+    await expect(main.getByText('Product Engineer', { exact: true })).toBeVisible()
     await expect(
       main.getByRole('heading', {
         level: 1,
@@ -27,9 +27,9 @@ test.describe('homepage', () => {
   test('publishes homepage metadata and Open Graph tags', async ({ page }) => {
     await page.goto('/')
 
-    const title = 'Shayan Fareed — Senior Product Engineer'
+    const title = 'Shayan Fareed — Product Engineer'
     const description =
-      'Shayan Fareed is a senior product engineer who brings complex digital products from idea to reality.'
+      'Shayan Fareed is a product engineer who brings complex digital products from idea to reality.'
 
     await expect(page).toHaveTitle(title)
     await expectMetaDescription(page, description)
@@ -53,10 +53,11 @@ test.describe('homepage', () => {
     ).toBeVisible()
     await expect(page.getByText(/reviewable measure without presenting the number/i)).toBeVisible()
     await expect(page.getByText(/retains review outcomes and notes/i)).toBeVisible()
-    await expect(page.getByRole('link', { name: /read the exploration/i })).toHaveAttribute(
-      'href',
-      '/work/fraud-detection-system',
-    )
+    await expect(page.getByText(/in a group university project, we explored/i)).toBeVisible()
+    await expect(page.getByText(/none were treated as production-ready/i)).toBeVisible()
+    await expect(page.getByText(/evidence standard for deployment remained open/i)).toBeVisible()
+    await expect(page.getByText(/model output only becomes useful/i)).toBeVisible()
+    await expect(page.getByRole('link', { name: /read the exploration/i })).toHaveCount(0)
 
     const workPaths = await page
       .locator('#work a[href^="/work/"]')
