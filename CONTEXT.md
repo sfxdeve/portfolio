@@ -1,6 +1,6 @@
 # Portfolio
 
-Personal developer portfolio for Shayan Fareed: projects presented as Case Studies on a showcase-heavy Craft Logbook site, with a Resume credentials surface for hiring skim and ATS download.
+Personal developer portfolio for Shayan Fareed: projects presented as Case Studies on a showcase-heavy Craft Logbook site, with a Resume credentials surface for hiring skim and a PDF download.
 
 ## Language
 
@@ -20,14 +20,30 @@ _Avoid_: Hero illustration, stock photography, abstract gradient mesh as the mai
 The site’s overall product direction: a personal index of work that opens into Case Studies, signaling developer-built craft through restraint and systems thinking, not agency marketing or editorial branding.
 _Avoid_: Editorial, magazine layout, designer-for-hire folio, SaaS marketing landing page, dark purple-glow “dev cosplay”, display serif heroes, gradient brand themes, terracotta-on-cream, parallax/scroll-hijack heroes
 
+**Identity**:
+The shared person record: name, “product engineer” role, bio, and chrome contact (Email, GitHub, LinkedIn). Location is Resume-only and not part of Identity.
+_Avoid_: About, author byline, personal brand blurb, “design engineer” as the primary role label
+
+**Catalog**:
+The single source of portfolio facts (Identity, Case Studies, Resume sections). On-site pages and the PDF download are views of it, not separate records.
+_Avoid_: CMS, content database, duplicated page-local copy, hand-maintained download distinct from the site
+
+**Profile**:
+The on-page section that presents Identity (and location when shown on Resume).
+_Avoid_: About, bio essay, dedicated /about page
+
 **Home**:
-The landing surface: short identity (name + “product engineer” role + shared bio) plus the work index of Case Studies. Contact stays in chrome; Writing is out of scope.
-_Avoid_: Work-only home, manifesto hero, cryptic craft-only landing, tall about-me first screen, card-grid project gallery, blog/writing index, contact-form page, “design engineer” as the primary Home label
+The landing surface: Identity plus the work index of Case Studies. Contact stays in chrome; Writing is out of scope.
+_Avoid_: Work-only home, manifesto hero, cryptic craft-only landing, tall about-me first screen, card-grid project gallery, blog/writing index, contact-form page
 
 **Resume**:
-The credentials surface: shared Identity bio (Profile), Experience, Projects as a projection of Case Studies (title + index summary + link, no outcome bullets), curated Skills, Languages, degree-only Education, and an ATS download that is the same facts in a plain presentation. Catalog owns the record; on-site page and download are two views. Location appears on Resume only; chrome contact is Email, GitHub, and LinkedIn.
-_Avoid_: About, CV as the site word, thin bio-only page, career timeline as the product, second ATS narrative, outcome bullets or Showcases on Resume, full school history below degree, skills laundry list, /about redirect
+The credentials surface for hiring skim: Profile, Experience, Projects, curated Skills, Languages, degree-only Education, and a PDF download of the same Catalog facts.
+_Avoid_: About, CV as the site word, thin bio-only page, career timeline as the product, ATS download, second PDF narrative, Craft Logbook styling in the PDF, multi-page PDF, outcome bullets or Showcases on Resume, full school history below degree, skills laundry list, /about redirect
 
 **Experience**:
 A paid or engaged position on the Resume: title, organization, location, date range, and short ownership bullets. Describes what was owned in that engagement; not a Case Study and not Capsule role.
 _Avoid_: Role (as the Resume noun), job card, employment essay, collapsing Experience into Projects
+
+**Projects**:
+Resume entries projected from Case Studies: title, index summary, and link — no outcome bullets or Showcases.
+_Avoid_: Second Case Study body, portfolio gallery cards, outcome bullets on Resume

@@ -1,13 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
 
-import { renderAtsHtml } from "@/catalog/ats-html";
 import { getResume, identity } from "@/catalog/portfolio";
+import { renderResumePrintHtml } from "@/catalog/resume-print-html";
 
-describe("ATS Resume HTML", () => {
+describe("Resume print HTML", () => {
   it("renders the same catalog facts as the on-site Resume", () => {
-    const html = renderAtsHtml();
+    const html = renderResumePrintHtml();
     const resume = getResume();
 
     expect(html).toContain(identity.name);
@@ -49,10 +47,5 @@ describe("ATS Resume HTML", () => {
     expect(html).toContain("NED University of Engineering &amp; Technology");
     expect(html).not.toContain("Intermediate");
     expect(html).not.toContain("Matriculation");
-  });
-
-  it("keeps the committed public ATS file aligned with renderAtsHtml", () => {
-    const committed = readFileSync(resolve("public/resume/ats.html"), "utf8");
-    expect(committed).toBe(renderAtsHtml());
   });
 });

@@ -1,12 +1,10 @@
 import { Link } from "@tanstack/react-router";
 
 import { getResume } from "@/catalog/portfolio";
+import { RESUME_PDF_HREF, resumePdfDownloadName } from "@/catalog/resume-pdf";
 import { IdentityHeader } from "@/components/identity-header";
 import { PageShell } from "@/components/page-shell";
 import { ProfileSection } from "@/components/profile-section";
-
-const ATS_HREF = "/resume/ats.html";
-const ATS_FILENAME = "Shayan Fareed - Resume.html";
 
 export function ResumePage() {
   const resume = getResume();
@@ -17,11 +15,11 @@ export function ResumePage() {
         label="Resume"
         aside={
           <a
-            href={ATS_HREF}
-            download={ATS_FILENAME}
+            href={RESUME_PDF_HREF}
+            download={resumePdfDownloadName()}
             className="font-mono text-[11px] tracking-wide text-accent-ink transition-colors hover:text-foreground focus-visible:text-foreground"
           >
-            Download ATS
+            Download PDF
           </a>
         }
       />

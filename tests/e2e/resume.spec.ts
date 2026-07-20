@@ -26,7 +26,7 @@ test("navigates among Home, Resume, and a Case Study via chrome", async ({ page 
     .click();
   await expect(page).toHaveURL(/\/resume$/);
   await expect(page.getByRole("region", { name: "Experience" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Download ATS/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Download PDF/i })).toBeVisible();
   await expect(
     page.getByRole("link", { name: "View case study for EcoBuiltConnect" }),
   ).toBeVisible();
@@ -40,16 +40,16 @@ test("Resume page has no automatically detectable accessibility violations", asy
   expect(results.violations).toEqual([]);
 });
 
-test("About route is gone and ATS download serves catalog Resume HTML", async ({ page }) => {
+test("About route is gone and Resume PDF download is served", async ({ page, request }) => {
   await page.goto("/about");
   await expect(page.getByRole("heading", { name: /This page is not in the site/ })).toBeVisible();
 
-  const response = await page.goto("/resume/ats.html");
-  expect(response?.ok()).toBe(true);
-  await expect(page.locator("body")).toContainText("Shayan Fareed");
-  await expect(page.locator("body")).toContainText("Experience");
-  await expect(page.locator("body")).toContainText(
-    "https://shayanfareed.vercel.app/work/ecobuiltconnect",
-  );
-  await expect(page.locator("body")).not.toContainText("Intermediate");
+  const response = await request.get("/resume/download.pdf");
+  expect(response.ok()).toBe(true);
+  expect(response.headers()["content-type"] ?? "").toMatch(/application\/pdf/);
+  const body = await response.body();
+  expect(body.subarray(0, 5).toString("utf8")).toBe("%PDF-");
+
+  const gone = await request.get("/resume/ats.html");
+  expect(gone.ok()).toBeFalsy();
 });

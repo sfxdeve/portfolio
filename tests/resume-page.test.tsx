@@ -55,11 +55,11 @@ describe("Resume page", () => {
     expect(within(education).queryByText(/Intermediate|Matriculation/)).toBeNull();
   });
 
-  it("exposes an ATS download control", () => {
+  it("exposes a PDF download control", () => {
     render(<ResumePage />);
 
-    const download = screen.getByRole("link", { name: /Download ATS/i });
-    expect(download.getAttribute("href")).toBe("/resume/ats.html");
-    expect(download.getAttribute("download")).toBeTruthy();
+    const download = screen.getByRole("link", { name: /Download PDF/i });
+    expect(download.getAttribute("href")).toBe("/resume/download.pdf");
+    expect(download.getAttribute("download")).toBe("Shayan Fareed - Product Engineer.pdf");
   });
 });

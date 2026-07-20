@@ -18,7 +18,7 @@ The project uses Node 24 LTS and pnpm 11. The committed lockfile makes installs 
 - `pnpm build` creates a Nitro production build.
 - `pnpm start` runs the built Node server.
 - `pnpm test` runs unit and end-to-end tests.
-- `pnpm check` runs type checking, linting, formatting checks, tests, the production build, and a production-server smoke test.
+- `pnpm check` runs type checking, linting, formatting checks, tests, and the production build.
 
 ## Stack
 

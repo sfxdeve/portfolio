@@ -90,7 +90,7 @@ export const identity: Identity = {
   ],
 };
 
-/** Canonical public origin for absolute links in the ATS download. */
+/** Canonical public origin for absolute links in the Resume PDF download. */
 export const siteOrigin = "https://shayanfareed.vercel.app";
 
 const experience: Experience[] = [

@@ -1,4 +1,5 @@
 import { getResume, identity, siteOrigin, type Resume } from "@/catalog/portfolio";
+import { identityRoleLabel } from "@/catalog/resume-pdf";
 
 function escapeHtml(value: string): string {
   return value
@@ -79,9 +80,10 @@ function educationHtml(resume: Resume): string {
     .join("\n");
 }
 
-/** Plain print-ready HTML of the catalog Resume; same facts as the on-site page. */
-export function renderAtsHtml(): string {
+/** Plain print-ready HTML of the catalog Resume; generator input for the PDF download. */
+export function renderResumePrintHtml(): string {
   const resume = getResume();
+  const roleLabel = identityRoleLabel();
   const languages = resume.languages
     .map((language) => `${escapeHtml(language.name)}: ${escapeHtml(language.level)}`)
     .join(" | ");
@@ -91,7 +93,7 @@ export function renderAtsHtml(): string {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${escapeHtml(identity.name)} - Product Engineer</title>
+    <title>${escapeHtml(identity.name)} - ${escapeHtml(roleLabel)}</title>
     <style>
       @page {
         size: A4;
@@ -188,7 +190,7 @@ export function renderAtsHtml(): string {
     <main class="page">
       <header class="header">
         <div class="name">${escapeHtml(identity.name)}</div>
-        <div class="title">Product Engineer</div>
+        <div class="title">${escapeHtml(roleLabel)}</div>
         <div class="contact">
           ${contactLine()}
         </div>
