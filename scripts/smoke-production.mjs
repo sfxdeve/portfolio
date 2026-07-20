@@ -32,7 +32,7 @@ try {
       const response = await fetch(`http://127.0.0.1:${port}/`);
       const body = await response.text();
 
-      if (response.ok && body.includes("Start building your portfolio.")) {
+      if (response.ok && body.includes("Shayan Fareed") && body.includes("product engineer")) {
         process.exitCode = 0;
         break;
       }
