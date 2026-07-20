@@ -1,6 +1,6 @@
-# Portfolio Starter
+# Craft Logbook
 
-A clean, batteries-included starting point for building a portfolio with TanStack Start, React, TypeScript, Tailwind CSS, shadcn/Base UI, MDX, TanStack Form, and Zod.
+Personal product-engineer portfolio for Shayan Fareed: a Home work index, Capsule meta-rail Case Studies, and a thin About surface.
 
 ## Setup
 
@@ -20,16 +20,10 @@ The project uses Node 24 LTS and pnpm 11. The committed lockfile makes installs 
 - `pnpm test` runs unit and end-to-end tests.
 - `pnpm check` runs type checking, linting, formatting checks, tests, the production build, and a production-server smoke test.
 
-## Included capabilities
+## Stack
 
-- TanStack Start with file-based routing and generic Nitro deployment output
-- Tailwind CSS and shadcn components backed by Base UI
-- MDX with GFM and frontmatter exports
-- TanStack Form with Zod validation
+- TanStack Start with file-based routing and Nitro deployment output
+- Tailwind CSS and shadcn/Base UI tokens
 - Oxlint, Oxfmt, Vitest, Testing Library, Playwright, and axe
 
-TanStack Start and Nitro are intentionally retained while their current releases remain pre-stable. All other direct dependencies start from the latest stable releases verified when this template was created.
-
-## Remove the showcase
-
-The home page is disposable example code. Delete `src/examples`, replace the component in `src/routes/index.tsx`, and remove the example tests when you are ready to build the portfolio.
+Domain language lives in `CONTEXT.md`. Visual direction: `docs/adr/0001-craft-logbook-visual-direction.md`.

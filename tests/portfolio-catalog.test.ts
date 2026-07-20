@@ -1,0 +1,69 @@
+import { describe, expect, it } from "vitest";
+
+import { getCaseStudyBySlug, identity, listCaseStudies } from "@/catalog/portfolio";
+
+describe("portfolio catalog", () => {
+  it("exposes identity with name, role, about blurb, and contact links", () => {
+    expect(identity.name).toBe("Shayan Fareed");
+    expect(identity.role).toBe("product engineer");
+    expect(identity.about.length).toBeGreaterThan(0);
+    expect(identity.contact.length).toBeGreaterThan(0);
+    for (const link of identity.contact) {
+      expect(link.label.length).toBeGreaterThan(0);
+      expect(link.href.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("lists two to three Case Studies in order", () => {
+    const caseStudies = listCaseStudies();
+    expect(caseStudies.length).toBeGreaterThanOrEqual(2);
+    expect(caseStudies.length).toBeLessThanOrEqual(3);
+  });
+
+  it("gives each Case Study a slug, Capsule fields, and at least one Showcase", () => {
+    for (const study of listCaseStudies()) {
+      expect(study.slug.length).toBeGreaterThan(0);
+      expect(study.capsule.problem.length).toBeGreaterThan(0);
+      expect(study.capsule.role.length).toBeGreaterThan(0);
+      expect(study.capsule.stack.length).toBeGreaterThan(0);
+      expect(study.capsule.outcome.length).toBeGreaterThan(0);
+      expect(study.body.some((block) => block.type === "showcase")).toBe(true);
+      for (const block of study.body) {
+        if (block.type !== "showcase") continue;
+        expect(block.showcase.src.startsWith("/evidence/")).toBe(true);
+        expect(block.showcase.alt.length).toBeGreaterThan(0);
+        expect(block.showcase.width).toBeGreaterThan(0);
+        expect(block.showcase.height).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("alternates text and Showcase blocks in every Case Study body", () => {
+    for (const study of listCaseStudies()) {
+      expect(study.body.length).toBeGreaterThan(0);
+      expect(study.body[0]?.type).toBe("text");
+      expect(study.body.at(-1)?.type).toBe("showcase");
+      expect(study.body.some((block) => block.type === "text")).toBe(true);
+      expect(study.body.some((block) => block.type === "showcase")).toBe(true);
+
+      for (let index = 1; index < study.body.length; index += 1) {
+        expect(study.body[index]?.type).not.toBe(study.body[index - 1]?.type);
+      }
+    }
+  });
+
+  it("lists the shipped Case Studies from the portfolio catalog in order", () => {
+    expect(listCaseStudies().map((study) => study.slug)).toEqual([
+      "ecobuiltconnect",
+      "artisanconnect",
+      "rushuploads",
+    ]);
+  });
+
+  it("returns a Case Study for a known slug and nothing for an unknown slug", () => {
+    const [first] = listCaseStudies();
+    expect(first).toBeDefined();
+    expect(getCaseStudyBySlug(first!.slug)).toEqual(first);
+    expect(getCaseStudyBySlug("does-not-exist")).toBeUndefined();
+  });
+});
