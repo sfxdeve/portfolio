@@ -2,15 +2,15 @@
 
 ### Issue tracker
 
-Issues and PRDs are tracked in GitHub Issues via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues and PRDs are tracked in GitHub Issues for this repository. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
-Use the default five-label triage vocabulary. See `docs/agents/triage-labels.md`.
+Triage uses the default five canonical label names. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 
-Single-context repo: read root `CONTEXT.md` and root `docs/adr/` when present. See `docs/agents/domain.md`.
+Domain documentation uses a single-context layout. See `docs/agents/domain.md`.
 
 ## Cursor Cloud specific instructions
 
