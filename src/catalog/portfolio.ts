@@ -1,4 +1,7 @@
+export type ContactKind = "email" | "github" | "linkedin";
+
 export type ContactLink = {
+  kind: ContactKind;
   label: string;
   href: string;
 };
@@ -6,7 +9,7 @@ export type ContactLink = {
 export type Identity = {
   name: string;
   role: string;
-  about: string;
+  bio: string;
   contact: ContactLink[];
 };
 
@@ -79,12 +82,11 @@ export type CaseStudy = {
 export const identity: Identity = {
   name: "Shayan Fareed",
   role: "product engineer",
-  about:
-    "I take on the difficult middle, where product decisions, technical constraints, and day-to-day operations meet, and stay with the work until it is out in the world and working as it should. I connect frontend, backend, APIs, and delivery into coherent systems, especially where the requirements are tangled, the trust boundary matters, and the final product has to be useful in the real world.",
+  bio: "I take on the difficult middle, where product decisions, technical constraints, and day-to-day operations meet, and stay with the work until it is out in the world and working as it should. I connect frontend, backend, APIs, and delivery into coherent systems, especially where the requirements are tangled, the trust boundary matters, and the final product has to be useful in the real world.",
   contact: [
-    { label: "Email", href: "mailto:sfx.pers@gmail.com" },
-    { label: "GitHub", href: "https://github.com/sfxdeve" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/shayanfareed" },
+    { kind: "email", label: "Email", href: "mailto:sfx.pers@gmail.com" },
+    { kind: "github", label: "GitHub", href: "https://github.com/sfxdeve" },
+    { kind: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/shayanfareed" },
   ],
 };
 

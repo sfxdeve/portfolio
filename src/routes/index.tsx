@@ -9,7 +9,7 @@ export const Route = createFileRoute("/")({
       { title: `${identity.name} - ${identity.role}` },
       {
         name: "description",
-        content: identity.about,
+        content: identity.bio,
       },
     ],
   }),

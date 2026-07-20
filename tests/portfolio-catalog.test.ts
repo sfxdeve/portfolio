@@ -3,18 +3,19 @@ import { describe, expect, it } from "vitest";
 import { getCaseStudyBySlug, getResume, identity, listCaseStudies } from "@/catalog/portfolio";
 
 describe("portfolio catalog", () => {
-  it("exposes identity with name, role, about blurb, and Email/GitHub/LinkedIn contact", () => {
+  it("exposes identity with name, role, bio blurb, and Email/GitHub/LinkedIn contact", () => {
     expect(identity.name).toBe("Shayan Fareed");
     expect(identity.role).toBe("product engineer");
-    expect(identity.about.length).toBeGreaterThan(0);
+    expect(identity.bio.length).toBeGreaterThan(0);
+    expect(identity.contact.map((link) => link.kind)).toEqual(["email", "github", "linkedin"]);
     expect(identity.contact.map((link) => link.label)).toEqual(["Email", "GitHub", "LinkedIn"]);
-    expect(identity.contact.find((link) => link.label === "Email")?.href).toBe(
+    expect(identity.contact.find((link) => link.kind === "email")?.href).toBe(
       "mailto:sfx.pers@gmail.com",
     );
-    expect(identity.contact.find((link) => link.label === "GitHub")?.href).toBe(
+    expect(identity.contact.find((link) => link.kind === "github")?.href).toBe(
       "https://github.com/sfxdeve",
     );
-    expect(identity.contact.find((link) => link.label === "LinkedIn")?.href).toBe(
+    expect(identity.contact.find((link) => link.kind === "linkedin")?.href).toBe(
       "https://www.linkedin.com/in/shayanfareed",
     );
   });

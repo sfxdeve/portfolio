@@ -12,7 +12,7 @@ describe("ATS Resume HTML", () => {
 
     expect(html).toContain(identity.name);
     expect(html).toContain("Product Engineer");
-    expect(html).toContain(identity.about);
+    expect(html).toContain(identity.bio);
     expect(html).toContain(resume.location);
     expect(html).toContain("sfx.pers@gmail.com");
     expect(html).toContain("linkedin.com/in/shayanfareed");

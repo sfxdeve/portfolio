@@ -30,6 +30,18 @@ test("keeps the Home identity strip and Profile usable on small mobile viewports
     await expect(profile).toBeVisible();
     await expect(profile.getByText(/I take on the difficult middle/)).toBeVisible();
 
+    const linkedIn = page.getByRole("link", { name: "LinkedIn" });
+    await expect(linkedIn).toBeVisible();
+    const chromeFits = await linkedIn.evaluate((el) => {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.left >= 0 &&
+        rect.right <= document.documentElement.clientWidth &&
+        document.documentElement.scrollWidth <= document.documentElement.clientWidth
+      );
+    });
+    expect(chromeFits).toBe(true);
+
     const workIndex = page.getByRole("list", { name: "Work index" });
     await expect(workIndex).toBeAttached();
     await workIndex.scrollIntoViewIfNeeded();

@@ -12,7 +12,7 @@ describe("Craft Logbook Home", () => {
     expect(screen.getByText(identity.role)).toBeTruthy();
 
     const profile = screen.getByRole("region", { name: "Profile" });
-    expect(within(profile).getByText(identity.about)).toBeTruthy();
+    expect(within(profile).getByText(identity.bio)).toBeTruthy();
     expect(within(profile).queryByText(/Karachi/)).toBeNull();
 
     const caseStudies = listCaseStudies();

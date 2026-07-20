@@ -11,7 +11,7 @@ describe("Resume page", () => {
 
     expect(screen.getByRole("heading", { name: identity.name })).toBeTruthy();
     expect(screen.getByText(identity.role)).toBeTruthy();
-    expect(screen.getByText(identity.about)).toBeTruthy();
+    expect(screen.getByText(identity.bio)).toBeTruthy();
 
     const profile = screen.getByRole("region", { name: "Profile" });
     expect(within(profile).getByText(resume.location)).toBeTruthy();

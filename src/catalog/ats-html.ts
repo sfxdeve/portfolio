@@ -9,9 +9,9 @@ function escapeHtml(value: string): string {
 }
 
 function contactLine(): string {
-  const email = identity.contact.find((link) => link.label === "Email");
-  const github = identity.contact.find((link) => link.label === "GitHub");
-  const linkedin = identity.contact.find((link) => link.label === "LinkedIn");
+  const email = identity.contact.find((link) => link.kind === "email");
+  const github = identity.contact.find((link) => link.kind === "github");
+  const linkedin = identity.contact.find((link) => link.kind === "linkedin");
   const resume = getResume();
 
   const parts = [
@@ -197,7 +197,7 @@ export function renderAtsHtml(): string {
       <section class="section">
         <div class="section-title">Profile</div>
         <p>
-          ${escapeHtml(identity.about)}
+          ${escapeHtml(identity.bio)}
         </p>
       </section>
 
