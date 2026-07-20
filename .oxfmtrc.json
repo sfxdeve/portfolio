@@ -1,13 +1,4 @@
 {
-  "semi": false,
-  "singleQuote": true,
-  "ignorePatterns": ["docs/**", "src/routeTree.gen.ts"],
-  "sortImports": {},
-  "sortPackageJson": {
-    "sortScripts": true
-  },
-  "sortTailwindcss": {
-    "stylesheet": "./src/styles.css",
-    "functions": ["clsx", "cn"]
-  }
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [".agents/**", "src/routeTree.gen.ts"]
 }

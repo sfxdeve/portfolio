@@ -1,11 +1,20 @@
 {
-  "plugins": ["react", "typescript", "unicorn"],
-  "categories": {
-    "correctness": "error",
-    "suspicious": "warn"
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "jsx-a11y"],
+  "options": {
+    "typeAware": true
   },
-  "ignorePatterns": ["docs/**", "src/routeTree.gen.ts"],
+  "ignorePatterns": [".agents/**", "src/routeTree.gen.ts"],
   "rules": {
     "react/react-in-jsx-scope": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/components/ui/**"],
+      "rules": {
+        "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/prefer-tag-over-role": "off"
+      }
+    }
+  ]
 }

@@ -1,32 +1,25 @@
-import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
-import type { ReactNode } from 'react'
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import type { ReactNode } from "react";
 
-import { SiteNavigation } from '@/components/site/site-navigation'
-import { createSiteHead } from '@/lib/site-meta'
-
-import styles from '../styles.css?url'
+import styles from "../styles.css?url";
 
 export const Route = createRootRoute({
-  head: () => {
-    const { links, meta, title } = createSiteHead()
-
-    return {
-      meta: [
-        { charSet: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { title },
-        ...meta,
-      ],
-      links: [
-        { rel: 'stylesheet', href: styles },
-        { rel: 'icon', href: '/orbit/orbit-logo-mark.svg', type: 'image/svg+xml' },
-        ...links,
-      ],
-    }
-  },
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Portfolio Starter" },
+      {
+        name: "description",
+        content: "A clean, batteries-included starting point for a personal portfolio.",
+      },
+    ],
+    links: [{ rel: "stylesheet", href: styles }],
+  }),
   shellComponent: RootDocument,
-  component: Outlet,
-})
+});
 
 function RootDocument({ children }: { children: ReactNode }) {
   return (
@@ -35,10 +28,18 @@ function RootDocument({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <SiteNavigation />
         {children}
+        <TanStackDevtools
+          config={{ position: "bottom-right" }}
+          plugins={[
+            {
+              name: "TanStack Router",
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+          ]}
+        />
         <Scripts />
       </body>
     </html>
-  )
+  );
 }

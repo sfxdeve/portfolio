@@ -1,11 +1,13 @@
-import { defineConfig } from 'vitest/config'
+import viteReact from "@vitejs/plugin-react";
+import { configDefaults, defineConfig } from "vitest/config";
 
-import { createMdxPlugin } from './mdx.config'
+import { createMdxPlugin } from "./mdx.config";
 
 export default defineConfig({
-  plugins: [createMdxPlugin()],
   resolve: { tsconfigPaths: true },
+  plugins: [createMdxPlugin(), viteReact({ include: /\.(?:js|jsx|mdx|ts|tsx)$/ })],
   test: {
-    include: ['tests/**/*.test.ts'],
+    environment: "jsdom",
+    exclude: [...configDefaults.exclude, "tests/e2e/**"],
   },
-})
+});

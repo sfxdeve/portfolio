@@ -1,10 +1,10 @@
 [tools]
 node = "24.18.0"
-pnpm = "11.10.0"
+pnpm = "11.13.0"
 
 [tasks.setup]
-description = "Install locked dependencies and Playwright Chromium"
-run = ["pnpm install --frozen-lockfile", "pnpm exec playwright install chromium"]
+description = "Install locked dependencies and Chromium/WebKit for Playwright"
+run = ["pnpm install --frozen-lockfile", "pnpm exec playwright install chromium webkit"]
 
 [tasks.check]
 description = "Run the complete repository validation suite"

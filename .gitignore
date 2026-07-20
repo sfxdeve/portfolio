@@ -1,11 +1,9 @@
-# Dependencies
 node_modules/
 
-# Build and framework output
+# Framework and build output
 .nitro/
 .output/
 .tanstack/
-.vercel/
 dist/
 dist-ssr/
 
@@ -17,18 +15,12 @@ test-results/
 # Local environment and tool state
 .env
 .env.*
-!.env.example
 *.local
 *.tsbuildinfo
 
-# Logs
+# Logs and editor files
 *.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS, editor, and local worktrees
 .DS_Store
 .idea/
+.vscode/
 .worktrees/
