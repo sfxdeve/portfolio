@@ -1,6 +1,6 @@
 # Craft Logbook
 
-Personal product-engineer portfolio for Shayan Fareed: a Home work index, Capsule meta-rail Case Studies, and a thin About surface.
+Personal product-engineer portfolio for Shayan Fareed: Home (work index), Case Studies, and a thin About surface.
 
 ## Setup
 
@@ -26,4 +26,4 @@ The project uses Node 24 LTS and pnpm 11. The committed lockfile makes installs 
 - Tailwind CSS and shadcn/Base UI tokens
 - Oxlint, Oxfmt, Vitest, Testing Library, Playwright, and axe
 
-Domain language lives in `CONTEXT.md`. Visual direction: `docs/adr/0001-craft-logbook-visual-direction.md`.
+Domain language: `CONTEXT.md`. Product contract: `docs/adr/0001-craft-logbook-visual-direction.md`.
