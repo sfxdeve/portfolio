@@ -1,0 +1,26 @@
+node_modules/
+
+# Framework and build output
+.nitro/
+.output/
+.tanstack/
+dist/
+dist-ssr/
+
+# Test output
+coverage/
+playwright-report/
+test-results/
+
+# Local environment and tool state
+.env
+.env.*
+*.local
+*.tsbuildinfo
+
+# Logs and editor files
+*.log
+.DS_Store
+.idea/
+.vscode/
+.worktrees/
