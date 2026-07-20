@@ -29,7 +29,14 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
           {study.body.map((block, index) =>
             block.type === "text" ? (
               <section key={`text-${index}`} className="max-w-xl">
-                <h2 className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
+                {block.depth === "technical" ? (
+                  <p className="font-mono text-[11px] tracking-wider text-accent-ink uppercase">
+                    Technical decision
+                  </p>
+                ) : null}
+                <h2
+                  className={`${block.depth === "technical" ? "mt-1" : ""} font-mono text-[11px] tracking-wider text-muted-foreground uppercase`}
+                >
                   {block.heading}
                 </h2>
                 <p className="mt-2 text-base leading-relaxed text-foreground/80">{block.body}</p>

@@ -23,6 +23,7 @@ describe("portfolio catalog", () => {
   it("gives each Case Study a slug, Capsule fields, and at least one Showcase", () => {
     for (const study of listCaseStudies()) {
       expect(study.slug.length).toBeGreaterThan(0);
+      expect(study.indexSummary.length).toBeGreaterThan(0);
       expect(study.capsule.problem.length).toBeGreaterThan(0);
       expect(study.capsule.role.length).toBeGreaterThan(0);
       expect(study.capsule.stack.length).toBeGreaterThan(0);
@@ -34,6 +35,21 @@ describe("portfolio catalog", () => {
         expect(block.showcase.alt.length).toBeGreaterThan(0);
         expect(block.showcase.width).toBeGreaterThan(0);
         expect(block.showcase.height).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("includes peer-depth technical text in every Case Study body", () => {
+    for (const study of listCaseStudies()) {
+      const technicalBlocks = study.body.filter(
+        (block) => block.type === "text" && block.depth === "technical",
+      );
+      expect(technicalBlocks.length).toBeGreaterThan(0);
+      for (const block of technicalBlocks) {
+        if (block.type !== "text") continue;
+        expect(block.body).toMatch(/Decision:/);
+        expect(block.body).toMatch(/Constraint:/);
+        expect(block.body).toMatch(/Trade-off:/);
       }
     }
   });

@@ -15,7 +15,7 @@ describe("Craft Logbook Home", () => {
     for (const study of caseStudies) {
       const link = screen.getByRole("link", { name: new RegExp(study.title) });
       expect(link.getAttribute("href")).toBe(`/work/${study.slug}`);
-      expect(link.textContent).toContain(study.outcome);
+      expect(link.textContent).toContain(study.indexSummary);
       expect(link.textContent).toContain(study.year);
     }
 

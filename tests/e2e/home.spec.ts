@@ -14,6 +14,22 @@ test("shows Craft Logbook identity and work index", async ({ page }) => {
   await expect(page).not.toHaveTitle(/Portfolio Starter/);
 });
 
+test("keeps the full work index inside small mobile viewports", async ({ page }) => {
+  for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 375, height: 667 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+
+    const lastRow = page.getByRole("list", { name: "Work index" }).locator("li").last();
+    await expect(lastRow).toBeVisible();
+
+    const bottom = await lastRow.evaluate((element) => element.getBoundingClientRect().bottom);
+    expect(bottom).toBeLessThanOrEqual(viewport.height);
+  }
+});
+
 test("has no automatically detectable accessibility violations", async ({ page }) => {
   await page.goto("/");
 

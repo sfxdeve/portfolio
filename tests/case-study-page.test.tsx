@@ -49,4 +49,24 @@ describe("Case Study page", () => {
       }
     }
   });
+
+  it("marks technical decision blocks for peer-depth readers", () => {
+    const study = listCaseStudies().find((entry) =>
+      entry.body.some((block) => block.type === "text" && block.depth === "technical"),
+    );
+    expect(study).toBeDefined();
+    if (!study) return;
+
+    render(<CaseStudyPage study={study} />);
+
+    const technicalBlocks = study.body.filter(
+      (block) => block.type === "text" && block.depth === "technical",
+    );
+    expect(screen.getAllByText("Technical decision").length).toBe(technicalBlocks.length);
+    for (const block of technicalBlocks) {
+      if (block.type !== "text") continue;
+      expect(screen.getByRole("heading", { name: block.heading })).toBeTruthy();
+      expect(screen.getByText(block.body)).toBeTruthy();
+    }
+  });
 });

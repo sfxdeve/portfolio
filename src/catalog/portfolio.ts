@@ -21,7 +21,7 @@ export type ShowcaseBlock = {
 };
 
 export type CaseBodyBlock =
-  | { type: "text"; heading: string; body: string }
+  | { type: "text"; depth: "product" | "technical"; heading: string; body: string }
   | { type: "showcase"; showcase: ShowcaseBlock };
 
 export type Capsule = {
@@ -34,8 +34,7 @@ export type Capsule = {
 export type CaseStudy = {
   slug: string;
   title: string;
-  outcome: string;
-  stack: string[];
+  indexSummary: string;
   year: string;
   capsule: Capsule;
   body: CaseBodyBlock[];
@@ -56,8 +55,7 @@ const caseStudies: CaseStudy[] = [
   {
     slug: "ecobuiltconnect",
     title: "EcoBuiltConnect",
-    outcome: "Making finite material supply trustworthy enough to buy",
-    stack: ["TypeScript", "React", "TanStack", "Postgres"],
+    indexSummary: "Making finite material supply trustworthy enough to buy",
     year: "2026",
     capsule: {
       problem:
@@ -70,6 +68,7 @@ const caseStudies: CaseStudy[] = [
     body: [
       {
         type: "text",
+        depth: "product",
         heading: "Discovery had to carry trust, not just inventory",
         body: "Buyers needed enough context to act on limited supply. Sellers needed controlled ways to describe condition, sustainability, price, quantity, and fulfillment, not free-text claims the marketplace could not stand behind.",
       },
@@ -87,6 +86,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Structured fields made claims comparable",
         body: "Listing detail used the same structured fields (condition, sustainability, price, quantity, fulfillment) so buyers could inspect seller claims side by side instead of parsing free-text promises.",
       },
@@ -104,6 +104,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Review protected the marketplace without rewriting sellers",
         body: "Operators could give feedback, hide listings, and block unsupported materials, but they did not rewrite seller-owned claims. Accountability stayed clear.",
       },
@@ -121,6 +122,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Ownership and publication stayed separate",
         body: "Sellers authored the claims; operators controlled publication. Feedback, hiding, and material blocks could stop a listing from reaching buyers without rewriting what the seller stood behind.",
       },
@@ -138,8 +140,9 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
-        heading: "Checkout separated one buyer action from many seller responsibilities",
-        body: "One checkout could include multiple sellers, then split into seller-scoped orders so confirmation, fulfillment, cancellation, dispute handling, and payout stayed clear.",
+        depth: "technical",
+        heading: "Checkout split into seller-scoped orders",
+        body: "Decision: one cart checkout fans out into seller-scoped orders before confirmation, fulfillment, disputes, or payout. Constraint: a buyer can pay once while each seller remains independently responsible for inventory, handoff, and money movement. Trade-off: the platform carries an extra order-partition step and must keep cart totals reconciled with per-seller states, but cancellation or dispute against one seller no longer contaminates the others.",
       },
       {
         type: "showcase",
@@ -155,8 +158,9 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
-        heading: "Payout followed quantity, not optimism",
-        body: "Surplus-material fulfillment can happen in pieces. Payout followed handed-off quantities, held disputed amounts, and made undisputed handoffs eligible after the review window.",
+        depth: "technical",
+        heading: "Payout keyed to handed-off quantity",
+        body: "Decision: payout eligibility follows handed-off quantity, not the optimistic whole-order amount. Constraint: surplus materials often ship in pieces, and disputed units must stay held while undisputed units can clear after the review window. Trade-off: payout and dispute code has to track partial fulfillment states instead of a single paid/unpaid flag, but sellers get paid for what they actually delivered without waiting on unrelated line items.",
       },
       {
         type: "showcase",
@@ -176,8 +180,7 @@ const caseStudies: CaseStudy[] = [
   {
     slug: "artisanconnect",
     title: "ArtisanConnect",
-    outcome: "Keeping local service work accountable from quote to review",
-    stack: ["TypeScript", "React", "TanStack"],
+    indexSummary: "Keeping local service work accountable from quote to review",
     year: "2025",
     capsule: {
       problem:
@@ -190,6 +193,7 @@ const caseStudies: CaseStudy[] = [
     body: [
       {
         type: "text",
+        depth: "product",
         heading: "Public trust started before a job was posted",
         body: "Clients needed verification, reputation, and work evidence to choose confidently. Artisans needed visibility without exposing direct contact details or external links.",
       },
@@ -208,6 +212,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Jobs needed enough detail for remote-first pricing",
         body: "Artisans could not quote responsibly from vague descriptions. Job creation gathered practical remote-first detail (media, measurements, access, symptoms, timing) without a bloated contracting workflow.",
       },
@@ -225,6 +230,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Quote comparison guided without declaring a winner",
         body: "Clients compared price, materials, availability, reputation, and verification. The product helped them reason; it did not flatten the decision with “best” or “cheapest” labels.",
       },
@@ -243,8 +249,9 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
-        heading: "Payment created the engagement boundary",
-        body: "Work did not begin until the engagement was funded. Smaller jobs released on completion; larger jobs split release across start confirmation and completion.",
+        depth: "technical",
+        heading: "Funding opens the engagement lifecycle",
+        body: "Decision: an accepted quote becomes a protected engagement only after funding, and release rules vary by job size—completion-only for smaller jobs, start-plus-completion for larger ones. Constraint: work must not begin on an unfunded promise, but larger jobs still need capital available before the artisan shows up. Trade-off: the payment state machine is more complex than a single capture-on-complete flow, yet every later dispute, payout, and review can hang off one funded engagement instead of ad-hoc invoices.",
       },
       {
         type: "showcase",
@@ -260,6 +267,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Completion, payout, and reviews closed the loop",
         body: "Completion notes and after-work photos anchored release, disputes, and two-sided reviews, all attached to the same paid engagement record.",
       },
@@ -277,8 +285,9 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
-        heading: "One engagement record held the whole loop",
-        body: "Funding, completion evidence, payout, disputes, and two-sided reviews all attached to the same paid engagement, so artisans could see marketplace work and money state without stitching separate records together.",
+        depth: "technical",
+        heading: "One engagement record owns money and proof",
+        body: "Decision: funding, completion evidence, payout, disputes, and two-sided reviews all attach to the same paid engagement aggregate. Constraint: artisans and operators need one place to see whether work, evidence, and money agree without stitching quote, chat, and payout tables by hand. Trade-off: the engagement model becomes the system of record and rejects looser multi-object workflows, but dashboard and dispute flows stay coherent because every state change has a single parent id.",
       },
       {
         type: "showcase",
@@ -297,8 +306,7 @@ const caseStudies: CaseStudy[] = [
   {
     slug: "rushuploads",
     title: "RushUploads",
-    outcome: "Making large-file delivery simple without hiding the system underneath",
-    stack: ["TypeScript", "React"],
+    indexSummary: "Making large-file delivery simple without hiding the system underneath",
     year: "2025",
     capsule: {
       problem:
@@ -311,8 +319,9 @@ const caseStudies: CaseStudy[] = [
     body: [
       {
         type: "text",
-        heading: "The upload flow waited until the sender was ready",
-        body: "Selecting files did not immediately commit upload work. Senders could edit title, message, expiry, and limits; upload started only when they chose to send.",
+        depth: "technical",
+        heading: "Transfers stay staged until explicit send",
+        body: "Decision: file selection creates a staged transfer draft; upload work starts only on an explicit send after title, message, expiry, and limits are set. Constraint: large-file uploads are expensive to restart, and senders need to revise metadata without paying that cost twice. Trade-off: the client must manage draft versus uploading versus shareable states instead of a fire-and-forget picker, but failed or abandoned drafts never become public links and never bill storage for incomplete intent.",
       },
       {
         type: "showcase",
@@ -328,6 +337,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Upload waited on an explicit send",
         body: "The staged transfer lifecycle kept title, message, expiry, and limits editable after files were chosen. Upload work began only when the sender committed; then the success state became the share moment.",
       },
@@ -345,6 +355,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Recipients needed the least possible friction",
         body: "Recipients downloaded from a public transfer page without an account. Download clicks routed through an ad-supported interstitial that funded sender earnings.",
       },
@@ -362,8 +373,9 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
-        heading: "Access and monetization were separate steps",
-        body: "Public transfer access showed the files without an account. The monetized download step lived in a separate interstitial, so recipients could inspect the transfer before the ad-supported countdown began.",
+        depth: "technical",
+        heading: "Public access stays separate from monetized download",
+        body: "Decision: the public transfer page shows files without an account, while the ad-supported countdown lives on a separate interstitial before the actual download. Constraint: recipients must inspect what they are about to fetch, but sender earnings still depend on the monetized step. Trade-off: two surfaces replace a single download button, adding a hop in the happy path, yet inspection and monetization no longer fight over the same route and accounting remains tied to interstitial completion rather than mere page views.",
       },
       {
         type: "showcase",
@@ -380,6 +392,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Sender value came from visibility and earnings",
         body: "Senders needed more than a share link: transfer state, download activity, balance, lifetime earnings, and payout request status had to stay visible.",
       },
@@ -398,6 +411,7 @@ const caseStudies: CaseStudy[] = [
       },
       {
         type: "text",
+        depth: "product",
         heading: "Admin operations made the model accountable",
         body: "An ad-supported file-transfer product needs operational control over analytics, moderation, payout requests, user disabling, and ad inventory.",
       },
