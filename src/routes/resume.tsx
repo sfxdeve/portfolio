@@ -1,17 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { identity } from "@/catalog/portfolio";
-import { AboutPage } from "@/components/about-page";
+import { ResumePage } from "@/components/resume-page";
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute("/resume")({
   head: () => ({
     meta: [
-      { title: `${identity.name} - About` },
+      { title: `${identity.name} - Resume` },
       {
         name: "description",
         content: identity.about,
       },
     ],
   }),
-  component: AboutPage,
+  component: ResumePage,
 });

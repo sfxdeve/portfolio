@@ -1,26 +1,19 @@
 import { Link } from "@tanstack/react-router";
 
-import { identity, listCaseStudies } from "@/catalog/portfolio";
+import { listCaseStudies } from "@/catalog/portfolio";
+import { IdentityHeader } from "@/components/identity-header";
 import { PageShell } from "@/components/page-shell";
+import { ProfileSection } from "@/components/profile-section";
 
 export function HomePage() {
   const caseStudies = listCaseStudies();
 
   return (
     <PageShell>
-      <header className="mt-8 grid gap-1 sm:mt-14 sm:gap-2 sm:grid-cols-[minmax(0,11rem)_1fr] sm:items-end">
-        <div>
-          <p className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-            Index
-          </p>
-          <h1 className="mt-1 text-xl font-medium tracking-tight text-foreground">
-            {identity.name}
-          </h1>
-        </div>
-        <p className="font-mono text-[12px] text-muted-foreground sm:text-right">{identity.role}</p>
-      </header>
+      <IdentityHeader label="Index" />
+      <ProfileSection />
 
-      <ol aria-label="Work index" className="mt-5 border-t border-foreground sm:mt-8">
+      <ol aria-label="Work index" className="mt-10 border-t border-border">
         {caseStudies.map((study, index) => (
           <li key={study.slug} className="border-b border-border">
             <Link

@@ -5,11 +5,15 @@ import { identity, listCaseStudies } from "@/catalog/portfolio";
 import { HomePage } from "@/components/home-page";
 
 describe("Craft Logbook Home", () => {
-  it("shows the identity strip and numbered work-index rows", () => {
+  it("shows the identity strip, Profile section, and numbered work-index rows", () => {
     render(<HomePage />);
 
     expect(screen.getByRole("heading", { name: identity.name })).toBeTruthy();
     expect(screen.getByText(identity.role)).toBeTruthy();
+
+    const profile = screen.getByRole("region", { name: "Profile" });
+    expect(within(profile).getByText(identity.about)).toBeTruthy();
+    expect(within(profile).queryByText(/Karachi/)).toBeNull();
 
     const caseStudies = listCaseStudies();
     for (const study of caseStudies) {

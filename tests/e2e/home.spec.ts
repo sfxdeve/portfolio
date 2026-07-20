@@ -1,11 +1,12 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("shows Craft Logbook identity and work index", async ({ page }) => {
+test("shows Craft Logbook identity, Profile, and work index", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Shayan Fareed" })).toBeVisible();
   await expect(page.getByText("product engineer")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Profile" })).toBeVisible();
   await expect(page.getByRole("link", { name: /EcoBuiltConnect/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /ArtisanConnect/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /RushUploads/ })).toBeVisible();
@@ -14,7 +15,9 @@ test("shows Craft Logbook identity and work index", async ({ page }) => {
   await expect(page).not.toHaveTitle(/Portfolio Starter/);
 });
 
-test("keeps the full work index inside small mobile viewports", async ({ page }) => {
+test("keeps the Home identity strip and Profile usable on small mobile viewports", async ({
+  page,
+}) => {
   for (const viewport of [
     { width: 320, height: 568 },
     { width: 375, height: 667 },
@@ -22,11 +25,15 @@ test("keeps the full work index inside small mobile viewports", async ({ page })
     await page.setViewportSize(viewport);
     await page.goto("/");
 
-    const lastRow = page.getByRole("list", { name: "Work index" }).locator("li").last();
-    await expect(lastRow).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Shayan Fareed" })).toBeVisible();
+    const profile = page.getByRole("region", { name: "Profile" });
+    await expect(profile).toBeVisible();
+    await expect(profile.getByText(/I take on the difficult middle/)).toBeVisible();
 
-    const bottom = await lastRow.evaluate((element) => element.getBoundingClientRect().bottom);
-    expect(bottom).toBeLessThanOrEqual(viewport.height);
+    const workIndex = page.getByRole("list", { name: "Work index" });
+    await expect(workIndex).toBeAttached();
+    await workIndex.scrollIntoViewIfNeeded();
+    await expect(workIndex.locator("li").first()).toBeVisible();
   }
 });
 

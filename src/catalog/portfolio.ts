@@ -10,6 +10,42 @@ export type Identity = {
   contact: ContactLink[];
 };
 
+export type Experience = {
+  title: string;
+  organization: string;
+  location: string;
+  dates: string;
+  bullets: string[];
+};
+
+export type ResumeProject = {
+  title: string;
+  summary: string;
+  href: string;
+  slug: string;
+};
+
+export type Language = {
+  name: string;
+  level: string;
+};
+
+export type Education = {
+  degree: string;
+  institution: string;
+  dates: string;
+  location: string;
+};
+
+export type Resume = {
+  location: string;
+  experience: Experience[];
+  projects: ResumeProject[];
+  skills: string[];
+  languages: Language[];
+  education: Education[];
+};
+
 export type ShowcaseBlock = {
   kind: "ui" | "diagram" | "diff" | "recording";
   label: string;
@@ -44,12 +80,78 @@ export const identity: Identity = {
   name: "Shayan Fareed",
   role: "product engineer",
   about:
-    "I take on the difficult parts, bring people and decisions together, and stay with the work until it is out in the world and working as it should. I am especially interested in product work where the requirements are tangled, the trust boundary matters, and the final system has to be useful in the real world.",
+    "I take on the difficult middle, where product decisions, technical constraints, and day-to-day operations meet, and stay with the work until it is out in the world and working as it should. I connect frontend, backend, APIs, and delivery into coherent systems, especially where the requirements are tangled, the trust boundary matters, and the final product has to be useful in the real world.",
   contact: [
     { label: "Email", href: "mailto:sfx.pers@gmail.com" },
     { label: "GitHub", href: "https://github.com/sfxdeve" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/shayanfareed" },
   ],
 };
+
+/** Canonical public origin for absolute links in the ATS download. */
+export const siteOrigin = "https://shayanfareed.vercel.app";
+
+const experience: Experience[] = [
+  {
+    title: "Freelance Product Engineer",
+    organization: "Upwork",
+    location: "Remote",
+    dates: "Jan 2025 to Present",
+    bullets: [
+      "Turn client requirements into full-stack products, shaping product decisions and carrying the work through to release for international clients.",
+      "Connect frontend systems, reusable components, backend integrations, dashboards, and workflows so complex behavior stays clear to users and manageable behind the scenes.",
+    ],
+  },
+  {
+    title: "Software Engineer",
+    organization: "Jumppace Pvt Ltd",
+    location: "Karachi, Pakistan",
+    dates: "Oct 2023 to Nov 2024",
+    bullets: [
+      "Shipped production web applications with React.js, Node.js, and MongoDB while working across frontend, backend, and shared product decisions.",
+      "Strengthened reusable components and API design so shipped features remained easier to extend and maintain after release.",
+    ],
+  },
+  {
+    title: "React.js Developer",
+    organization: "AZ Code Arena",
+    location: "Karachi, Pakistan",
+    dates: "Apr 2023 to Sep 2023",
+    bullets: [
+      "Turned Figma designs into responsive React interfaces using JavaScript, HTML, CSS, and reusable component-based UI patterns.",
+      "Connected those interfaces to REST APIs and authentication flows, keeping the final experience stable and usable across devices.",
+    ],
+  },
+];
+
+const skills = [
+  "TypeScript",
+  "React",
+  "TanStack Start",
+  "Node.js",
+  "PostgreSQL",
+  "REST APIs",
+  "Tailwind CSS",
+  "Docker",
+  "Vercel",
+  "Marketplace systems",
+  "Operational workflows",
+];
+
+const languages: Language[] = [
+  { name: "Urdu", level: "Native" },
+  { name: "English", level: "Professional" },
+  { name: "Turkish", level: "Fluent" },
+];
+
+const education: Education[] = [
+  {
+    degree: "BS Computer Science",
+    institution: "NED University of Engineering & Technology",
+    dates: "2022 to 2026",
+    location: "Karachi, Pakistan",
+  },
+];
 
 const caseStudies: CaseStudy[] = [
   {
@@ -251,7 +353,7 @@ const caseStudies: CaseStudy[] = [
         type: "text",
         depth: "technical",
         heading: "Funding opens the engagement lifecycle",
-        body: "Decision: an accepted quote becomes a protected engagement only after funding, and release rules vary by job size—completion-only for smaller jobs, start-plus-completion for larger ones. Constraint: work must not begin on an unfunded promise, but larger jobs still need capital available before the artisan shows up. Trade-off: the payment state machine is more complex than a single capture-on-complete flow, yet every later dispute, payout, and review can hang off one funded engagement instead of ad-hoc invoices.",
+        body: "Decision: an accepted quote becomes a protected engagement only after funding, and release rules vary by job size: completion-only for smaller jobs, start-plus-completion for larger ones. Constraint: work must not begin on an unfunded promise, but larger jobs still need capital available before the artisan shows up. Trade-off: the payment state machine is more complex than a single capture-on-complete flow, yet every later dispute, payout, and review can hang off one funded engagement instead of ad-hoc invoices.",
       },
       {
         type: "showcase",
@@ -438,4 +540,20 @@ export function listCaseStudies(): CaseStudy[] {
 
 export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
   return caseStudies.find((study) => study.slug === slug);
+}
+
+export function getResume(): Resume {
+  return {
+    location: "Karachi, Pakistan",
+    experience,
+    projects: caseStudies.map((study) => ({
+      title: study.title,
+      summary: study.indexSummary,
+      href: `/work/${study.slug}`,
+      slug: study.slug,
+    })),
+    skills,
+    languages,
+    education,
+  };
 }

@@ -15,8 +15,8 @@ export function SiteChrome() {
       </Link>
       <div className="flex min-w-0 items-center gap-4 sm:gap-5 font-mono text-[11px] text-muted-foreground">
         <nav aria-label="Primary" className="flex gap-4 sm:gap-5">
-          <Link to="/about" className={chromeLinkClass}>
-            About
+          <Link to="/resume" className={chromeLinkClass}>
+            Resume
           </Link>
         </nav>
         <nav aria-label="Contact" className="flex gap-4 sm:gap-5">

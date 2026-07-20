@@ -1,29 +1,33 @@
 # Portfolio
 
-Personal developer portfolio for Shayan Fareed: projects presented as Case Studies on a showcase-heavy Craft Logbook site.
+Personal developer portfolio for Shayan Fareed: projects presented as Case Studies on a showcase-heavy Craft Logbook site, with a Resume credentials surface for hiring skim and ATS download.
 
 ## Language
 
 **Case Study**:
-A project page built from a Capsule and a body of short narrative blocks with Showcase sections. Proof lives in the artifacts; text explains problem, constraints, and outcome—not chapters.
+A project page built from a Capsule and a body of short narrative blocks with Showcase sections. Proof lives in the artifacts; text explains problem, constraints, and outcome, not chapters.
 _Avoid_: Essay, article, long-form writeup, blog post, showcase-only gallery, rigid multi-section template without visual proof
 
 **Capsule**:
-The scannable Case Study summary—problem, role, stack, and outcome—so a hiring-first reader can skim the point. Technical depth follows for peers without being required to get it.
+The scannable Case Study summary (problem, role, stack, and outcome) so a hiring-first reader can skim the point. Technical depth follows for peers without being required to get it.
 _Avoid_: Manifesto intro, long abstract, pull-quote opener, peer-only jargon in the first screen, Capsule as a long top-of-page essay block
 
 **Showcase**:
-Visual or interactive proof of the work—product UI, recordings, diagrams, live demos, code diffs—used as a first-class part of a Case Study, not decoration around a wall of text. Default is artifact-first; interactive demos are optional and reserved for flagship cases that need them.
+Visual or interactive proof of the work (product UI, recordings, diagrams, live demos, code diffs) used as a first-class part of a Case Study, not decoration around a wall of text. Default is artifact-first; interactive demos are optional and reserved for flagship cases that need them.
 _Avoid_: Hero illustration, stock photography, abstract gradient mesh as the main visual, demo-obligatory portfolio
 
 **Craft Logbook**:
-The site’s overall product direction: a personal index of work that opens into Case Studies, signaling developer-built craft through restraint and systems thinking—not agency marketing or editorial branding.
+The site’s overall product direction: a personal index of work that opens into Case Studies, signaling developer-built craft through restraint and systems thinking, not agency marketing or editorial branding.
 _Avoid_: Editorial, magazine layout, designer-for-hire folio, SaaS marketing landing page, dark purple-glow “dev cosplay”, display serif heroes, gradient brand themes, terracotta-on-cream, parallax/scroll-hijack heroes
 
 **Home**:
-The landing surface: short identity (name + “product engineer” role) plus the work index of Case Studies. Contact stays in chrome; Writing is out of scope.
+The landing surface: short identity (name + “product engineer” role + shared bio) plus the work index of Case Studies. Contact stays in chrome; Writing is out of scope.
 _Avoid_: Work-only home, manifesto hero, cryptic craft-only landing, tall about-me first screen, card-grid project gallery, blog/writing index, contact-form page, “design engineer” as the primary Home label
 
-**About**:
-A thin identity surface for longer bio than Home’s strip. Not a career timeline, skills matrix, or downloadable credentials page.
-_Avoid_: Resume, CV, full bio page, experience timeline
+**Resume**:
+The credentials surface: shared Identity bio (Profile), Experience, Projects as a projection of Case Studies (title + index summary + link, no outcome bullets), curated Skills, Languages, degree-only Education, and an ATS download that is the same facts in a plain presentation. Catalog owns the record; on-site page and download are two views. Location appears on Resume only; chrome contact is Email, GitHub, and LinkedIn.
+_Avoid_: About, CV as the site word, thin bio-only page, career timeline as the product, second ATS narrative, outcome bullets or Showcases on Resume, full school history below degree, skills laundry list, /about redirect
+
+**Experience**:
+A paid or engaged position on the Resume: title, organization, location, date range, and short ownership bullets. Describes what was owned in that engagement; not a Case Study and not Capsule role.
+_Avoid_: Role (as the Resume noun), job card, employment essay, collapsing Experience into Projects
