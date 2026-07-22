@@ -35,10 +35,6 @@ export function HomePage() {
               </span>
               <span className="hidden font-mono text-[11px] text-muted-foreground sm:col-start-auto sm:block sm:pt-0.5">
                 {study.year}
-                <span className="mx-1.5 text-border" aria-hidden>
-                  ·
-                </span>
-                {study.capsule.stack.join(" · ")}
               </span>
             </Link>
           </li>
