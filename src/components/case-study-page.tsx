@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
 
 import type { CaseStudy } from "@/catalog/portfolio";
 import { PageShell } from "@/components/page-shell";
@@ -9,9 +10,10 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
     <PageShell>
       <Link
         to="/"
-        className="mt-14 inline-block font-mono text-[11px] tracking-wide text-muted-foreground transition-colors hover:text-accent-ink focus-visible:text-accent-ink"
+        className="mt-14 inline-flex items-center gap-1 font-mono text-[11px] tracking-wide text-muted-foreground transition-colors hover:text-accent-ink focus-visible:text-accent-ink"
       >
-        ← Index
+        <ArrowLeft aria-hidden className="size-3" />
+        Index
       </Link>
 
       <div className="mt-5 md:grid md:grid-cols-[minmax(12rem,14rem)_minmax(0,1fr)] md:gap-12 lg:gap-16">

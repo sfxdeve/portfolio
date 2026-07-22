@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
 
 import { PageShell } from "@/components/page-shell";
 
@@ -13,9 +14,10 @@ export function NotFoundPanel({ title, description }: { title: string; descripti
         <p className="max-w-md text-sm leading-relaxed text-muted-foreground">{description}</p>
         <Link
           to="/"
-          className="inline-block font-mono text-[11px] tracking-wide text-accent-ink transition-colors hover:text-foreground"
+          className="inline-flex items-center gap-1 font-mono text-[11px] tracking-wide text-accent-ink transition-colors hover:text-foreground"
         >
-          ← Index
+          <ArrowLeft aria-hidden className="size-3" />
+          Index
         </Link>
       </div>
     </PageShell>

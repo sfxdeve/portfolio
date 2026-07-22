@@ -31,7 +31,7 @@ describe("Case Study page", () => {
       expect(screen.getByRole("img", { name: block.showcase.alt })).toBeTruthy();
     }
 
-    const indexLink = screen.getByRole("link", { name: "← Index" });
+    const indexLink = screen.getByRole("link", { name: "Index" });
     expect(indexLink.getAttribute("href")).toBe("/");
   });
 

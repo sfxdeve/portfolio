@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 
 import { getResume } from "@/catalog/portfolio";
 import { RESUME_PDF_HREF, resumePdfDownloadName } from "@/catalog/resume-pdf";
@@ -63,9 +64,10 @@ export function ResumePage() {
                   to="/work/$slug"
                   params={{ slug: project.slug }}
                   aria-label={`View case study for ${project.title}`}
-                  className="font-mono text-[11px] tracking-wide text-accent-ink transition-colors hover:text-foreground focus-visible:text-foreground"
+                  className="inline-flex items-center gap-1 font-mono text-[11px] tracking-wide text-accent-ink transition-colors hover:text-foreground focus-visible:text-foreground"
                 >
-                  View case study →
+                  View case study
+                  <ArrowRight aria-hidden className="size-3" />
                 </Link>
               </div>
               <p className="mt-1 text-sm text-muted-foreground">{project.summary}</p>

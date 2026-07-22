@@ -31,7 +31,7 @@ test("unknown Case Study slug shows a clear not-found experience", async ({ page
 
   await expect(page.getByRole("heading", { name: /No Case Study/ })).toBeVisible();
   await expect(page.getByText(/does-not-exist/)).toBeVisible();
-  await expect(page.getByRole("link", { name: "← Index" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Index" })).toBeVisible();
   await expect(page).not.toHaveTitle(/Portfolio Starter/);
 });
 
