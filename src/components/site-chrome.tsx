@@ -20,11 +20,19 @@ export function SiteChrome() {
           </Link>
         </nav>
         <nav aria-label="Contact" className="flex flex-wrap gap-x-3 gap-y-1 sm:gap-x-5">
-          {identity.contact.map((link) => (
-            <a key={link.kind} href={link.href} className={chromeLinkClass}>
-              {link.label}
-            </a>
-          ))}
+          {identity.contact.map((link) => {
+            const opensInNewTab = link.kind === "github" || link.kind === "linkedin";
+            return (
+              <a
+                key={link.kind}
+                href={link.href}
+                className={chromeLinkClass}
+                {...(opensInNewTab ? { target: "_blank", rel: "noreferrer" } : {})}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </nav>
       </div>
     </div>

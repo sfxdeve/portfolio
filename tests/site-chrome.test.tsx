@@ -25,12 +25,17 @@ describe("Site chrome", () => {
     expect(within(contact).getByRole("link", { name: "Email" }).getAttribute("href")).toBe(
       "mailto:sfx.pers@gmail.com",
     );
-    expect(within(contact).getByRole("link", { name: "GitHub" }).getAttribute("href")).toBe(
-      "https://github.com/sfxdeve",
-    );
-    expect(within(contact).getByRole("link", { name: "LinkedIn" }).getAttribute("href")).toBe(
-      "https://www.linkedin.com/in/shayanfareed",
-    );
+    const github = within(contact).getByRole("link", { name: "GitHub" });
+    expect(github.getAttribute("href")).toBe("https://github.com/sfxdeve");
+    expect(github.getAttribute("target")).toBe("_blank");
+    expect(github.getAttribute("rel")).toBe("noreferrer");
+
+    const linkedIn = within(contact).getByRole("link", { name: "LinkedIn" });
+    expect(linkedIn.getAttribute("href")).toBe("https://www.linkedin.com/in/shayanfareed");
+    expect(linkedIn.getAttribute("target")).toBe("_blank");
+    expect(linkedIn.getAttribute("rel")).toBe("noreferrer");
+
+    expect(within(contact).getByRole("link", { name: "Email" }).getAttribute("target")).toBeNull();
     expect(within(contact).queryByText(/Karachi/)).toBeNull();
   });
 });
