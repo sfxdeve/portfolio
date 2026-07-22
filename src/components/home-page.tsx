@@ -19,7 +19,7 @@ export function HomePage() {
             <Link
               to="/work/$slug"
               params={{ slug: study.slug }}
-              className="group grid w-full grid-cols-[2rem_minmax(0,1fr)_auto] items-start gap-x-3 gap-y-1 py-2.5 text-left transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:grid-cols-[2rem_minmax(0,12rem)_1fr_auto] sm:gap-y-0 sm:py-4"
+              className="group grid w-full grid-cols-[2rem_minmax(0,1fr)_auto] items-start gap-x-3 gap-y-1 px-3 py-2.5 text-left transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 sm:grid-cols-[2rem_minmax(0,12rem)_1fr_auto] sm:gap-y-0 sm:px-4 sm:py-4"
             >
               <span className="font-mono text-[11px] text-muted-foreground">
                 {String(index + 1).padStart(2, "0")}
