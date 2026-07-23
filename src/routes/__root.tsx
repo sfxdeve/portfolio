@@ -4,6 +4,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { ReactNode } from "react";
 
 import { NotFoundPanel } from "@/components/not-found-panel";
+import { SystemColorScheme } from "@/components/system-color-scheme";
 
 import styles from "../styles.css?url";
 
@@ -26,11 +27,12 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
+        <SystemColorScheme />
         {children}
         {import.meta.env.DEV ? (
           <TanStackDevtools

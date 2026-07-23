@@ -3,6 +3,8 @@
 @import "tailwindcss";
 @import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
 :root {
   --radius: 0.375rem;
   --background: oklch(0.985 0.004 250);

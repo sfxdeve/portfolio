@@ -18,7 +18,7 @@ _Avoid_: Hero illustration, stock photography, abstract gradient mesh as the mai
 
 **Craft Logbook**:
 The site’s overall product direction: a personal index of work that opens into Case Studies, signaling developer-built craft through restraint and systems thinking, not agency marketing or editorial branding.
-_Avoid_: Editorial, magazine layout, designer-for-hire folio, SaaS marketing landing page, dark purple-glow “dev cosplay”, display serif heroes, gradient brand themes, terracotta-on-cream, parallax/scroll-hijack heroes
+_Avoid_: Editorial, magazine layout, designer-for-hire folio, SaaS marketing landing page, dark-as-identity / purple-glow “dev cosplay”, display serif heroes, gradient brand themes, terracotta-on-cream, parallax/scroll-hijack heroes
 
 **Identity**:
 The shared person record: name, “product engineer” role, bio, and chrome contact (Email, GitHub, LinkedIn). Location is Resume-only and not part of Identity.
