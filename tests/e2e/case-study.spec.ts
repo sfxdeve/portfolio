@@ -14,7 +14,6 @@ test("navigates from Home work-index to a Case Study with Capsule and Showcase",
   await expect(capsule).toBeVisible();
   await expect(capsule.getByText("Problem", { exact: true })).toBeVisible();
   await expect(capsule.getByText("Role", { exact: true })).toBeVisible();
-  await expect(capsule.getByText("Stack", { exact: true })).toBeVisible();
   await expect(capsule.getByText("Outcome", { exact: true })).toBeVisible();
   await expect(capsule.getByText(/inspectable, accountable, and payable/)).toBeVisible();
 

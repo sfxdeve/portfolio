@@ -66,7 +66,6 @@ export type CaseBodyBlock =
 export type Capsule = {
   problem: string;
   role: string;
-  stack: string[];
   outcome: string;
 };
 
@@ -165,7 +164,6 @@ const caseStudies: CaseStudy[] = [
       problem:
         "Reclaimed and surplus construction supply had to be inspectable, accountable, and payable without pretending every order would be simple.",
       role: "Product engineer for seller responsibility, operator governance, checkout, fulfillment, disputes, and payout logic",
-      stack: ["TypeScript", "React", "TanStack Start", "Postgres"],
       outcome:
         "A shipped marketplace surface became a controlled product system for trust-sensitive material commerce.",
     },
@@ -290,7 +288,6 @@ const caseStudies: CaseStudy[] = [
       problem:
         "ArtisanConnect could not stop at introductions. The product needed a managed lifecycle that protected both clients and artisans.",
       role: "Product engineer who shaped the managed marketplace lifecycle without making launch too heavy to use",
-      stack: ["TypeScript", "React", "TanStack Start"],
       outcome:
         "A shipped service marketplace connected verification, quotes, payment, completion evidence, disputes, payouts, and two-sided reviews.",
     },
@@ -416,7 +413,6 @@ const caseStudies: CaseStudy[] = [
       problem:
         "RushUploads had to feel lightweight at the edge while still supporting transfer lifecycle rules, earnings, payout requests, ads, moderation, and cleanup.",
       role: "Product engineer who connected the simple user-facing flow to the operational system that made temporary large-file delivery sustainable",
-      stack: ["TypeScript", "React"],
       outcome:
         "A shipped file-delivery product balanced recipient simplicity with sender ownership and admin control.",
     },

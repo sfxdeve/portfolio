@@ -18,9 +18,6 @@ describe("Case Study page", () => {
     expect(within(rail).getByText(study.capsule.problem)).toBeTruthy();
     expect(within(rail).getByText(study.capsule.role)).toBeTruthy();
     expect(within(rail).getByText(study.capsule.outcome)).toBeTruthy();
-    for (const item of study.capsule.stack) {
-      expect(within(rail).getByText(new RegExp(item))).toBeTruthy();
-    }
 
     const showcases = study.body.filter((block) => block.type === "showcase");
     expect(showcases.length).toBeGreaterThan(0);

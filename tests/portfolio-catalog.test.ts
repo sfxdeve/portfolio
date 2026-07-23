@@ -81,7 +81,6 @@ describe("portfolio catalog", () => {
       expect(study.indexSummary.length).toBeGreaterThan(0);
       expect(study.capsule.problem.length).toBeGreaterThan(0);
       expect(study.capsule.role.length).toBeGreaterThan(0);
-      expect(study.capsule.stack.length).toBeGreaterThan(0);
       expect(study.capsule.outcome.length).toBeGreaterThan(0);
       expect(study.body.some((block) => block.type === "showcase")).toBe(true);
       for (const block of study.body) {

@@ -9,7 +9,7 @@ A project page built from a Capsule and a body of short narrative blocks with Sh
 _Avoid_: Essay, article, long-form writeup, blog post, showcase-only gallery, rigid multi-section template without visual proof
 
 **Capsule**:
-The scannable Case Study summary (problem, role, stack, and outcome) so a hiring-first reader can skim the point. Technical depth follows for peers without being required to get it.
+The scannable Case Study summary (problem, role, and outcome) so a hiring-first reader can skim the point. Technical depth follows for peers without being required to get it.
 _Avoid_: Manifesto intro, long abstract, pull-quote opener, peer-only jargon in the first screen, Capsule as a long top-of-page essay block
 
 **Showcase**:

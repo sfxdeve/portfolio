@@ -22,7 +22,6 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
           <dl className="mt-8 space-y-6 border-t border-foreground pt-6">
             <CapsuleField label="Problem" value={study.capsule.problem} />
             <CapsuleField label="Role" value={study.capsule.role} />
-            <CapsuleField label="Stack" value={study.capsule.stack.join(" · ")} mono />
             <CapsuleField label="Outcome" value={study.capsule.outcome} />
           </dl>
         </aside>
@@ -53,21 +52,13 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
   );
 }
 
-function CapsuleField({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+function CapsuleField({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <dt className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
         {label}
       </dt>
-      <dd
-        className={
-          mono
-            ? "mt-1.5 font-mono text-[11px] leading-snug text-foreground/80"
-            : "mt-1.5 text-sm leading-snug text-foreground"
-        }
-      >
-        {value}
-      </dd>
+      <dd className="mt-1.5 text-sm leading-snug text-foreground">{value}</dd>
     </div>
   );
 }
