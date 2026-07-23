@@ -56,3 +56,12 @@ test("has no automatically detectable accessibility violations", async ({ page }
 
   expect(results.violations).toEqual([]);
 });
+
+test("follows the OS color scheme on the document root", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveClass(/dark/);
+
+  await page.emulateMedia({ colorScheme: "light" });
+  await expect(page.locator("html")).not.toHaveClass(/dark/);
+});

@@ -14,6 +14,7 @@ type LinkMockProps = {
 /**
  * Stub TanStack `Link` as a plain anchor for unit tests.
  * Real `Link` behaviour is covered by Playwright.
+ * Stub `ScriptOnce` — it requires a router and is SSR-only.
  */
 vi.mock("@tanstack/react-router", async () => {
   const actual =
@@ -29,5 +30,5 @@ vi.mock("@tanstack/react-router", async () => {
     return createElement("a", { href, ...rest }, children);
   }
 
-  return { ...actual, Link };
+  return { ...actual, Link, ScriptOnce: () => null };
 });
