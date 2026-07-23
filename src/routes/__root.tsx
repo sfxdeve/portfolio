@@ -13,10 +13,10 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Shayan Fareed - product engineer" },
+      { title: "Shayan Fareed - Product Engineer" },
       {
         name: "description",
-        content: "Product engineer portfolio: Case Studies with Capsules and Showcase artifacts.",
+        content: "Product Engineer portfolio: Case Studies with Capsules and Showcase artifacts.",
       },
     ],
     links: [{ rel: "stylesheet", href: styles }],

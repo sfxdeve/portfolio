@@ -80,7 +80,7 @@ export type CaseStudy = {
 
 export const identity: Identity = {
   name: "Shayan Fareed",
-  role: "product engineer",
+  role: "Product Engineer",
   bio: "I take on the difficult middle, where product decisions, technical constraints, and day-to-day operations meet, and stay with the work until it is out in the world and working as it should. I connect frontend, backend, APIs, and delivery into coherent systems, especially where the requirements are tangled, the trust boundary matters, and the final product has to be useful in the real world.",
   contact: [
     { kind: "email", label: "Email", href: "mailto:sfx.pers@gmail.com" },
@@ -163,7 +163,7 @@ const caseStudies: CaseStudy[] = [
     capsule: {
       problem:
         "Reclaimed and surplus construction supply had to be inspectable, accountable, and payable without pretending every order would be simple.",
-      role: "Product engineer for seller responsibility, operator governance, checkout, fulfillment, disputes, and payout logic",
+      role: "Product Engineer for seller responsibility, operator governance, checkout, fulfillment, disputes, and payout logic",
       outcome:
         "A shipped marketplace surface became a controlled product system for trust-sensitive material commerce.",
     },
@@ -287,7 +287,7 @@ const caseStudies: CaseStudy[] = [
     capsule: {
       problem:
         "ArtisanConnect could not stop at introductions. The product needed a managed lifecycle that protected both clients and artisans.",
-      role: "Product engineer who shaped the managed marketplace lifecycle without making launch too heavy to use",
+      role: "Product Engineer who shaped the managed marketplace lifecycle without making launch too heavy to use",
       outcome:
         "A shipped service marketplace connected verification, quotes, payment, completion evidence, disputes, payouts, and two-sided reviews.",
     },
@@ -412,7 +412,7 @@ const caseStudies: CaseStudy[] = [
     capsule: {
       problem:
         "RushUploads had to feel lightweight at the edge while still supporting transfer lifecycle rules, earnings, payout requests, ads, moderation, and cleanup.",
-      role: "Product engineer who connected the simple user-facing flow to the operational system that made temporary large-file delivery sustainable",
+      role: "Product Engineer who connected the simple user-facing flow to the operational system that made temporary large-file delivery sustainable",
       outcome:
         "A shipped file-delivery product balanced recipient simplicity with sender ownership and admin control.",
     },

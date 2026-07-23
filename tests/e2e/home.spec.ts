@@ -5,7 +5,7 @@ test("shows Craft Logbook identity, Profile, and work index", async ({ page }) =
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Shayan Fareed" })).toBeVisible();
-  await expect(page.getByText("product engineer")).toBeVisible();
+  await expect(page.getByText("Product Engineer")).toBeVisible();
   await expect(page.getByRole("region", { name: "Profile" })).toBeVisible();
   await expect(page.getByRole("link", { name: /EcoBuiltConnect/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /ArtisanConnect/ })).toBeVisible();

@@ -5,7 +5,7 @@ import { getCaseStudyBySlug, getResume, identity, listCaseStudies } from "@/cata
 describe("portfolio catalog", () => {
   it("exposes identity with name, role, bio blurb, and Email/GitHub/LinkedIn contact", () => {
     expect(identity.name).toBe("Shayan Fareed");
-    expect(identity.role).toBe("product engineer");
+    expect(identity.role).toBe("Product Engineer");
     expect(identity.bio.length).toBeGreaterThan(0);
     expect(identity.contact.map((link) => link.kind)).toEqual(["email", "github", "linkedin"]);
     expect(identity.contact.map((link) => link.label)).toEqual(["Email", "GitHub", "LinkedIn"]);
