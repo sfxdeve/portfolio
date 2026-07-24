@@ -19,7 +19,12 @@ export const Route = createRootRoute({
         content: "Product Engineer portfolio: Case Studies with Capsules and Showcase artifacts.",
       },
     ],
-    links: [{ rel: "stylesheet", href: styles }],
+    links: [
+      { rel: "stylesheet", href: styles },
+      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/favicon-48.png", type: "image/png", sizes: "48x48" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+    ],
   }),
   shellComponent: RootDocument,
   notFoundComponent: RootNotFound,
