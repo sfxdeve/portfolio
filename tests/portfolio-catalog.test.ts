@@ -3,20 +3,20 @@ import { describe, expect, it } from "vitest";
 import { getCaseStudyBySlug, getResume, identity, listCaseStudies } from "@/catalog/portfolio";
 
 describe("portfolio catalog", () => {
-  it("exposes identity with name, role, bio blurb, and Email/GitHub/LinkedIn contact", () => {
+  it("exposes identity with name, role, bio blurb, and Email/GitHub/X contact", () => {
     expect(identity.name).toBe("Shayan Fareed");
     expect(identity.role).toBe("Product Engineer");
     expect(identity.bio.length).toBeGreaterThan(0);
-    expect(identity.contact.map((link) => link.kind)).toEqual(["email", "github", "linkedin"]);
-    expect(identity.contact.map((link) => link.label)).toEqual(["Email", "GitHub", "LinkedIn"]);
+    expect(identity.contact.map((link) => link.kind)).toEqual(["email", "github", "x"]);
+    expect(identity.contact.map((link) => link.label)).toEqual(["Email", "GitHub", "X (Twitter)"]);
     expect(identity.contact.find((link) => link.kind === "email")?.href).toBe(
       "mailto:sfx.pers@gmail.com",
     );
     expect(identity.contact.find((link) => link.kind === "github")?.href).toBe(
       "https://github.com/sfxdeve",
     );
-    expect(identity.contact.find((link) => link.kind === "linkedin")?.href).toBe(
-      "https://www.linkedin.com/in/shayanfareed",
+    expect(identity.contact.find((link) => link.kind === "x")?.href).toBe(
+      "https://x.com/fareedshayan11",
     );
   });
 
@@ -34,7 +34,14 @@ describe("portfolio catalog", () => {
     }
 
     expect(resume.skills.length).toBeGreaterThan(0);
-    expect(resume.skills.length).toBeLessThanOrEqual(14);
+    expect(resume.skills.length).toBeLessThanOrEqual(6);
+    for (const group of resume.skills) {
+      expect(group.label.length).toBeGreaterThan(0);
+      expect(group.items.length).toBeGreaterThan(0);
+    }
+    // Grouping buys breadth, not licence for a laundry list. See CONTEXT.md.
+    const skillCount = resume.skills.reduce((total, group) => total + group.items.length, 0);
+    expect(skillCount).toBeLessThanOrEqual(24);
 
     expect(resume.languages).toEqual([
       { name: "Urdu", level: "Native" },
@@ -101,9 +108,11 @@ describe("portfolio catalog", () => {
       expect(technicalBlocks.length).toBeGreaterThan(0);
       for (const block of technicalBlocks) {
         if (block.type !== "text") continue;
-        expect(block.body).toMatch(/Decision:/);
-        expect(block.body).toMatch(/Constraint:/);
-        expect(block.body).toMatch(/Trade-off:/);
+        expect(block.heading.length).toBeGreaterThan(0);
+        // A technical block earns its "Technical decision" eyebrow by explaining a
+        // choice and its cost. Depth is not assertable, so this floor only rules
+        // out a one-line restatement of the heading.
+        expect(block.body.length).toBeGreaterThan(200);
       }
     }
   });

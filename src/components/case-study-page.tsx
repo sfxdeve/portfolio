@@ -13,11 +13,11 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
         className="mt-14 inline-flex items-center gap-1 font-mono text-[11px] tracking-wide text-muted-foreground transition-colors hover:text-accent-ink focus-visible:text-accent-ink"
       >
         <ArrowLeft aria-hidden className="size-3" />
-        Index
+        Home
       </Link>
 
       <div className="mt-5 md:grid md:grid-cols-[minmax(12rem,14rem)_minmax(0,1fr)] md:gap-12 lg:gap-16">
-        <aside aria-label="Capsule" className="md:sticky md:top-8 md:self-start">
+        <aside aria-label="Summary" className="md:sticky md:top-8 md:self-start">
           <h1 className="text-2xl font-medium tracking-tight text-foreground">{study.title}</h1>
           <dl className="mt-8 space-y-6 border-t border-foreground pt-6">
             <CapsuleField label="Problem" value={study.capsule.problem} />

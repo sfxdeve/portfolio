@@ -14,7 +14,7 @@ describe("Case Study page", () => {
 
     expect(screen.getByRole("heading", { name: study.title })).toBeTruthy();
 
-    const rail = screen.getByRole("complementary", { name: "Capsule" });
+    const rail = screen.getByRole("complementary", { name: "Summary" });
     expect(within(rail).getByText(study.capsule.problem)).toBeTruthy();
     expect(within(rail).getByText(study.capsule.role)).toBeTruthy();
     expect(within(rail).getByText(study.capsule.outcome)).toBeTruthy();
@@ -26,10 +26,15 @@ describe("Case Study page", () => {
       expect(screen.getByText(block.showcase.label)).toBeTruthy();
       expect(screen.getByText(block.showcase.caption)).toBeTruthy();
       expect(screen.getByRole("img", { name: block.showcase.alt })).toBeTruthy();
+      expect(
+        screen.getByRole("link", {
+          name: `Open full-size ${block.showcase.label} image`,
+        }),
+      ).toBeTruthy();
     }
 
-    const indexLink = screen.getByRole("link", { name: "Index" });
-    expect(indexLink.getAttribute("href")).toBe("/");
+    const homeLink = screen.getByRole("link", { name: "Home" });
+    expect(homeLink.getAttribute("href")).toBe("/");
   });
 
   it("renders text block headings and bodies from the case body", () => {

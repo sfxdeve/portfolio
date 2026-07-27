@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { getCaseStudyBySlug } from "@/catalog/portfolio";
+import { getCaseStudyBySlug, identity } from "@/catalog/portfolio";
 import { CaseStudyPage } from "@/components/case-study-page";
 import { NotFoundPanel } from "@/components/not-found-panel";
 
@@ -16,15 +16,15 @@ export const Route = createFileRoute("/work/$slug")({
     const study = loaderData?.study;
     if (!study) {
       return {
-        meta: [{ title: "Case Study not found" }],
+        meta: [{ title: `Case study not found - ${identity.name}` }],
       };
     }
     return {
       meta: [
-        { title: study.title },
+        { title: `${study.title} case study - ${identity.name}` },
         {
           name: "description",
-          content: study.capsule.outcome,
+          content: `${study.indexSummary}. ${study.capsule.outcome}`,
         },
       ],
     };
@@ -41,8 +41,8 @@ function CaseStudyNotFound() {
 
   return (
     <NotFoundPanel
-      title={`No Case Study for “${slug}”`}
-      description="That slug is not in the work index. Return to the index and pick a known Case Study."
+      title={`No case study called “${slug}”`}
+      description="The home page lists the published case studies."
     />
   );
 }

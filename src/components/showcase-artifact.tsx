@@ -7,7 +7,7 @@ export function ShowcaseArtifact({ showcase }: { showcase: ShowcaseBlock }) {
         href={showcase.src}
         target="_blank"
         rel="noreferrer"
-        aria-label={`Open image: ${showcase.alt}`}
+        aria-label={`Open full-size ${showcase.label} image`}
         className="block overflow-hidden border border-border bg-muted/40 transition-opacity hover:opacity-95 focus-visible:opacity-95"
       >
         <img

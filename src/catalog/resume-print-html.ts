@@ -11,7 +11,7 @@ function escapeHtml(value: string): string {
 function contactLine(): string {
   const email = identity.contact.find((link) => link.kind === "email");
   const github = identity.contact.find((link) => link.kind === "github");
-  const linkedin = identity.contact.find((link) => link.kind === "linkedin");
+  const x = identity.contact.find((link) => link.kind === "x");
   const resume = getResume();
 
   const parts = [
@@ -21,8 +21,8 @@ function contactLine(): string {
     github
       ? `<a href="${escapeHtml(github.href)}">${escapeHtml(github.href.replace(/^https?:\/\//, ""))}</a>`
       : null,
-    linkedin
-      ? `<a href="${escapeHtml(linkedin.href)}">${escapeHtml(linkedin.href.replace(/^https?:\/\/(www\.)?/, ""))}</a>`
+    x
+      ? `<a href="${escapeHtml(x.href)}">${escapeHtml(x.href.replace(/^https?:\/\/(www\.)?/, ""))}</a>`
       : null,
     escapeHtml(resume.location),
   ].filter(Boolean);
@@ -61,6 +61,15 @@ function projectsHtml(resume: Resume): string {
           <div class="item-subtitle">${escapeHtml(project.summary)}</div>
         </article>`;
     })
+    .join("\n");
+}
+
+function skillsHtml(resume: Resume): string {
+  return resume.skills
+    .map(
+      (group) =>
+        `        <div class="skill-group"><span class="skill-label">${escapeHtml(group.label)}:</span> ${escapeHtml(group.items.join(", "))}</div>`,
+    )
     .join("\n");
 }
 
@@ -174,6 +183,14 @@ export function renderResumePrintHtml(): string {
         margin-top: 1px;
       }
 
+      .skill-group {
+        margin-bottom: 2px;
+      }
+
+      .skill-label {
+        font-weight: 700;
+      }
+
       ul {
         margin: 3px 0 0;
         padding-left: 16px;
@@ -213,9 +230,7 @@ ${projectsHtml(resume)}
 
       <section class="section">
         <div class="section-title">Skills</div>
-        <p>
-          ${escapeHtml(resume.skills.join(", "))}
-        </p>
+${skillsHtml(resume)}
       </section>
 
       <section class="section">

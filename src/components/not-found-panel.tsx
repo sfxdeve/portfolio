@@ -17,7 +17,7 @@ export function NotFoundPanel({ title, description }: { title: string; descripti
           className="inline-flex items-center gap-1 font-mono text-[11px] tracking-wide text-accent-ink transition-colors hover:text-foreground"
         >
           <ArrowLeft aria-hidden className="size-3" />
-          Index
+          Home
         </Link>
       </div>
     </PageShell>

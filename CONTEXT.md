@@ -33,8 +33,15 @@ landing page, dark-as-identity / purple-glow “dev cosplay”, display serif
 heroes, gradient brand themes, terracotta-on-cream, parallax/scroll-hijack
 heroes
 
+**Voice**: The single register every user-facing string is written in: plain and
+concrete, the author as the actor, naming what a product is before how it was
+built (see ADR-0003). _Avoid_: systems-analyst abstraction, agentless passive,
+boundary / surface / product system as house words, Decision–Constraint–Trade-off
+scaffolding, Title Case in UI labels, a different positioning claim per page, a
+domain generalised from whichever Case Studies happen to be published
+
 **Identity**: The shared person record: name, “Product Engineer” role, bio, and
-chrome contact (Email, GitHub, LinkedIn). Location is Resume-only and not part
+chrome contact (Email, GitHub, X). Location is Resume-only and not part
 of Identity. _Avoid_: About, author byline, personal brand blurb, “design
 engineer” as the primary role label
 
@@ -52,7 +59,8 @@ manifesto hero, cryptic craft-only landing, tall about-me first screen,
 card-grid project gallery, blog/writing index, contact-form page
 
 **Resume**: The credentials surface for hiring skim: Profile, Experience,
-Projects, curated Skills, Languages, degree-only Education, and a PDF download
+Projects, Skills grouped into a few labelled bands, Languages, degree-only
+Education, and a PDF download
 of the same Catalog facts. _Avoid_: About, CV as the site word, thin bio-only
 page, career timeline as the product, ATS download, second PDF narrative, Craft
 Logbook styling in the PDF, multi-page PDF, outcome bullets or Showcases on

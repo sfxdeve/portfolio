@@ -80,9 +80,18 @@ export function ResumePage() {
         <h2 className="border-b border-border pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
           Skills
         </h2>
-        <p className="mt-4 text-sm leading-relaxed text-foreground/80">
-          {resume.skills.join(", ")}
-        </p>
+        <dl className="mt-5 space-y-5">
+          {resume.skills.map((group) => (
+            <div key={group.label}>
+              <dt className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
+                {group.label}
+              </dt>
+              <dd className="mt-1.5 text-sm leading-relaxed text-foreground/80">
+                {group.items.join(", ")}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <section aria-label="Languages" className="mt-10">

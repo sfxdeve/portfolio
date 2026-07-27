@@ -2,6 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { getResume, identity } from "@/catalog/portfolio";
+import { resumePdfDownloadName } from "@/catalog/resume-pdf";
 import { ResumePage } from "@/components/resume-page";
 
 describe("Resume page", () => {
@@ -9,8 +10,9 @@ describe("Resume page", () => {
     const resume = getResume();
     render(<ResumePage />);
 
-    expect(screen.getByRole("heading", { name: identity.name })).toBeTruthy();
-    expect(screen.getByText(identity.role)).toBeTruthy();
+    const header = screen.getByRole("banner");
+    expect(within(header).getByRole("heading", { name: identity.name })).toBeTruthy();
+    expect(within(header).getByText(identity.role)).toBeTruthy();
     expect(screen.getByText(identity.bio)).toBeTruthy();
 
     const profile = screen.getByRole("region", { name: "Profile" });
@@ -37,8 +39,9 @@ describe("Resume page", () => {
     }
 
     const skills = screen.getByRole("region", { name: "Skills" });
-    for (const skill of resume.skills) {
-      expect(within(skills).getByText(skill, { exact: false })).toBeTruthy();
+    for (const group of resume.skills) {
+      expect(within(skills).getByText(group.label)).toBeTruthy();
+      expect(within(skills).getByText(group.items.join(", "))).toBeTruthy();
     }
 
     const languages = screen.getByRole("region", { name: "Languages" });
@@ -60,6 +63,6 @@ describe("Resume page", () => {
 
     const download = screen.getByRole("link", { name: /Download PDF/i });
     expect(download.getAttribute("href")).toBe("/resume/download.pdf");
-    expect(download.getAttribute("download")).toBe("Shayan Fareed - Product Engineer.pdf");
+    expect(download.getAttribute("download")).toBe(resumePdfDownloadName());
   });
 });

@@ -18,7 +18,7 @@ describe("Site chrome", () => {
     expect(within(primary).queryByRole("link", { name: /Index/i })).toBeNull();
   });
 
-  it("keeps Email, GitHub, and LinkedIn in Contact nav without location", () => {
+  it("keeps Email, GitHub, and X in Contact nav without location", () => {
     render(<SiteChrome />);
 
     const contact = screen.getByRole("navigation", { name: "Contact" });
@@ -30,10 +30,10 @@ describe("Site chrome", () => {
     expect(github.getAttribute("target")).toBe("_blank");
     expect(github.getAttribute("rel")).toBe("noreferrer");
 
-    const linkedIn = within(contact).getByRole("link", { name: "LinkedIn" });
-    expect(linkedIn.getAttribute("href")).toBe("https://www.linkedin.com/in/shayanfareed");
-    expect(linkedIn.getAttribute("target")).toBe("_blank");
-    expect(linkedIn.getAttribute("rel")).toBe("noreferrer");
+    const x = within(contact).getByRole("link", { name: "X (Twitter)" });
+    expect(x.getAttribute("href")).toBe("https://x.com/fareedshayan11");
+    expect(x.getAttribute("target")).toBe("_blank");
+    expect(x.getAttribute("rel")).toBe("noreferrer");
 
     expect(within(contact).getByRole("link", { name: "Email" }).getAttribute("target")).toBeNull();
     expect(within(contact).queryByText(/Karachi/)).toBeNull();

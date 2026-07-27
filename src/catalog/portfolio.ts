@@ -1,4 +1,4 @@
-export type ContactKind = "email" | "github" | "linkedin";
+export type ContactKind = "email" | "github" | "x";
 
 export type ContactLink = {
   kind: ContactKind;
@@ -28,6 +28,11 @@ export type ResumeProject = {
   slug: string;
 };
 
+export type SkillGroup = {
+  label: string;
+  items: string[];
+};
+
 export type Language = {
   name: string;
   level: string;
@@ -44,7 +49,7 @@ export type Resume = {
   location: string;
   experience: Experience[];
   projects: ResumeProject[];
-  skills: string[];
+  skills: SkillGroup[];
   languages: Language[];
   education: Education[];
 };
@@ -81,62 +86,109 @@ export type CaseStudy = {
 export const identity: Identity = {
   name: "Shayan Fareed",
   role: "Product Engineer",
-  bio: "I take on the difficult middle, where product decisions, technical constraints, and day-to-day operations meet, and stay with the work until it is out in the world and working as it should. I connect frontend, backend, APIs, and delivery into coherent systems, especially where the requirements are tangled, the trust boundary matters, and the final product has to be useful in the real world.",
+  bio: "I build custom web products end to end, and I mean the whole thing: the design decisions, the web and mobile clients, the data model, the infrastructure underneath. Some of it is client work that lands as an empty repository or as a codebase with history. Some is my own, shipped and running with real users. What I gravitate to is the complicated middle: who may do what, who owes whom money, and what happens when something goes wrong.",
   contact: [
     { kind: "email", label: "Email", href: "mailto:sfx.pers@gmail.com" },
     { kind: "github", label: "GitHub", href: "https://github.com/sfxdeve" },
-    { kind: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/shayanfareed" },
+    { kind: "x", label: "X (Twitter)", href: "https://x.com/fareedshayan11" },
   ],
 };
 
 /** Canonical public origin for absolute links in the Resume PDF download. */
 export const siteOrigin = "https://shayanfareed.vercel.app";
 
+/**
+ * Third-person positioning claim for meta descriptions. Single source so page
+ * meta cannot drift into several different phrasings of the same sentence.
+ *
+ * Describes the kind of work, not a domain. The Case Studies are a selected
+ * few, so nothing here should imply they bound the work on offer.
+ */
+export const positioning =
+  "Product Engineer building custom web products end to end: design, web and mobile, data, and the infrastructure underneath. Client teams and independent products alike.";
+
 const experience: Experience[] = [
   {
-    title: "Freelance Product Engineer",
+    title: "Product Engineer",
+    organization: "Ars Futura",
+    location: "Remote, Zagreb, Croatia",
+    dates: "Dec 2025 to Present",
+    bullets: [
+      "I build and ship features on long-running client products, across the interface, the API behind it, and the release.",
+      "I work inside client teams alongside their design and product people, on new builds and on codebases that arrive with history.",
+      "I review other engineers’ work and help set the conventions a new joiner picks up on the way in.",
+    ],
+  },
+  {
+    title: "Freelance Software Engineer",
     organization: "Upwork",
     location: "Remote",
-    dates: "Jan 2025 to Present",
+    dates: "Apr 2024 to Jan 2026",
     bullets: [
-      "Turn client requirements into full-stack products, shaping product decisions and carrying the work through to release for international clients.",
-      "Connect frontend systems, reusable components, backend integrations, dashboards, and workflows so complex behavior stays clear to users and manageable behind the scenes.",
+      "I took client products from the first scoping call through release, deciding what to build as often as building it.",
+      "I delivered each one whole: the interface, the API behind it, and the admin tooling staff needed to run the thing once it was live.",
+      "I was the only engineer on most of them, so the design calls, the data model, and the deployment were mine too.",
     ],
   },
   {
     title: "Software Engineer",
     organization: "Jumppace Pvt Ltd",
-    location: "Karachi, Pakistan",
+    location: "On-site, Karachi, Pakistan",
     dates: "Oct 2023 to Nov 2024",
     bullets: [
-      "Shipped production web applications with React.js, Node.js, and MongoDB while working across frontend, backend, and shared product decisions.",
-      "Strengthened reusable components and API design so shipped features remained easier to extend and maintain after release.",
+      "I shipped production web applications on React, Node.js, and MongoDB, working on both sides of the API.",
+      "I wrote the shared components and API contracts the rest of the team built features on after release.",
+      "I picked up whichever part of the product needed work, rather than staying on one layer of it.",
     ],
   },
   {
     title: "React.js Developer",
     organization: "AZ Code Arena",
-    location: "Karachi, Pakistan",
+    location: "Hybrid, Karachi, Pakistan",
     dates: "Apr 2023 to Sep 2023",
     bullets: [
-      "Turned Figma designs into responsive React interfaces using JavaScript, HTML, CSS, and reusable component-based UI patterns.",
-      "Connected those interfaces to REST APIs and authentication flows, keeping the final experience stable and usable across devices.",
+      "I turned Figma designs into responsive React interfaces built from reusable components.",
+      "I wired those interfaces up to REST APIs and sign-in flows, and learned where a design stops answering questions and the engineer has to.",
     ],
   },
 ];
 
-const skills = [
-  "TypeScript",
-  "React",
-  "TanStack Start",
-  "Node.js",
-  "PostgreSQL",
-  "REST APIs",
-  "Tailwind CSS",
-  "Docker",
-  "Vercel",
-  "Marketplace systems",
-  "Operational workflows",
+/**
+ * Grouped so breadth stays skimmable without becoming a laundry list.
+ *
+ * Names capabilities, not the domains of the published Case Studies (ADR-0003).
+ * "marketplace" and "escrow" belong in a Case Study, where the specifics are
+ * shown; here they would read as the only kind of product on offer.
+ */
+const skills: SkillGroup[] = [
+  {
+    label: "Web and mobile",
+    items: [
+      "TypeScript",
+      "React",
+      "TanStack Start",
+      "Tailwind CSS",
+      "React Native",
+      "Expo",
+      "native iOS and Android",
+    ],
+  },
+  {
+    label: "Backend and data",
+    items: ["Node.js", "PostgreSQL", "REST APIs", "schema and query design"],
+  },
+  {
+    label: "Infrastructure",
+    items: ["Docker", "Vercel", "CI/CD", "automated testing"],
+  },
+  {
+    label: "AI",
+    items: ["LLM integrations", "RAG pipelines", "evals and prompt engineering"],
+  },
+  {
+    label: "Product",
+    items: ["UI and UX design", "roles and permissions", "payments and payouts", "admin tooling"],
+  },
 ];
 
 const languages: Language[] = [
@@ -158,30 +210,33 @@ const caseStudies: CaseStudy[] = [
   {
     slug: "ecobuiltconnect",
     title: "EcoBuiltConnect",
-    indexSummary: "Making finite material supply trustworthy enough to buy",
+    indexSummary:
+      "A marketplace for reclaimed building materials, where every listing is one of a kind",
     year: "2026",
     capsule: {
       problem:
-        "Reclaimed and surplus construction supply had to be inspectable, accountable, and payable without pretending every order would be simple.",
-      role: "Product Engineer for seller responsibility, operator governance, checkout, fulfillment, disputes, and payout logic",
+        "Reclaimed building materials are one-offs sold by the meter, and when a batch is gone it is gone. Buyers had to trust a stranger about condition, and sellers had to get paid for the part they actually handed over.",
+      role: "Product Engineer. Listing review, checkout, handoffs, disputes, payouts.",
+      // TODO: replace the qualitative outcome with real numbers once available (listings published, orders fulfilled, GMV, dispute rate).
       outcome:
-        "A shipped marketplace surface became a controlled product system for trust-sensitive material commerce.",
+        "I shipped. A buyer pays once for a cart spanning several yards, each seller is paid for each batch they hand over, and a dispute freezes only the units in dispute.",
     },
     body: [
       {
         type: "text",
         depth: "product",
-        heading: "Discovery had to carry trust, not just inventory",
-        body: "Buyers needed enough context to act on limited supply. Sellers needed controlled ways to describe condition, sustainability, price, quantity, and fulfillment, not free-text claims the marketplace could not stand behind.",
+        heading: "Every listing is a one-off",
+        body: "A salvage yard does not have ten of anything. It has 48 linear meters of one particular reclaimed beam, at one condition, in one part of Cape Town. So I gave sellers structured fields instead of a description box: condition, how the material was sourced, price per unit, how much is left, minimum order, and who arranges collection. Buyers get something they can check, and the marketplace never repeats a claim it cannot attribute to the seller who made it.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Marketplace browsing",
-          caption: "Browsing emphasized material type, location, condition, and supply context.",
+          caption:
+            "Six results, six different quantities: 48 linear meters of beams here, 200 railway sleepers there. Buyers filter on condition, how the material was sourced, location, and price.",
           src: "/evidence/ecobuiltconnect/01-marketplace-browsing.webp",
-          alt: "EcoBuiltConnect marketplace browsing screen showing sustainable and surplus material listings.",
+          alt: "EcoBuiltConnect marketplace browsing screen listing reclaimed timber with per-unit prices and available quantities.",
           width: 1200,
           height: 768,
         },
@@ -189,17 +244,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Structured fields made claims comparable",
-        body: "Listing detail used the same structured fields (condition, sustainability, price, quantity, fulfillment) so buyers could inspect seller claims side by side instead of parsing free-text promises.",
+        heading: "The same fields on every screen",
+        body: "The listing page reuses the fields from search rather than introducing its own. Comparing two batches of timber is reading the same rows twice instead of interpreting two sales pitches. Anything a seller writes in their own words sits in a box labelled as theirs, and supporting documents such as a demolition inventory attach as evidence a buyer can open.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Listing detail",
-          caption: "Listing detail gave buyers a structured way to evaluate seller claims.",
+          caption:
+            "R550 per linear meter, 48 available, two-meter minimum, with a demolition inventory attached as evidence. The price locks at checkout; the exact address waits for seller confirmation.",
           src: "/evidence/ecobuiltconnect/02-listing-detail.webp",
-          alt: "EcoBuiltConnect listing detail screen with material information, price, condition, and sustainability context.",
+          alt: "EcoBuiltConnect listing detail screen showing price per linear meter, available quantity, condition, and attached evidence.",
           width: 1200,
           height: 768,
         },
@@ -207,17 +263,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Review protected the marketplace without rewriting sellers",
-        body: "Operators could give feedback, hide listings, and block unsupported materials, but they did not rewrite seller-owned claims. Accountability stayed clear.",
+        heading: "Operators approve, they do not rewrite",
+        body: "Listings go to an operator before buyers see them, checked against a fixed list: seller verification, media, claims and evidence, privacy, and unsupported materials. The operator can approve, request a correction, or keep the listing hidden. What they cannot do is edit the seller’s words, and the review screen says so on the page. If an operator rewrites a claim, buyers can no longer tell which words came from the seller.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Seller listing management",
-          caption: "Sellers retained ownership of listing details and review state.",
+          caption:
+            "What the seller sees while review is pending: automatic checks passed, operator decision outstanding, their own copy still editable.",
           src: "/evidence/ecobuiltconnect/03-seller-listing-management.webp",
-          alt: "EcoBuiltConnect seller listing management screen showing listings and review state.",
+          alt: "EcoBuiltConnect seller listing management screen showing a listing pending operator review with its submission status.",
           width: 1200,
           height: 768,
         },
@@ -225,17 +282,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Ownership and publication stayed separate",
-        body: "Sellers authored the claims; operators controlled publication. Feedback, hiding, and material blocks could stop a listing from reaching buyers without rewriting what the seller stood behind.",
+        heading: "Writing a listing and publishing it are separate rights",
+        body: "The seller writes the content; the operator decides whether it reaches the marketplace. Pulling a listing therefore never erases who said what. Operator notes stay internal, so when a dispute arrives months later it can be traced back to the original claim and the person who made it.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Operator review",
-          caption: "Operators governed publication and feedback rather than editing claims.",
+          caption:
+            "Approve for publication, request correction, or keep hidden. Every field the seller supplied is labelled as theirs, including the photos.",
           src: "/evidence/ecobuiltconnect/06-operator-review.webp",
-          alt: "EcoBuiltConnect operator review screen for marketplace governance and listing review.",
+          alt: "EcoBuiltConnect operator review screen showing a listing review checklist and publication decisions.",
           width: 1200,
           height: 768,
         },
@@ -243,17 +301,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "technical",
-        heading: "Checkout split into seller-scoped orders",
-        body: "Decision: one cart checkout fans out into seller-scoped orders before confirmation, fulfillment, disputes, or payout. Constraint: a buyer can pay once while each seller remains independently responsible for inventory, handoff, and money movement. Trade-off: the platform carries an extra order-partition step and must keep cart totals reconciled with per-seller states, but cancellation or dispute against one seller no longer contaminates the others.",
+        heading: "Splitting the cart at checkout",
+        body: "A buyer filling one cart from four salvage yards is really placing four orders. I split the cart at checkout, before confirmation, so each seller got an order carrying its own inventory, handoffs, and payout, while the buyer still paid once. That bought a reconciliation step between one payment and several orders, and I took it because a dispute with one yard cannot reach the other three. Each order then runs its own clock: unconfirmed orders cancel themselves, and the collection address stays hidden until the seller confirms.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Seller-scoped order",
-          caption: "Seller-scoped orders kept responsibility clear after checkout.",
+          caption:
+            "One seller’s slice of a paid cart, waiting on their confirmation. R6,600 of materials, 15% VAT added for the buyer, 8% platform fee deducted from the seller.",
           src: "/evidence/ecobuiltconnect/04-seller-order.webp",
-          alt: "EcoBuiltConnect seller order screen showing order details and fulfillment responsibility.",
+          alt: "EcoBuiltConnect seller order screen showing order status, money summary, and a confirmation deadline.",
           width: 1200,
           height: 768,
         },
@@ -261,8 +320,8 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "technical",
-        heading: "Payout keyed to handed-off quantity",
-        body: "Decision: payout eligibility follows handed-off quantity, not the optimistic whole-order amount. Constraint: surplus materials often ship in pieces, and disputed units must stay held while undisputed units can clear after the review window. Trade-off: payout and dispute code has to track partial fulfillment states instead of a single paid/unpaid flag, but sellers get paid for what they actually delivered without waiting on unrelated line items.",
+        heading: "Paying for what actually moved",
+        body: "Materials leave in batches, not all at once. Keying payout to the order total would have meant either paying for goods still sitting in the yard or holding the whole amount hostage to the last meter, so I tied payout eligibility to handed-off quantity instead. A seller records 8 of 12 linear meters as handed over, that batch opens a 48-hour dispute window, and if nobody objects the money for those 8 meters comes free while the remaining 4 stay open on their own. The cost is that payout tracks partial quantities and several overlapping windows rather than one paid flag.",
       },
       {
         type: "showcase",
@@ -270,9 +329,9 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Quantity-based payout",
           caption:
-            "Payout logic followed handed-off quantities instead of the optimistic whole order.",
+            "8 of 12 meters handed over, R4,400 gross against that batch, eligible in 48 hours if undisputed. The remaining 4 meters wait on their own handoff.",
           src: "/evidence/ecobuiltconnect/05-partial-fulfillment-payout.webp",
-          alt: "EcoBuiltConnect payout screen showing partial fulfillment and quantity-based payout state.",
+          alt: "EcoBuiltConnect fulfillment screen showing partial handoff progress, dispute window, and payout eligibility for the handed-off quantity.",
           width: 1200,
           height: 768,
         },
@@ -282,21 +341,22 @@ const caseStudies: CaseStudy[] = [
   {
     slug: "artisanconnect",
     title: "ArtisanConnect",
-    indexSummary: "Keeping local service work accountable from quote to review",
+    indexSummary: "Hiring a plumber, with the money held until the work is done",
     year: "2025",
     capsule: {
       problem:
-        "ArtisanConnect could not stop at introductions. The product needed a managed lifecycle that protected both clients and artisans.",
-      role: "Product Engineer who shaped the managed marketplace lifecycle without making launch too heavy to use",
+        "Booking a tradesperson means guessing. Clients could not tell who was qualified or what a job should cost, and artisans could not price a vague request or count on being paid once the work was done.",
+      role: "Product Engineer, end to end: posting a job through to releasing the money.",
+      // TODO: replace the qualitative outcome with real numbers once available (jobs completed, quote-to-hire rate, average time to payout).
       outcome:
-        "A shipped service marketplace connected verification, quotes, payment, completion evidence, disputes, payouts, and two-sided reviews.",
+        "I shipped. Clients compare quotes split into labour and materials, the money sits secured until the client approves the finished work, and only disputed funds are held.",
     },
     body: [
       {
         type: "text",
         depth: "product",
-        heading: "Public trust started before a job was posted",
-        body: "Clients needed verification, reputation, and work evidence to choose confidently. Artisans needed visibility without exposing direct contact details or external links.",
+        heading: "Checkable credentials, not a phone number",
+        body: "Before a client posts anything, they want to know who they are dealing with. A profile shows identity and mobile verified, references checked, a trade credential with its expiry date, business insurance, a rating and a count of finished jobs in that trade. It deliberately does not show a phone number or a link out, and it says in small print that verification is not a guarantee of workmanship, because those are different promises and only one of them is ours to make.",
       },
       {
         type: "showcase",
@@ -304,9 +364,9 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Public artisan profile",
           caption:
-            "The public profile showed useful evidence while keeping the trust boundary intact.",
+            "4.8 across 86 reviews, 132 finished plumbing jobs, insurance valid to November. Full reviews need a sign-in; the phone number is nowhere on the page.",
           src: "/evidence/artisanconnect/01-public-artisan-profile.webp",
-          alt: "ArtisanConnect public artisan profile showing verification, work examples, and review context.",
+          alt: "ArtisanConnect public artisan profile showing rating, completed job count, verified credentials, and recent work photos.",
           width: 1200,
           height: 800,
         },
@@ -314,17 +374,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Jobs needed enough detail for remote-first pricing",
-        body: "Artisans could not quote responsibly from vague descriptions. Job creation gathered practical remote-first detail (media, measurements, access, symptoms, timing) without a bloated contracting workflow.",
+        heading: "Nobody can price “my sink leaks”",
+        body: "A plumber quoting from a one-line description is guessing, and a guessed price gets renegotiated in someone’s kitchen. The job form asks for the things that actually change a quote: symptoms, measurements, photos and video, how to get in, and a preferred date. It stops well short of a contracting workflow. The client’s address and number stay masked until they pay.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Client job creation",
-          caption: "Job creation gathered enough context for remote-first quote decisions.",
+          caption:
+            "Symptoms as tick-boxes, pipe diameter and accessible length, three photos and a video, plus where to park. Address and phone masked until payment.",
           src: "/evidence/artisanconnect/02-client-job-creation.webp",
-          alt: "ArtisanConnect client job creation screen showing service details, media, and practical job context.",
+          alt: "ArtisanConnect job creation screen showing symptoms, measurements, access notes, and attached photos with masked contact details.",
           width: 1200,
           height: 800,
         },
@@ -332,8 +393,8 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Quote comparison guided without declaring a winner",
-        body: "Clients compared price, materials, availability, reputation, and verification. The product helped them reason; it did not flatten the decision with “best” or “cheapest” labels.",
+        heading: "No “best match” badge",
+        body: "Quotes arrive split into labour and materials, alongside a start date, a duration, the artisan’s rating and their verification count. I kept all of it side by side and refused to rank it, because the cheapest quote and the right quote are often not the same row and the platform is not the one living with the result. Accepting a quote locks its scope and price.",
       },
       {
         type: "showcase",
@@ -341,9 +402,9 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Quote comparison",
           caption:
-            "Comparison surfaced meaningful differences without ranking away client judgment.",
+            "Three quotes from R4,050 to R5,600, each showing labour against materials. The 2.5% protection fee is added where the client can see it before accepting.",
           src: "/evidence/artisanconnect/03-quote-comparison.webp",
-          alt: "ArtisanConnect quote comparison screen showing price, materials, timing, and verification context.",
+          alt: "ArtisanConnect quote comparison screen showing three quotes broken into labour and materials with ratings and verification.",
           width: 1200,
           height: 800,
         },
@@ -351,17 +412,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "technical",
-        heading: "Funding opens the engagement lifecycle",
-        body: "Decision: an accepted quote becomes a protected engagement only after funding, and release rules vary by job size: completion-only for smaller jobs, start-plus-completion for larger ones. Constraint: work must not begin on an unfunded promise, but larger jobs still need capital available before the artisan shows up. Trade-off: the payment state machine is more complex than a single capture-on-complete flow, yet every later dispute, payout, and review can hang off one funded engagement instead of ad-hoc invoices.",
+        heading: "Money first, then work",
+        body: "Accepting a quote does not start a job; funding it does. I made the engagement come into existence only once the money is secured, so no artisan travels to a site on the strength of a promise and no client argues about scope after the fact. Release rules vary with job size, which means the payment state machine carries several paths rather than one. In exchange, every later event hangs off a single funded engagement with one ID: the completion evidence, a dispute, the payout, both reviews.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Funded engagement",
-          caption: "Funding turned an accepted quote into a protected engagement.",
+          caption:
+            "R4,050 secured before the start date, with a code the client reads out when the artisan arrives. Address and number are now visible; the conversation stays in the app.",
           src: "/evidence/artisanconnect/04-funded-engagement.webp",
-          alt: "ArtisanConnect funded engagement screen showing payment-backed service work state.",
+          alt: "ArtisanConnect funded engagement screen showing secured funds, scheduled start, start code, and in-app conversation.",
           width: 1200,
           height: 800,
         },
@@ -369,17 +431,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Completion, payout, and reviews closed the loop",
-        body: "Completion notes and after-work photos anchored release, disputes, and two-sided reviews, all attached to the same paid engagement record.",
+        heading: "Evidence decides the release",
+        body: "An artisan closes a job by filing what they did: notes, timestamped photos taken after the work, a report, and the agreed scope ticked off item by item. The client then has a fixed window to approve and release the money or open a dispute, and only the disputed amount is held. Both sides rate each other, and neither rating publishes until both are in or the window expires, so nobody writes a review in reply to their own.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Completion and review",
-          caption: "Completion evidence anchored release, dispute, and review behavior.",
+          caption:
+            "Five scope items ticked, four photos stamped within seven minutes of each other, 72 hours left to approve. Ratings cover workmanship, communication, punctuality, and scope accuracy.",
           src: "/evidence/artisanconnect/05-completion-review.webp",
-          alt: "ArtisanConnect completion and review screen showing completion evidence and client review state.",
+          alt: "ArtisanConnect completion review screen showing completion notes, after-work photos, scope checklist, and release or dispute actions.",
           width: 1200,
           height: 800,
         },
@@ -387,17 +450,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "technical",
-        heading: "One engagement record owns money and proof",
-        body: "Decision: funding, completion evidence, payout, disputes, and two-sided reviews all attach to the same paid engagement aggregate. Constraint: artisans and operators need one place to see whether work, evidence, and money agree without stitching quote, chat, and payout tables by hand. Trade-off: the engagement model becomes the system of record and rejects looser multi-object workflows, but dashboard and dispute flows stay coherent because every state change has a single parent id.",
+        heading: "One record holds the money and the proof",
+        body: "Funding, completion evidence, payouts, disputes and both reviews all attach to the same engagement rather than living in separate tables joined after the fact. Answering “was this paid, was it done, and who said so” is then one lookup instead of a reconciliation. The trade is rigidity: loose flows that would let evidence exist without a funded job are simply not representable, and I had to rethink a few features to fit that shape.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Artisan dashboard",
-          caption: "The artisan dashboard kept marketplace work and payout state visible.",
+          caption:
+            "R4,050 sitting in pending, released once the client approves. The credential expiring in 42 days is surfaced as an action, since an expired one stops new matches.",
           src: "/evidence/artisanconnect/06-artisan-dashboard.webp",
-          alt: "ArtisanConnect artisan dashboard showing paid work and marketplace actions.",
+          alt: "ArtisanConnect artisan dashboard showing pending payouts, next actions, job matches, and a credential expiry warning.",
           width: 1200,
           height: 800,
         },
@@ -407,30 +471,31 @@ const caseStudies: CaseStudy[] = [
   {
     slug: "rushuploads",
     title: "RushUploads",
-    indexSummary: "Making large-file delivery simple without hiding the system underneath",
+    indexSummary: "Big files sent by link, paid for by the ads on the download page",
     year: "2025",
     capsule: {
       problem:
-        "RushUploads had to feel lightweight at the edge while still supporting transfer lifecycle rules, earnings, payout requests, ads, moderation, and cleanup.",
-      role: "Product Engineer who connected the simple user-facing flow to the operational system that made temporary large-file delivery sustainable",
+        "Sending 2.7 GB to eight people should not make either side sign up for anything. But bandwidth costs money, and a free file host with no account is also where abuse goes.",
+      role: "Product Engineer. Transfers, the public download page, earnings, payouts, admin console.",
       outcome:
-        "A shipped file-delivery product balanced recipient simplicity with sender ownership and admin control.",
+        "I shipped RushUploads, which now has 12,480 users, 3,216 active transfers, and 8.4 TB stored. Senders earn from ad views on the download page and cash out at a $10 threshold.",
     },
     body: [
       {
         type: "text",
         depth: "technical",
-        heading: "Transfers stay staged until explicit send",
-        body: "Decision: file selection creates a staged transfer draft; upload work starts only on an explicit send after title, message, expiry, and limits are set. Constraint: large-file uploads are expensive to restart, and senders need to revise metadata without paying that cost twice. Trade-off: the client must manage draft versus uploading versus shareable states instead of a fire-and-forget picker, but failed or abandoned drafts never become public links and never bill storage for incomplete intent.",
+        heading: "Picking files is not sending them",
+        body: "Nothing uploads when a sender drops files in. The transfer stays a draft until they press send, because a 2.7 GB upload is expensive to start and worse to restart, and people change the title, the message, or the expiry after they have already chosen the files. That left the client managing three states rather than one, and it is the reason an abandoned draft never becomes a live public link with somebody’s files behind it.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Transfer creation",
-          caption: "File choice, message, expiry, and limits stayed editable before upload began.",
+          caption:
+            "Four files, 2.72 GB, nothing uploaded yet. Expiry and a 3,000-visit download cap are still editable, and the upload goes in 10 MB chunks, three at a time.",
           src: "/evidence/rushuploads/01-transfer-creation.webp",
-          alt: "RushUploads transfer creation screen showing file selection and sharing details.",
+          alt: "RushUploads transfer creation screen showing selected files, transfer settings, and a send button before upload begins.",
           width: 1200,
           height: 751,
         },
@@ -438,17 +503,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Upload waited on an explicit send",
-        body: "The staged transfer lifecycle kept title, message, expiry, and limits editable after files were chosen. Upload work began only when the sender committed; then the success state became the share moment.",
+        heading: "The link appears last",
+        body: "A sender only gets a shareable URL once every file has finished uploading, so a half-uploaded transfer cannot be handed to anyone. From there they can copy the link themselves or have the product email a list of recipients, and the transfer starts counting visits against its cap.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Upload completion",
-          caption: "The success state turned upload completion into a clear sharing moment.",
+          caption:
+            "All four files confirmed, and now there is a link. Emailing eight recipients is optional; the link works on its own.",
           src: "/evidence/rushuploads/02-upload-completion-sharing.webp",
-          alt: "RushUploads upload completion screen showing share link and sender next actions.",
+          alt: "RushUploads transfer ready screen showing the share link, recipient notification field, and completed file uploads.",
           width: 1200,
           height: 751,
         },
@@ -456,17 +522,18 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Recipients needed the least possible friction",
-        body: "Recipients downloaded from a public transfer page without an account. Download clicks routed through an ad-supported interstitial that funded sender earnings.",
+        heading: "Recipients never sign up",
+        body: "Whoever receives the link can see the title, who sent it, the message, every filename and size, and when it expires, without an account and without an ad. Asking a stranger to register before they can tell whether the link is legitimate is how these products lose people.",
       },
       {
         type: "showcase",
         showcase: {
           kind: "ui",
           label: "Public recipient transfer",
-          caption: "Recipient pages focused on the transfer and its files.",
+          caption:
+            "No account, no countdown, no ad: just what is in the transfer and how long it lasts. 500 of 3,000 permitted visits remain.",
           src: "/evidence/rushuploads/03-public-recipient-transfer.webp",
-          alt: "RushUploads public recipient transfer page showing downloadable files.",
+          alt: "RushUploads public transfer page showing sender, expiry, remaining visits, and a download button for each file.",
           width: 1200,
           height: 800,
         },
@@ -474,8 +541,8 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "technical",
-        heading: "Public access stays separate from monetized download",
-        body: "Decision: the public transfer page shows files without an account, while the ad-supported countdown lives on a separate interstitial before the actual download. Constraint: recipients must inspect what they are about to fetch, but sender earnings still depend on the monetized step. Trade-off: two surfaces replace a single download button, adding a hop in the happy path, yet inspection and monetization no longer fight over the same route and accounting remains tied to interstitial completion rather than mere page views.",
+        heading: "Looking is free, downloading pays",
+        body: "The ad and its countdown live on a separate route from the transfer page, one file at a time. Recipients can therefore inspect a transfer as often as they like without generating revenue, and I keyed earnings to a finished countdown rather than a page view, since a page view is trivially inflated and advertisers are paying for attention. It costs the recipient one extra navigation on the way to each file, which is the honest price of the thing being free.",
       },
       {
         type: "showcase",
@@ -483,9 +550,9 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Download interstitial",
           caption:
-            "The interstitial introduced the earnings model without making recipients create accounts.",
+            "Three seconds against one 24 MB file, with the download button disabled until the counter clears. The sender earns from this page, not the one before it.",
           src: "/evidence/rushuploads/04-download-interstitial.webp",
-          alt: "RushUploads download interstitial showing ad-supported countdown before file download.",
+          alt: "RushUploads download interstitial showing a three second countdown, a disabled download button, and an advertisement.",
           width: 1200,
           height: 800,
         },
@@ -493,8 +560,8 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Sender value came from visibility and earnings",
-        body: "Senders needed more than a share link: transfer state, download activity, balance, lifetime earnings, and payout request status had to stay visible.",
+        heading: "Senders can see what they earned",
+        body: "The dashboard answers two questions at once: what is happening to my transfers, and what am I owed. Per transfer it shows visits against the cap, download and recipient counts, and expiry. Above that sits the balance, lifetime earnings, the rate being paid per visit, and the payout button once the threshold is met.",
       },
       {
         type: "showcase",
@@ -502,9 +569,9 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Sender dashboard",
           caption:
-            "Sender ownership showed up through transfer state, earnings, and payout visibility.",
+            "$0.004 per recipient visit at a $4 CPM, $10 minimum before cashing out. 2,500 of 3,000 visits used on the one active transfer.",
           src: "/evidence/rushuploads/05-sender-dashboard-earnings.webp",
-          alt: "RushUploads sender dashboard showing transfer activity, balance, earnings, and payout status.",
+          alt: "RushUploads sender dashboard showing earnings summary, CPM rate, payout threshold, and active transfer activity.",
           width: 1200,
           height: 751,
         },
@@ -512,8 +579,8 @@ const caseStudies: CaseStudy[] = [
       {
         type: "text",
         depth: "product",
-        heading: "Admin operations made the model accountable",
-        body: "An ad-supported file-transfer product needs operational control over analytics, moderation, payout requests, user disabling, and ad inventory.",
+        heading: "Anonymous uploads need a kill switch",
+        body: "Letting people publish files without an account means somebody has to be able to take them down. Admins can force-expire a transfer, which deletes the stored objects rather than just hiding the page, disable users, and approve or reject payout requests with a written reason. They also set the CPM the whole earnings model runs on. What the console will not show them is recipient email addresses or credentials.",
       },
       {
         type: "showcase",
@@ -521,9 +588,9 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Admin operations",
           caption:
-            "Admin controls kept moderation, payouts, ads, and product settings in one operating surface.",
+            "12,480 users, 3,216 live transfers, 8.4 TB stored. A pending $10 payout waits on approval, and the $4 CPM is editable in place.",
           src: "/evidence/rushuploads/06-admin-operations.webp",
-          alt: "RushUploads admin operations screen showing moderation and operational controls.",
+          alt: "RushUploads admin console showing platform totals, transfer moderation, a pending payout request, and ad management.",
           width: 1200,
           height: 751,
         },

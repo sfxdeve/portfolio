@@ -10,10 +10,14 @@ describe("Craft Logbook Home", () => {
 
     expect(screen.getByRole("heading", { name: identity.name })).toBeTruthy();
     expect(screen.getByText(identity.role)).toBeTruthy();
+    expect(screen.getByText("Home")).toBeTruthy();
 
     const profile = screen.getByRole("region", { name: "Profile" });
     expect(within(profile).getByText(identity.bio)).toBeTruthy();
     expect(within(profile).queryByText(/Karachi/)).toBeNull();
+
+    const selectedWork = screen.getByRole("region", { name: "Selected work" });
+    expect(within(selectedWork).getByRole("list")).toBeTruthy();
 
     const caseStudies = listCaseStudies();
     for (const study of caseStudies) {

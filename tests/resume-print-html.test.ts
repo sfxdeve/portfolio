@@ -9,11 +9,11 @@ describe("Resume print HTML", () => {
     const resume = getResume();
 
     expect(html).toContain(identity.name);
-    expect(html).toContain("Product Engineer");
+    expect(html).toContain(identity.role);
     expect(html).toContain(identity.bio);
     expect(html).toContain(resume.location);
     expect(html).toContain("sfx.pers@gmail.com");
-    expect(html).toContain("linkedin.com/in/shayanfareed");
+    expect(html).toContain("x.com/fareedshayan11");
 
     for (const item of resume.experience) {
       expect(html).toContain(item.title);
@@ -33,8 +33,9 @@ describe("Resume print HTML", () => {
       expect(html).not.toMatch(new RegExp(`${project.title}[\\s\\S]{0,200}<ul>`));
     }
 
-    for (const skill of resume.skills) {
-      expect(html).toContain(skill);
+    for (const group of resume.skills) {
+      expect(html).toContain(group.label);
+      expect(html).toContain(group.items.join(", "));
     }
 
     for (const language of resume.languages) {

@@ -12,7 +12,11 @@ test("shows Craft Logbook identity, Profile, and work index", async ({ page }) =
   await expect(page.getByRole("link", { name: /RushUploads/ })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Contact" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Email" })).toBeVisible();
-  await expect(page).not.toHaveTitle(/Portfolio Starter/);
+  await expect(page).toHaveTitle("Shayan Fareed - Product Engineer");
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    "content",
+    "Product Engineer building custom web products end to end: design, web and mobile, data, and the infrastructure underneath. Client teams and independent products alike. Selected case studies of shipped work.",
+  );
 });
 
 test("keeps the Home identity strip and Profile usable on small mobile viewports", async ({
@@ -28,11 +32,11 @@ test("keeps the Home identity strip and Profile usable on small mobile viewports
     await expect(page.getByRole("heading", { name: "Shayan Fareed" })).toBeVisible();
     const profile = page.getByRole("region", { name: "Profile" });
     await expect(profile).toBeVisible();
-    await expect(profile.getByText(/I take on the difficult middle/)).toBeVisible();
+    await expect(profile.getByText(/I build custom web products end to end/)).toBeVisible();
 
-    const linkedIn = page.getByRole("link", { name: "LinkedIn" });
-    await expect(linkedIn).toBeVisible();
-    const chromeFits = await linkedIn.evaluate((el) => {
+    const x = page.getByRole("link", { name: "X (Twitter)", exact: true });
+    await expect(x).toBeVisible();
+    const chromeFits = await x.evaluate((el) => {
       const rect = el.getBoundingClientRect();
       return (
         rect.left >= 0 &&
@@ -42,7 +46,7 @@ test("keeps the Home identity strip and Profile usable on small mobile viewports
     });
     expect(chromeFits).toBe(true);
 
-    const workIndex = page.getByRole("list", { name: "Work index" });
+    const workIndex = page.getByRole("region", { name: "Selected work" }).getByRole("list");
     await expect(workIndex).toBeAttached();
     await workIndex.scrollIntoViewIfNeeded();
     await expect(workIndex.locator("li").first()).toBeVisible();

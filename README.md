@@ -26,4 +26,4 @@ The project uses Node 24 LTS and pnpm 11. The committed lockfile makes installs 
 - Tailwind CSS and shadcn/Base UI tokens
 - Oxlint, Oxfmt, Vitest, Testing Library, Playwright, and axe
 
-Domain language: `CONTEXT.md`. Product contract: `docs/adr/0001-craft-logbook-visual-direction.md`.
+Domain language: `CONTEXT.md`. Product contract: `docs/adr/0001-craft-logbook-visual-direction.md`. Copy voice: `docs/adr/0003-plain-concrete-copy-voice.md`.

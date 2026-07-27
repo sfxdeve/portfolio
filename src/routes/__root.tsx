@@ -3,6 +3,7 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { ReactNode } from "react";
 
+import { identity, positioning } from "@/catalog/portfolio";
 import { NotFoundPanel } from "@/components/not-found-panel";
 import { SystemColorScheme } from "@/components/system-color-scheme";
 
@@ -13,11 +14,8 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Shayan Fareed - Product Engineer" },
-      {
-        name: "description",
-        content: "Product Engineer portfolio: Case Studies with Capsules and Showcase artifacts.",
-      },
+      { title: `${identity.name} - ${identity.role}` },
+      { name: "description", content: positioning },
     ],
     links: [
       { rel: "stylesheet", href: styles },
@@ -59,8 +57,8 @@ function RootDocument({ children }: { children: ReactNode }) {
 function RootNotFound() {
   return (
     <NotFoundPanel
-      title="This page is not in the site"
-      description="That URL does not match a published route. Return to the index and continue from there."
+      title="Page not found"
+      description="Nothing lives at this URL. The home page lists the published case studies."
     />
   );
 }
