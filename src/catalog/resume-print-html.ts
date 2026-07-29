@@ -219,12 +219,12 @@ export function renderResumePrintHtml(): string {
       </section>
 
       <section class="section">
-        <div class="section-title">Experience</div>
+        <div class="section-title">Recent experience</div>
 ${experienceHtml(resume)}
       </section>
 
       <section class="section">
-        <div class="section-title">Projects</div>
+        <div class="section-title">Selected projects</div>
 ${projectsHtml(resume)}
       </section>
 

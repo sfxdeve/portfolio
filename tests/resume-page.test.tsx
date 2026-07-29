@@ -18,7 +18,7 @@ describe("Resume page", () => {
     const profile = screen.getByRole("region", { name: "Profile" });
     expect(within(profile).getByText(resume.location)).toBeTruthy();
 
-    const experience = screen.getByRole("region", { name: "Experience" });
+    const experience = screen.getByRole("region", { name: "Recent experience" });
     for (const item of resume.experience) {
       expect(within(experience).getByText(item.title)).toBeTruthy();
       expect(within(experience).getByText(item.organization, { exact: false })).toBeTruthy();
@@ -28,7 +28,7 @@ describe("Resume page", () => {
       }
     }
 
-    const projects = screen.getByRole("region", { name: "Projects" });
+    const projects = screen.getByRole("region", { name: "Selected projects" });
     for (const project of resume.projects) {
       expect(within(projects).getByText(project.title)).toBeTruthy();
       expect(within(projects).getByText(project.summary)).toBeTruthy();

@@ -13,7 +13,7 @@ test("navigates among Home, Resume, and a Case Study via chrome", async ({ page 
   await expect(page).toHaveTitle("Shayan Fareed - Resume");
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     "content",
-    "Experience, projects, and skills for Shayan Fareed. Product Engineer building custom web products end to end: design, web and mobile, data, and the infrastructure underneath. Client teams and independent products alike.",
+    "Recent experience, selected projects, and skills for Shayan Fareed. Product Engineer building custom web products end to end: design, web and mobile, data, and the infrastructure underneath. Client teams and independent products alike.",
   );
 
   await page.getByRole("link", { name: "Shayan Fareed" }).click();
@@ -28,7 +28,7 @@ test("navigates among Home, Resume, and a Case Study via chrome", async ({ page 
     .getByRole("link", { name: "Resume" })
     .click();
   await expect(page).toHaveURL(/\/resume$/);
-  await expect(page.getByRole("region", { name: "Experience" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "Recent experience" })).toBeVisible();
   await expect(page.getByRole("link", { name: /Download PDF/i })).toBeVisible();
   await expect(
     page.getByRole("link", { name: "View case study for EcoBuiltConnect" }),

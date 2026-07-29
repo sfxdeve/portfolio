@@ -27,9 +27,9 @@ export function ResumePage() {
 
       <ProfileSection location={resume.location} />
 
-      <section aria-label="Experience" className="mt-10">
+      <section aria-label="Recent experience" className="mt-10">
         <h2 className="border-b border-border pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-          Experience
+          Recent experience
         </h2>
         <ul className="mt-5 space-y-8">
           {resume.experience.map((item) => (
@@ -51,9 +51,9 @@ export function ResumePage() {
         </ul>
       </section>
 
-      <section aria-label="Projects" className="mt-10">
+      <section aria-label="Selected projects" className="mt-10">
         <h2 className="border-b border-border pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-          Projects
+          Selected projects
         </h2>
         <ul className="mt-5 space-y-8">
           {resume.projects.map((project) => (
