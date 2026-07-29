@@ -86,7 +86,7 @@ export type CaseStudy = {
 export const identity: Identity = {
   name: "Shayan Fareed",
   role: "Product Engineer",
-  bio: "I build custom web products end to end, and I mean the whole thing: the design decisions, the web and mobile clients, the data model, the infrastructure underneath. Some of it is client work that lands as an empty repository or as a codebase with history. Some is my own, shipped and running with real users. What I gravitate to is the complicated middle: who may do what, who owes whom money, and what happens when something goes wrong.",
+  bio: "I build custom web products end to end, and I mean the whole thing: the design decisions, the web and mobile clients, the data model, the infrastructure underneath. Some of it is client work that starts as an empty repository or as a codebase with history. Some is my own, shipped and running with real users. What I gravitate to is the complicated middle: who may do what, who owes whom money, and what happens when something goes wrong.",
   contact: [
     { kind: "email", label: "Email", href: "mailto:sfx.pers@gmail.com" },
     { kind: "github", label: "GitHub", href: "https://github.com/sfxdeve" },
@@ -126,7 +126,7 @@ const experience: Experience[] = [
     dates: "Apr 2024 to Jan 2026",
     bullets: [
       "I took client products from the first scoping call through release, deciding what to build as often as building it.",
-      "I delivered each one whole: the interface, the API behind it, and the admin tooling staff needed to run the thing once it was live.",
+      "I delivered each one whole: the interface, the API behind it, and the admin tooling that staff needed to run the thing once it was live.",
       "I was the only engineer on most of them, so the design calls, the data model, and the deployment were mine too.",
     ],
   },
@@ -219,14 +219,14 @@ const caseStudies: CaseStudy[] = [
       role: "Product Engineer. Listing review, checkout, handoffs, disputes, payouts.",
       // TODO: replace the qualitative outcome with real numbers once available (listings published, orders fulfilled, GMV, dispute rate).
       outcome:
-        "I shipped. A buyer pays once for a cart spanning several yards, each seller is paid for each batch they hand over, and a dispute freezes only the units in dispute.",
+        "A buyer pays once for a cart spanning several salvage yards, each seller is paid for each batch they hand over, and a dispute freezes only the units in dispute.",
     },
     body: [
       {
         type: "text",
         depth: "product",
         heading: "Every listing is a one-off",
-        body: "A salvage yard does not have ten of anything. It has 48 linear meters of one particular reclaimed beam, at one condition, in one part of Cape Town. So I gave sellers structured fields instead of a description box: condition, how the material was sourced, price per unit, how much is left, minimum order, and who arranges collection. Buyers get something they can check, and the marketplace never repeats a claim it cannot attribute to the seller who made it.",
+        body: "A salvage yard does not have ten of anything. It has 48 linear meters of one particular reclaimed beam, in one condition, in one part of Cape Town. So I gave sellers structured fields instead of a description box: condition, how the material was sourced, price per unit, how much is left, minimum order, and who arranges collection. Buyers get something they can check, and the marketplace never repeats a claim it cannot attribute to the seller who made it.",
       },
       {
         type: "showcase",
@@ -321,7 +321,7 @@ const caseStudies: CaseStudy[] = [
         type: "text",
         depth: "technical",
         heading: "Paying for what actually moved",
-        body: "Materials leave in batches, not all at once. Keying payout to the order total would have meant either paying for goods still sitting in the yard or holding the whole amount hostage to the last meter, so I tied payout eligibility to handed-off quantity instead. A seller records 8 of 12 linear meters as handed over, that batch opens a 48-hour dispute window, and if nobody objects the money for those 8 meters comes free while the remaining 4 stay open on their own. The cost is that payout tracks partial quantities and several overlapping windows rather than one paid flag.",
+        body: "Materials leave in batches, not all at once. Keying payout to the order total would have meant either paying for goods still sitting in the yard or holding the whole amount hostage to the last meter, so I tied payout eligibility to handed-off quantity instead. A seller records 8 of 12 linear meters as handed over, that batch opens a 48-hour dispute window, and if nobody objects, the money for those 8 meters comes free while the remaining 4 stay open on their own. The cost is that payout tracks partial quantities and several overlapping windows rather than one paid flag.",
       },
       {
         type: "showcase",
@@ -349,7 +349,7 @@ const caseStudies: CaseStudy[] = [
       role: "Product Engineer, end to end: posting a job through to releasing the money.",
       // TODO: replace the qualitative outcome with real numbers once available (jobs completed, quote-to-hire rate, average time to payout).
       outcome:
-        "I shipped. Clients compare quotes split into labour and materials, the money sits secured until the client approves the finished work, and only disputed funds are held.",
+        "Clients compare quotes split into labour and materials, the money sits secured until the client approves the finished work, and only disputed funds are held.",
     },
     body: [
       {
@@ -364,7 +364,7 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Public artisan profile",
           caption:
-            "4.8 across 86 reviews, 132 finished plumbing jobs, insurance valid to November. Full reviews need a sign-in; the phone number is nowhere on the page.",
+            "4.8 across 86 reviews, 132 finished plumbing jobs, insurance valid until November. Full reviews need a sign-in; the phone number is nowhere on the page.",
           src: "/evidence/artisanconnect/01-public-artisan-profile.webp",
           alt: "ArtisanConnect public artisan profile showing rating, completed job count, verified credentials, and recent work photos.",
           width: 1200,
@@ -432,7 +432,7 @@ const caseStudies: CaseStudy[] = [
         type: "text",
         depth: "product",
         heading: "Evidence decides the release",
-        body: "An artisan closes a job by filing what they did: notes, timestamped photos taken after the work, a report, and the agreed scope ticked off item by item. The client then has a fixed window to approve and release the money or open a dispute, and only the disputed amount is held. Both sides rate each other, and neither rating publishes until both are in or the window expires, so nobody writes a review in reply to their own.",
+        body: "An artisan closes a job by filing what they did: notes, timestamped photos taken after the work, a report, and the agreed scope ticked off item by item. The client then has a fixed window to approve and release the money or open a dispute, and only the disputed amount is held. Both sides rate each other, and neither rating publishes until both are in or the window expires, so nobody writes a review in reply to the other side’s.",
       },
       {
         type: "showcase",
@@ -459,7 +459,7 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Artisan dashboard",
           caption:
-            "R4,050 sitting in pending, released once the client approves. The credential expiring in 42 days is surfaced as an action, since an expired one stops new matches.",
+            "R4,050 sitting in pending, released once the client approves. The credential expiring in 42 days appears as an action, since an expired one stops new matches.",
           src: "/evidence/artisanconnect/06-artisan-dashboard.webp",
           alt: "ArtisanConnect artisan dashboard showing pending payouts, next actions, job matches, and a credential expiry warning.",
           width: 1200,
@@ -478,7 +478,7 @@ const caseStudies: CaseStudy[] = [
         "Sending 2.7 GB to eight people should not make either side sign up for anything. But bandwidth costs money, and a free file host with no account is also where abuse goes.",
       role: "Product Engineer. Transfers, the public download page, earnings, payouts, admin console.",
       outcome:
-        "I shipped RushUploads, which now has 12,480 users, 3,216 active transfers, and 8.4 TB stored. Senders earn from ad views on the download page and cash out at a $10 threshold.",
+        "RushUploads now has 12,480 users, 3,216 active transfers, and 8.4 TB stored. Senders earn from ad views on the download page and cash out at a $10 threshold.",
     },
     body: [
       {
@@ -493,7 +493,7 @@ const caseStudies: CaseStudy[] = [
           kind: "ui",
           label: "Transfer creation",
           caption:
-            "Four files, 2.72 GB, nothing uploaded yet. Expiry and a 3,000-visit download cap are still editable, and the upload goes in 10 MB chunks, three at a time.",
+            "Four files, 2.72 GB, nothing uploaded yet. Expiry and a 3,000-visit download cap are still editable, and the upload goes up in 10 MB chunks, three at a time.",
           src: "/evidence/rushuploads/01-transfer-creation.webp",
           alt: "RushUploads transfer creation screen showing selected files, transfer settings, and a send button before upload begins.",
           width: 1200,
@@ -514,7 +514,7 @@ const caseStudies: CaseStudy[] = [
           caption:
             "All four files confirmed, and now there is a link. Emailing eight recipients is optional; the link works on its own.",
           src: "/evidence/rushuploads/02-upload-completion-sharing.webp",
-          alt: "RushUploads transfer ready screen showing the share link, recipient notification field, and completed file uploads.",
+          alt: "RushUploads transfer-ready screen showing the share link, recipient notification field, and completed file uploads.",
           width: 1200,
           height: 751,
         },
@@ -552,7 +552,7 @@ const caseStudies: CaseStudy[] = [
           caption:
             "Three seconds against one 24 MB file, with the download button disabled until the counter clears. The sender earns from this page, not the one before it.",
           src: "/evidence/rushuploads/04-download-interstitial.webp",
-          alt: "RushUploads download interstitial showing a three second countdown, a disabled download button, and an advertisement.",
+          alt: "RushUploads download interstitial showing a three-second countdown, a disabled download button, and an advertisement.",
           width: 1200,
           height: 800,
         },
@@ -580,7 +580,7 @@ const caseStudies: CaseStudy[] = [
         type: "text",
         depth: "product",
         heading: "Anonymous uploads need a kill switch",
-        body: "Letting people publish files without an account means somebody has to be able to take them down. Admins can force-expire a transfer, which deletes the stored objects rather than just hiding the page, disable users, and approve or reject payout requests with a written reason. They also set the CPM the whole earnings model runs on. What the console will not show them is recipient email addresses or credentials.",
+        body: "Letting people publish files without an account means somebody has to be able to take them down. Admins can force-expire a transfer — deleting the stored objects rather than just hiding the page — disable users, and approve or reject payout requests with a written reason. They also set the CPM the whole earnings model runs on. What the console will not show them is recipient email addresses or credentials.",
       },
       {
         type: "showcase",
