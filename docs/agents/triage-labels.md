@@ -13,3 +13,15 @@ The skills speak in terms of five canonical triage roles. This file maps those r
 When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
 
 Edit the right-hand column to match whatever vocabulary you actually use.
+
+## Wayfinder labels
+
+Used by `/wayfinder` (see `docs/agents/issue-tracker.md`). These are separate from the triage roles above.
+
+| Label                 | Meaning                                          |
+| --------------------- | ------------------------------------------------ |
+| `wayfinder:map`       | Map issue holding Notes / Decisions-so-far / Fog |
+| `wayfinder:research`  | Child ticket: research                           |
+| `wayfinder:prototype` | Child ticket: prototype                          |
+| `wayfinder:grilling`  | Child ticket: grilling                           |
+| `wayfinder:task`      | Child ticket: task                               |

@@ -19,6 +19,7 @@ The project uses Node 24 LTS and pnpm 11. The committed lockfile makes installs 
 - `pnpm start` runs the built Node server.
 - `pnpm test` runs unit and end-to-end tests.
 - `pnpm check` runs type checking, linting, formatting checks, tests, and the production build.
+- `pnpm resume:pdf` regenerates the committed Resume PDF after Catalog changes; `pnpm check` fails if it drifts.
 
 ## Stack
 
