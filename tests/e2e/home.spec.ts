@@ -22,12 +22,16 @@ test("shows Craft Logbook identity, Profile, and work index", async ({ page }) =
 test("keeps the Home identity strip and Profile usable on small mobile viewports", async ({
   page,
 }) => {
-  for (const viewport of [
+  const viewports = [
     { width: 320, height: 568 },
     { width: 375, height: 667 },
-  ]) {
+  ] as const;
+
+  await page.setViewportSize(viewports[0]);
+  await page.goto("/");
+
+  for (const viewport of viewports) {
     await page.setViewportSize(viewport);
-    await page.goto("/");
 
     await expect(page.getByRole("heading", { name: "Shayan Fareed" })).toBeVisible();
     const profile = page.getByRole("region", { name: "Profile" });

@@ -1,12 +1,10 @@
-import { TanStackDevtools } from "@tanstack/react-devtools";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { ReactNode } from "react";
 
 import { identity, positioning } from "@/catalog/portfolio";
+import { CloudflareWebAnalytics } from "@/components/cloudflare-web-analytics";
 import { NotFoundPanel } from "@/components/not-found-panel";
 import { SystemColorScheme } from "@/components/system-color-scheme";
-import { VercelObservability } from "@/components/vercel-observability";
 
 import styles from "../styles.css?url";
 
@@ -38,18 +36,7 @@ function RootDocument({ children }: { children: ReactNode }) {
       <body>
         <SystemColorScheme />
         {children}
-        <VercelObservability />
-        {import.meta.env.DEV ? (
-          <TanStackDevtools
-            config={{ position: "bottom-right" }}
-            plugins={[
-              {
-                name: "TanStack Router",
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-            ]}
-          />
-        ) : null}
+        <CloudflareWebAnalytics />
         <Scripts />
       </body>
     </html>

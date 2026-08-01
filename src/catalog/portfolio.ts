@@ -94,8 +94,13 @@ export const identity: Identity = {
   ],
 };
 
-/** Canonical public origin for absolute links in the Resume PDF download. */
-export const siteOrigin = "https://shayanfareed.vercel.app";
+/**
+ * Canonical public origin for absolute links in the Resume PDF download.
+ * Override with `VITE_SITE_ORIGIN` in Workers Builds when the hostname changes.
+ */
+export const siteOrigin = (
+  import.meta.env.VITE_SITE_ORIGIN ?? "https://shayanfareed.sfx-pers.workers.dev"
+).replace(/\/$/, "");
 
 /**
  * Third-person positioning claim for meta descriptions. Single source so page
@@ -163,15 +168,7 @@ const experience: Experience[] = [
 const skills: SkillGroup[] = [
   {
     label: "Web and mobile",
-    items: [
-      "TypeScript",
-      "React",
-      "TanStack Start",
-      "Tailwind CSS",
-      "React Native",
-      "Expo",
-      "native iOS and Android",
-    ],
+    items: ["TypeScript", "React", "TanStack Start", "Tailwind CSS", "React Native", "Expo"],
   },
   {
     label: "Backend and data",
@@ -179,15 +176,11 @@ const skills: SkillGroup[] = [
   },
   {
     label: "Infrastructure",
-    items: ["Docker", "Vercel", "CI/CD", "automated testing"],
+    items: ["Docker", "Cloudflare", "AWS", "CI/CD", "automated testing"],
   },
   {
     label: "AI",
     items: ["LLM integrations", "RAG pipelines", "evals and prompt engineering"],
-  },
-  {
-    label: "Product",
-    items: ["UI and UX design", "roles and permissions", "payments and payouts", "admin tooling"],
   },
 ];
 

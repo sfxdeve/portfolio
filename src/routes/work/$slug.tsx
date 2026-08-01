@@ -5,12 +5,17 @@ import { CaseStudyPage } from "@/components/case-study-page";
 import { NotFoundPanel } from "@/components/not-found-panel";
 
 export const Route = createFileRoute("/work/$slug")({
-  loader: ({ params }) => {
+  // workers-sdk#14917: notFound() from loader poisons this route under the
+  // Cloudflare Vite plugin; throw it from beforeLoad instead.
+  beforeLoad: ({ params }) => {
     const study = getCaseStudyBySlug(params.slug);
     if (!study) {
       throw notFound();
     }
     return { study };
+  },
+  loader: ({ context }) => {
+    return { study: context.study };
   },
   head: ({ loaderData }) => {
     const study = loaderData?.study;

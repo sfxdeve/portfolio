@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { getResume, identity } from "@/catalog/portfolio";
+import { getResume, identity, siteOrigin } from "@/catalog/portfolio";
 import { renderResumePrintHtml } from "@/catalog/resume-print-html";
 
 describe("Resume print HTML", () => {
@@ -25,7 +25,7 @@ describe("Resume print HTML", () => {
     }
 
     for (const project of resume.projects) {
-      const absoluteHref = `https://shayanfareed.vercel.app${project.href}`;
+      const absoluteHref = `${siteOrigin}${project.href}`;
       expect(html).toContain(project.title);
       expect(html).toContain(project.summary);
       expect(html).toContain(`href="${absoluteHref}"`);

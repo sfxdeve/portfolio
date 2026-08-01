@@ -1,9 +1,8 @@
 node_modules/
 
 # Framework and build output
-.nitro/
-.output/
 .tanstack/
+.wrangler/
 dist/
 dist-ssr/
 
