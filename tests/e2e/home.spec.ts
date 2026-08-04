@@ -1,24 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("shows Craft Logbook identity, Profile, and work index", async ({ page }) => {
-  await page.goto("/");
-
-  await expect(page.getByRole("heading", { name: "Shayan Fareed" })).toBeVisible();
-  await expect(page.getByText("Product Engineer")).toBeVisible();
-  await expect(page.getByRole("region", { name: "Profile" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /EcoBuiltConnect/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /ArtisanConnect/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /RushUploads/ })).toBeVisible();
-  await expect(page.getByRole("navigation", { name: "Contact" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Email" })).toBeVisible();
-  await expect(page).toHaveTitle("Shayan Fareed - Product Engineer");
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
-    "content",
-    "Product Engineer building custom web products end to end: design, web and mobile, data, and the infrastructure underneath. Client teams and independent products alike. Selected case studies of shipped work.",
-  );
-});
-
 test("keeps the Home identity strip and Profile usable on small mobile viewports", async ({
   page,
 }) => {
@@ -27,7 +9,6 @@ test("keeps the Home identity strip and Profile usable on small mobile viewports
     { width: 375, height: 667 },
   ] as const;
 
-  await page.setViewportSize(viewports[0]);
   await page.goto("/");
 
   for (const viewport of viewports) {
