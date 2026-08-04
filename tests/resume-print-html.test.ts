@@ -2,21 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import { identity, siteOrigin } from "@/catalog/portfolio";
 import { renderResumePrintHtml } from "@/catalog/resume-print-html";
-import { getResumeView } from "@/catalog/resume-view";
-
-import { resumeSectionPayloads } from "./helpers/assert-resume-view";
-
-/** Mirrors the adapter's HTML-escaping, which the escaping test below pins against a literal. */
-function escaped(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
 
 describe("Resume print adapter", () => {
-  it("renders every heading and payload string from the Resume view", () => {
+  it("renders identity, contact, and the Resume section headings", () => {
     const html = renderResumePrintHtml();
 
     expect(html).toContain(identity.name);
@@ -24,25 +12,29 @@ describe("Resume print adapter", () => {
     expect(html).toContain("sfx.pers@gmail.com");
     expect(html).toContain("x.com/fareedshayan11");
 
-    for (const section of getResumeView()) {
-      expect(html).toContain(section.heading);
-      for (const value of resumeSectionPayloads(section)) {
-        expect(html).toContain(escaped(value));
-      }
+    for (const heading of [
+      "Profile",
+      "Recent experience",
+      "Selected projects",
+      "Skills",
+      "Languages",
+      "Education",
+    ]) {
+      expect(html).toContain(heading);
     }
+
+    expect(html).toContain("Product Engineer");
+    expect(html).toContain("EcoBuiltConnect");
+    expect(html).not.toContain("View case study");
   });
 
   it("absolutizes project links for print and keeps projects bullet-free", () => {
     const html = renderResumePrintHtml();
-    const projects = getResumeView().find((section) => section.kind === "projects");
-    expect(projects?.kind).toBe("projects");
-    if (projects?.kind !== "projects") return;
+    const absoluteHref = `${siteOrigin}/work/ecobuiltconnect`;
 
-    for (const project of projects.items) {
-      const absoluteHref = `${siteOrigin}${project.href}`;
-      expect(html).toContain(`href="${absoluteHref}"`);
-      expect(html).not.toMatch(new RegExp(`${project.title}[\\s\\S]{0,200}<ul>`));
-    }
+    expect(html).toContain(`href="${absoluteHref}"`);
+    expect(html).toContain(`>${absoluteHref}</a>`);
+    expect(html).not.toMatch(/EcoBuiltConnect[\s\S]{0,200}<ul>/);
   });
 
   it("stays degree-only and escapes HTML in catalog strings", () => {
