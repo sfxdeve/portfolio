@@ -22,9 +22,7 @@ export function ShowcaseArtifact({ showcase }: { showcase: ShowcaseBlock }) {
         />
       </a>
       <figcaption className="mt-2 flex flex-col gap-0.5">
-        <span className="font-mono text-[11px] tracking-wide text-muted-foreground">
-          {showcase.label}
-        </span>
+        <span className="meta">{showcase.label}</span>
         <span className="text-sm text-muted-foreground">{showcase.caption}</span>
       </figcaption>
     </figure>

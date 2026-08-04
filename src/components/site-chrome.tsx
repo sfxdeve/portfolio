@@ -2,20 +2,15 @@ import { Link } from "@tanstack/react-router";
 
 import { identity } from "@/catalog/portfolio";
 
-const chromeLinkClass = "transition-colors hover:text-accent-ink focus-visible:text-accent-ink";
-
 export function SiteChrome() {
   return (
     <div className="flex flex-col gap-2 border-b border-border pb-3 sm:flex-row sm:items-center sm:justify-between sm:gap-x-6">
-      <Link
-        to="/"
-        className="shrink-0 font-mono text-[11px] tracking-wider text-foreground uppercase transition-colors hover:text-accent-ink focus-visible:text-accent-ink"
-      >
+      <Link to="/" className="shrink-0 label text-foreground nav-link">
         {identity.name}
       </Link>
-      <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] text-muted-foreground sm:gap-x-5">
+      <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 meta sm:gap-x-5">
         <nav aria-label="Primary" className="flex gap-x-3 sm:gap-x-5">
-          <Link to="/resume" className={chromeLinkClass}>
+          <Link to="/resume" className="nav-link">
             Resume
           </Link>
         </nav>
@@ -26,7 +21,7 @@ export function SiteChrome() {
               <a
                 key={link.kind}
                 href={link.href}
-                className={chromeLinkClass}
+                className="nav-link"
                 {...(opensInNewTab ? { target: "_blank", rel: "noreferrer" } : {})}
               >
                 {link.label}
