@@ -38,7 +38,7 @@ describe("Resume view", () => {
     expect(first?.bullets.length).toBeGreaterThan(0);
   });
 
-  it("carries Project entries with raw hrefs for each adapter to link its own way", () => {
+  it("carries Project entries with href and on-site linkLabel, not router slug", () => {
     const projects = getResumeView().find((section) => section.kind === "projects");
     expect(projects?.kind).toBe("projects");
     if (projects?.kind !== "projects") return;
@@ -48,7 +48,8 @@ describe("Resume view", () => {
     expect(first?.title).toBe("EcoBuiltConnect");
     expect(first?.summary).toContain("marketplace");
     expect(first?.href).toBe("/work/ecobuiltconnect");
-    expect(first?.slug).toBe("ecobuiltconnect");
+    expect(first?.linkLabel).toBe("View case study →");
+    expect(first).not.toHaveProperty("slug");
   });
 
   it("carries Skill groups with pre-joined item lines", () => {

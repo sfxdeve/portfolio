@@ -92,6 +92,9 @@ export const identity: Identity = {
   ],
 };
 
+/** Shared heading for the Profile section on Home and Resume. */
+export const profileHeading = "Profile";
+
 /**
  * Canonical public origin for absolute links in the Resume PDF download.
  * Override with `VITE_SITE_ORIGIN` in Workers Builds when the hostname changes.

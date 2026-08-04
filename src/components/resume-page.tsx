@@ -55,17 +55,17 @@ export function ResumePage() {
               <ResumeSection key={section.kind} heading={section.heading}>
                 <ul className="mt-5 space-y-8">
                   {section.items.map((project) => (
-                    <li key={project.slug}>
+                    <li key={project.href}>
                       <ItemHead
                         title={project.title}
                         aside={
                           <Link
                             to="/work/$slug"
-                            params={{ slug: project.slug }}
+                            params={{ slug: project.href.slice("/work/".length) }}
                             aria-label={`View case study for ${project.title}`}
                             className="accent-link"
                           >
-                            View case study →
+                            {project.linkLabel}
                           </Link>
                         }
                       />

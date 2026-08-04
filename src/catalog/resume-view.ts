@@ -1,4 +1,4 @@
-import { getResume, identity, positioning } from "@/catalog/portfolio";
+import { getResume, identity, positioning, profileHeading } from "@/catalog/portfolio";
 
 export type ExperienceViewItem = {
   title: string;
@@ -11,9 +11,10 @@ export type ExperienceViewItem = {
 export type ProjectViewItem = {
   title: string;
   summary: string;
-  /** Raw catalog path — the on-site page renders a router Link, print absolutizes it. */
+  /** Site-relative path — the on-site page routes it; print absolutizes it. */
   href: string;
-  slug: string;
+  /** On-site link text both adapters may surface; print shows the absolute URL instead. */
+  linkLabel: string;
 };
 
 export type SkillViewGroup = {
@@ -48,7 +49,7 @@ export function getResumeView(): ResumeView {
   const resume = getResume();
 
   return [
-    { kind: "profile", heading: "Profile", bio: identity.bio, location: resume.location },
+    { kind: "profile", heading: profileHeading, bio: identity.bio, location: resume.location },
     {
       kind: "experience",
       heading: "Recent experience",
@@ -66,7 +67,7 @@ export function getResumeView(): ResumeView {
         title: project.title,
         summary: project.summary,
         href: `/work/${project.slug}`,
-        slug: project.slug,
+        linkLabel: "View case study →",
       })),
     },
     {

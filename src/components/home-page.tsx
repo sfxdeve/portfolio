@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import { identity, listCaseStudies } from "@/catalog/portfolio";
+import { identity, listCaseStudies, profileHeading } from "@/catalog/portfolio";
 import { IdentityHeader } from "@/components/identity-header";
 import { PageShell } from "@/components/page-shell";
 import { ProfileSection } from "@/components/profile-section";
@@ -11,7 +11,7 @@ export function HomePage() {
   return (
     <PageShell>
       <IdentityHeader label="Home" />
-      <ProfileSection heading="Profile" bio={identity.bio} />
+      <ProfileSection heading={profileHeading} bio={identity.bio} />
 
       <section aria-label="Selected work" className="mt-10">
         <h2 className="section-heading">Selected work</h2>
