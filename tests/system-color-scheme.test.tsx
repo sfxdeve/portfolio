@@ -1,7 +1,6 @@
-import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { SystemColorScheme } from "@/components/system-color-scheme";
+import { COLOR_SCHEME_SCRIPT } from "@/components/system-color-scheme";
 
 function stubMatchMedia(prefersDark: boolean) {
   let matches = prefersDark;
@@ -47,40 +46,31 @@ function stubMatchMedia(prefersDark: boolean) {
   };
 }
 
-describe("SystemColorScheme", () => {
+function expectColorScheme(dark: boolean) {
+  expect(document.documentElement.classList.contains("dark")).toBe(dark);
+  expect(document.documentElement.style.colorScheme).toBe(dark ? "dark" : "light");
+}
+
+describe("COLOR_SCHEME_SCRIPT", () => {
   beforeEach(() => {
     document.documentElement.classList.remove("dark");
     document.documentElement.style.colorScheme = "";
   });
 
+  // eslint-disable-next-line no-implied-eval -- executes the shipped script verbatim, as the browser would
+  const runScript = () => new Function(COLOR_SCHEME_SCRIPT)();
+
   it("leaves .dark off when the OS prefers light", () => {
     stubMatchMedia(false);
-    render(<SystemColorScheme />);
+    runScript();
 
-    expect(document.documentElement.classList.contains("dark")).toBe(false);
-    expect(document.documentElement.style.colorScheme).toBe("light");
+    expectColorScheme(false);
   });
 
   it("adds .dark when the OS prefers dark", () => {
     stubMatchMedia(true);
-    render(<SystemColorScheme />);
+    runScript();
 
-    expect(document.documentElement.classList.contains("dark")).toBe(true);
-    expect(document.documentElement.style.colorScheme).toBe("dark");
-  });
-
-  it("updates when the OS color scheme changes", () => {
-    const media = stubMatchMedia(false);
-    render(<SystemColorScheme />);
-
-    expect(document.documentElement.classList.contains("dark")).toBe(false);
-
-    media.setPrefersDark(true);
-    expect(document.documentElement.classList.contains("dark")).toBe(true);
-    expect(document.documentElement.style.colorScheme).toBe("dark");
-
-    media.setPrefersDark(false);
-    expect(document.documentElement.classList.contains("dark")).toBe(false);
-    expect(document.documentElement.style.colorScheme).toBe("light");
+    expectColorScheme(true);
   });
 });

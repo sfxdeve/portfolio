@@ -3,15 +3,16 @@ import { useEffect } from "react";
 
 const PREFERS_DARK = "(prefers-color-scheme: dark)";
 
-// Keep in sync with `applySystemColorScheme` — FOUC script must be a plain string.
-const COLOR_SCHEME_SCRIPT = `(function(){try{var d=matchMedia('${PREFERS_DARK}').matches;var e=document.documentElement;e.classList.toggle('dark',d);e.style.colorScheme=d?'dark':'light'}catch(e){}})();`;
-
-function applySystemColorScheme() {
+// The pre-paint script must reference only globals and the function's own params:
+// minifiers rename module bindings, which would dangle in the serialized source.
+function applySystemColorScheme(query: string) {
   const root = document.documentElement;
-  const dark = window.matchMedia(PREFERS_DARK).matches;
+  const dark = window.matchMedia(query).matches;
   root.classList.toggle("dark", dark);
   root.style.colorScheme = dark ? "dark" : "light";
 }
+
+export const COLOR_SCHEME_SCRIPT = `(function(){try{(${applySystemColorScheme.toString()})(${JSON.stringify(PREFERS_DARK)})}catch(e){}})();`;
 
 /**
  * Syncs the `.dark` class and `color-scheme` on `<html>` with the OS preference.
@@ -19,9 +20,9 @@ function applySystemColorScheme() {
  */
 export function SystemColorScheme() {
   useEffect(() => {
-    applySystemColorScheme();
+    applySystemColorScheme(PREFERS_DARK);
     const media = window.matchMedia(PREFERS_DARK);
-    const onChange = () => applySystemColorScheme();
+    const onChange = () => applySystemColorScheme(PREFERS_DARK);
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
   }, []);
