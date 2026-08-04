@@ -1,4 +1,5 @@
-import { getResume, identity, siteOrigin, type Resume } from "@/catalog/portfolio";
+import { identity, siteOrigin } from "@/catalog/portfolio";
+import { getResumeView, type ResumeSection } from "@/catalog/resume-view";
 
 function escapeHtml(value: string): string {
   return value
@@ -8,51 +9,55 @@ function escapeHtml(value: string): string {
     .replaceAll('"', "&quot;");
 }
 
-function contactLine(): string {
-  const email = identity.contact.find((link) => link.kind === "email");
-  const github = identity.contact.find((link) => link.kind === "github");
-  const x = identity.contact.find((link) => link.kind === "x");
-  const resume = getResume();
-
-  const parts = [
-    email
-      ? `<a href="${escapeHtml(email.href)}">${escapeHtml(email.href.replace(/^mailto:/, ""))}</a>`
-      : null,
-    github
-      ? `<a href="${escapeHtml(github.href)}">${escapeHtml(github.href.replace(/^https?:\/\//, ""))}</a>`
-      : null,
-    x
-      ? `<a href="${escapeHtml(x.href)}">${escapeHtml(x.href.replace(/^https?:\/\/(www\.)?/, ""))}</a>`
-      : null,
-    escapeHtml(resume.location),
-  ].filter(Boolean);
-
-  return parts.join(" | ");
+function displayHref(href: string): string {
+  return href.replace(/^mailto:/, "").replace(/^https?:\/\/(www\.)?/, "");
 }
 
-function experienceHtml(resume: Resume): string {
-  return resume.experience
-    .map(
-      (item) => `
+function contactLine(location: string): string {
+  const links = identity.contact.map(
+    (link) => `<a href="${escapeHtml(link.href)}">${escapeHtml(displayHref(link.href))}</a>`,
+  );
+  return [...links, escapeHtml(location)].join(" | ");
+}
+
+function sectionHtml(section: ResumeSection): string {
+  switch (section.kind) {
+    case "profile":
+      return `
+      <section class="section">
+        <div class="section-title">${escapeHtml(section.heading)}</div>
+        <p>
+          ${escapeHtml(section.bio)}
+        </p>
+      </section>`;
+    case "experience":
+      return `
+      <section class="section">
+        <div class="section-title">${escapeHtml(section.heading)}</div>
+${section.items
+  .map(
+    (item) => `
         <article class="item">
           <div class="item-head">
             <span>${escapeHtml(item.title)}</span>
             <span>${escapeHtml(item.dates)}</span>
           </div>
-          <div class="item-subtitle">${escapeHtml(item.organization)} / ${escapeHtml(item.location)}</div>
+          <div class="item-subtitle">${escapeHtml(item.subtitle)}</div>
           <ul>
             ${item.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("\n            ")}
           </ul>
         </article>`,
-    )
-    .join("\n");
-}
-
-function projectsHtml(resume: Resume): string {
-  return resume.projects
-    .map((project) => {
-      const href = `${siteOrigin}${project.href}`;
+  )
+  .join("\n")}
+      </section>`;
+    case "projects":
       return `
+      <section class="section">
+        <div class="section-title">${escapeHtml(section.heading)}</div>
+${section.items
+  .map((project) => {
+    const href = `${siteOrigin}${project.href}`;
+    return `
         <article class="item">
           <div class="item-head">
             <span>${escapeHtml(project.title)}</span>
@@ -60,40 +65,53 @@ function projectsHtml(resume: Resume): string {
           </div>
           <div class="item-subtitle">${escapeHtml(project.summary)}</div>
         </article>`;
-    })
-    .join("\n");
-}
-
-function skillsHtml(resume: Resume): string {
-  return resume.skills
-    .map(
-      (group) =>
-        `        <div class="skill-group"><span class="skill-label">${escapeHtml(group.label)}:</span> ${escapeHtml(group.items.join(", "))}</div>`,
-    )
-    .join("\n");
-}
-
-function educationHtml(resume: Resume): string {
-  return resume.education
-    .map(
-      (item) => `
+  })
+  .join("\n")}
+      </section>`;
+    case "skills":
+      return `
+      <section class="section">
+        <div class="section-title">${escapeHtml(section.heading)}</div>
+${section.groups
+  .map(
+    (group) =>
+      `        <div class="skill-group"><span class="skill-label">${escapeHtml(group.label)}:</span> ${escapeHtml(group.line)}</div>`,
+  )
+  .join("\n")}
+      </section>`;
+    case "languages":
+      return `
+      <section class="section">
+        <div class="section-title">${escapeHtml(section.heading)}</div>
+        <p>${escapeHtml(section.line)}</p>
+      </section>`;
+    case "education":
+      return `
+      <section class="section">
+        <div class="section-title">${escapeHtml(section.heading)}</div>
+${section.items
+  .map(
+    (item) => `
         <article class="item">
           <div class="item-head">
-            <span>${escapeHtml(item.degree)}, ${escapeHtml(item.institution)}</span>
+            <span>${escapeHtml(item.degreeLine)}</span>
             <span>${escapeHtml(item.dates)}</span>
           </div>
           <div>${escapeHtml(item.location)}</div>
         </article>`,
-    )
-    .join("\n");
+  )
+  .join("\n")}
+      </section>`;
+  }
 }
 
-/** Plain print-ready HTML of the catalog Resume; generator input for the PDF download. */
+/** Plain print-ready HTML of the Resume view; generator input for the PDF download. */
 export function renderResumePrintHtml(): string {
-  const resume = getResume();
-  const languages = resume.languages
-    .map((language) => `${escapeHtml(language.name)}: ${escapeHtml(language.level)}`)
-    .join(" | ");
+  const view = getResumeView();
+  const profile = view.find((section) => section.kind === "profile");
+  if (profile?.kind !== "profile") {
+    throw new Error("Resume view must include a profile section");
+  }
 
   return `<!doctype html>
 <html lang="en">
@@ -207,41 +225,10 @@ export function renderResumePrintHtml(): string {
         <div class="name">${escapeHtml(identity.name)}</div>
         <div class="title">${escapeHtml(identity.role)}</div>
         <div class="contact">
-          ${contactLine()}
+          ${contactLine(profile.location)}
         </div>
       </header>
-
-      <section class="section">
-        <div class="section-title">Profile</div>
-        <p>
-          ${escapeHtml(identity.bio)}
-        </p>
-      </section>
-
-      <section class="section">
-        <div class="section-title">Recent experience</div>
-${experienceHtml(resume)}
-      </section>
-
-      <section class="section">
-        <div class="section-title">Selected projects</div>
-${projectsHtml(resume)}
-      </section>
-
-      <section class="section">
-        <div class="section-title">Skills</div>
-${skillsHtml(resume)}
-      </section>
-
-      <section class="section">
-        <div class="section-title">Languages</div>
-        <p>${languages}</p>
-      </section>
-
-      <section class="section">
-        <div class="section-title">Education</div>
-${educationHtml(resume)}
-      </section>
+${view.map((section) => sectionHtml(section)).join("\n")}
     </main>
   </body>
 </html>

@@ -1,126 +1,137 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import type { ReactNode } from "react";
 
-import { getResume } from "@/catalog/portfolio";
-import { RESUME_PDF_HREF, resumePdfDownloadName } from "@/catalog/resume-pdf";
+import { RESUME_PDF_HREF, resumePdfDownloadName } from "@/catalog/resume-download";
+import { getResumeView } from "@/catalog/resume-view";
 import { IdentityHeader } from "@/components/identity-header";
 import { PageShell } from "@/components/page-shell";
 import { ProfileSection } from "@/components/profile-section";
 
 export function ResumePage() {
-  const resume = getResume();
+  const view = getResumeView();
 
   return (
     <PageShell>
       <IdentityHeader
         label="Resume"
         aside={
-          <a
-            href={RESUME_PDF_HREF}
-            download={resumePdfDownloadName()}
-            className="font-mono text-[11px] tracking-wide text-accent-ink transition-colors hover:text-foreground focus-visible:text-foreground"
-          >
+          <a href={RESUME_PDF_HREF} download={resumePdfDownloadName()} className="accent-link">
             Download PDF
           </a>
         }
       />
 
-      <ProfileSection location={resume.location} />
-
-      <section aria-label="Recent experience" className="mt-10">
-        <h2 className="border-b border-border pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-          Recent experience
-        </h2>
-        <ul className="mt-5 space-y-8">
-          {resume.experience.map((item) => (
-            <li key={`${item.title}-${item.dates}`}>
-              <div className="grid gap-1 sm:grid-cols-[1fr_auto] sm:items-baseline">
-                <p className="text-base font-medium text-foreground">{item.title}</p>
-                <p className="font-mono text-[11px] text-muted-foreground">{item.dates}</p>
-              </div>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {item.organization} / {item.location}
-              </p>
-              <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-foreground/80">
-                {item.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section aria-label="Selected projects" className="mt-10">
-        <h2 className="border-b border-border pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-          Selected projects
-        </h2>
-        <ul className="mt-5 space-y-8">
-          {resume.projects.map((project) => (
-            <li key={project.slug}>
-              <div className="grid gap-1 sm:grid-cols-[1fr_auto] sm:items-baseline">
-                <p className="text-base font-medium text-foreground">{project.title}</p>
-                <Link
-                  to="/work/$slug"
-                  params={{ slug: project.slug }}
-                  aria-label={`View case study for ${project.title}`}
-                  className="inline-flex items-center gap-1 font-mono text-[11px] tracking-wide text-accent-ink transition-colors hover:text-foreground focus-visible:text-foreground"
-                >
-                  View case study
-                  <ArrowRight aria-hidden className="size-3" />
-                </Link>
-              </div>
-              <p className="mt-1 text-sm text-muted-foreground">{project.summary}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section aria-label="Skills" className="mt-10">
-        <h2 className="border-b border-border pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-          Skills
-        </h2>
-        <dl className="mt-5 space-y-5">
-          {resume.skills.map((group) => (
-            <div key={group.label}>
-              <dt className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-                {group.label}
-              </dt>
-              <dd className="mt-1.5 text-sm leading-relaxed text-foreground/80">
-                {group.items.join(", ")}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section aria-label="Languages" className="mt-10">
-        <h2 className="border-b border-border pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-          Languages
-        </h2>
-        <p className="mt-4 text-sm text-foreground/80">
-          {resume.languages.map((language) => `${language.name}: ${language.level}`).join(" | ")}
-        </p>
-      </section>
-
-      <section aria-label="Education" className="mt-10">
-        <h2 className="border-b border-border pb-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-          Education
-        </h2>
-        <ul className="mt-5 space-y-4">
-          {resume.education.map((item) => (
-            <li key={item.degree}>
-              <div className="grid gap-1 sm:grid-cols-[1fr_auto] sm:items-baseline">
-                <p className="text-base font-medium text-foreground">
-                  {item.degree}, {item.institution}
-                </p>
-                <p className="font-mono text-[11px] text-muted-foreground">{item.dates}</p>
-              </div>
-              <p className="mt-1 text-sm text-muted-foreground">{item.location}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {view.map((section) => {
+        switch (section.kind) {
+          case "profile":
+            return (
+              <ProfileSection
+                key={section.kind}
+                heading={section.heading}
+                bio={section.bio}
+                location={section.location}
+              />
+            );
+          case "experience":
+            return (
+              <ResumeSection key={section.kind} heading={section.heading}>
+                <ul className="mt-5 space-y-8">
+                  {section.items.map((item) => (
+                    <li key={`${item.title}-${item.dates}`}>
+                      <ItemHead title={item.title} aside={<p className="meta">{item.dates}</p>} />
+                      <p className="mt-1 text-sm text-muted-foreground">{item.subtitle}</p>
+                      <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-foreground/80">
+                        {item.bullets.map((bullet) => (
+                          <li key={bullet}>{bullet}</li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </ResumeSection>
+            );
+          case "projects":
+            return (
+              <ResumeSection key={section.kind} heading={section.heading}>
+                <ul className="mt-5 space-y-8">
+                  {section.items.map((project) => (
+                    <li key={project.slug}>
+                      <ItemHead
+                        title={project.title}
+                        aside={
+                          <Link
+                            to="/work/$slug"
+                            params={{ slug: project.slug }}
+                            aria-label={`View case study for ${project.title}`}
+                            className="accent-link"
+                          >
+                            View case study →
+                          </Link>
+                        }
+                      />
+                      <p className="mt-1 text-sm text-muted-foreground">{project.summary}</p>
+                    </li>
+                  ))}
+                </ul>
+              </ResumeSection>
+            );
+          case "skills":
+            return (
+              <ResumeSection key={section.kind} heading={section.heading}>
+                <dl className="mt-5 space-y-5">
+                  {section.groups.map((group) => (
+                    <div key={group.label}>
+                      <dt className="label text-muted-foreground">{group.label}</dt>
+                      <dd className="mt-1.5 text-sm leading-relaxed text-foreground/80">
+                        {group.line}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </ResumeSection>
+            );
+          case "languages":
+            return (
+              <ResumeSection key={section.kind} heading={section.heading}>
+                <p className="mt-4 text-sm text-foreground/80">{section.line}</p>
+              </ResumeSection>
+            );
+          case "education":
+            return (
+              <ResumeSection key={section.kind} heading={section.heading}>
+                <ul className="mt-5 space-y-4">
+                  {section.items.map((item) => (
+                    <li key={item.degreeLine}>
+                      <ItemHead
+                        title={item.degreeLine}
+                        aside={<p className="meta">{item.dates}</p>}
+                      />
+                      <p className="mt-1 text-sm text-muted-foreground">{item.location}</p>
+                    </li>
+                  ))}
+                </ul>
+              </ResumeSection>
+            );
+        }
+      })}
     </PageShell>
+  );
+}
+
+function ResumeSection({ heading, children }: { heading: string; children: ReactNode }) {
+  return (
+    <section aria-label={heading} className="mt-10">
+      <h2 className="section-heading">{heading}</h2>
+      {children}
+    </section>
+  );
+}
+
+function ItemHead({ title, aside }: { title: string; aside: ReactNode }) {
+  return (
+    <div className="grid gap-1 sm:grid-cols-[1fr_auto] sm:items-baseline">
+      <p className="text-base font-medium text-foreground">{title}</p>
+      {aside}
+    </div>
   );
 }

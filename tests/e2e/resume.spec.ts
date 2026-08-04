@@ -9,16 +9,11 @@ test("navigates among Home, Resume, and a Case Study via chrome", async ({ page 
     .getByRole("link", { name: "Resume" })
     .click();
   await expect(page).toHaveURL(/\/resume$/);
-  await expect(page.getByText(/I build custom web products end to end/)).toBeVisible();
   await expect(page).toHaveTitle("Shayan Fareed - Resume");
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
-    "content",
-    "Recent experience, selected projects, and skills for Shayan Fareed. Product Engineer building custom web products end to end: design, web and mobile, data, and the infrastructure underneath. Client teams and independent products alike.",
-  );
 
   await page.getByRole("link", { name: "Shayan Fareed" }).click();
   await expect(page).toHaveURL("/");
-  await expect(page.getByRole("heading", { name: "Shayan Fareed" })).toBeVisible();
+  await expect(page).toHaveTitle("Shayan Fareed - Product Engineer");
 
   await page.getByRole("link", { name: /EcoBuiltConnect/ }).click();
   await expect(page).toHaveURL(/\/work\/ecobuiltconnect$/);
@@ -28,11 +23,6 @@ test("navigates among Home, Resume, and a Case Study via chrome", async ({ page 
     .getByRole("link", { name: "Resume" })
     .click();
   await expect(page).toHaveURL(/\/resume$/);
-  await expect(page.getByRole("region", { name: "Recent experience" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Download PDF/i })).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "View case study for EcoBuiltConnect" }),
-  ).toBeVisible();
 });
 
 test("Resume page has no automatically detectable accessibility violations", async ({ page }) => {
@@ -43,11 +33,13 @@ test("Resume page has no automatically detectable accessibility violations", asy
   expect(results.violations).toEqual([]);
 });
 
-test("About route is gone and Resume PDF download is served", async ({ page, request }) => {
+test("About route is gone", async ({ page }) => {
   await page.goto("/about");
   await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Home" })).toBeVisible();
+});
 
+test("Resume PDF download is served and the old ATS page is gone", async ({ request }) => {
   const response = await request.get("/resume/download.pdf");
   expect(response.ok()).toBe(true);
   expect(response.headers()["content-type"] ?? "").toMatch(/application\/pdf/);

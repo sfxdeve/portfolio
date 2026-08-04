@@ -1,50 +1,53 @@
 import { describe, expect, it } from "vitest";
 
-import { getResume, identity, siteOrigin } from "@/catalog/portfolio";
+import { identity, siteOrigin } from "@/catalog/portfolio";
 import { renderResumePrintHtml } from "@/catalog/resume-print-html";
+import { getResumeView } from "@/catalog/resume-view";
 
-describe("Resume print HTML", () => {
-  it("renders the same catalog facts as the on-site Resume", () => {
+import { resumeSectionPayloads } from "./helpers/assert-resume-view";
+
+/** Mirrors the adapter's HTML-escaping, which the escaping test below pins against a literal. */
+function escaped(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+describe("Resume print adapter", () => {
+  it("renders every heading and payload string from the Resume view", () => {
     const html = renderResumePrintHtml();
-    const resume = getResume();
 
     expect(html).toContain(identity.name);
     expect(html).toContain(identity.role);
-    expect(html).toContain(identity.bio);
-    expect(html).toContain(resume.location);
     expect(html).toContain("sfx.pers@gmail.com");
     expect(html).toContain("x.com/fareedshayan11");
 
-    for (const item of resume.experience) {
-      expect(html).toContain(item.title);
-      expect(html).toContain(item.organization);
-      expect(html).toContain(item.dates);
-      for (const bullet of item.bullets) {
-        expect(html).toContain(bullet);
+    for (const section of getResumeView()) {
+      expect(html).toContain(section.heading);
+      for (const value of resumeSectionPayloads(section)) {
+        expect(html).toContain(escaped(value));
       }
     }
+  });
 
-    for (const project of resume.projects) {
+  it("absolutizes project links for print and keeps projects bullet-free", () => {
+    const html = renderResumePrintHtml();
+    const projects = getResumeView().find((section) => section.kind === "projects");
+    expect(projects?.kind).toBe("projects");
+    if (projects?.kind !== "projects") return;
+
+    for (const project of projects.items) {
       const absoluteHref = `${siteOrigin}${project.href}`;
-      expect(html).toContain(project.title);
-      expect(html).toContain(project.summary);
       expect(html).toContain(`href="${absoluteHref}"`);
-      expect(html).toContain(absoluteHref);
       expect(html).not.toMatch(new RegExp(`${project.title}[\\s\\S]{0,200}<ul>`));
     }
+  });
 
-    for (const group of resume.skills) {
-      expect(html).toContain(group.label);
-      expect(html).toContain(group.items.join(", "));
-    }
+  it("stays degree-only and escapes HTML in catalog strings", () => {
+    const html = renderResumePrintHtml();
 
-    for (const language of resume.languages) {
-      expect(html).toContain(language.name);
-      expect(html).toContain(language.level);
-    }
-
-    const degree = resume.education[0]!;
-    expect(html).toContain(degree.degree);
     expect(html).toContain("NED University of Engineering &amp; Technology");
     expect(html).not.toContain("Intermediate");
     expect(html).not.toContain("Matriculation");
