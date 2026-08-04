@@ -66,6 +66,12 @@ page, career timeline as the product, ATS download, second PDF narrative, Craft
 Logbook styling in the PDF, multi-page PDF, outcome bullets or Showcases on
 Resume, full school history below degree, skills laundry list, /about redirect
 
+**Resume view**: The single structural description of the Resume — ordered
+sections with headings and content strings — that the on-site Resume page and
+the print/PDF adapter both render. Derived from the Catalog on every call; not
+a third record. _Avoid_: section order or headings encoded in a view, Resume
+structure duplicated per adapter
+
 **Experience**: A paid or engaged position on the Resume: title, organization,
 location, date range, and short ownership bullets. Describes what was owned in
 that engagement; not a Case Study and not Capsule role. _Avoid_: Role (as the

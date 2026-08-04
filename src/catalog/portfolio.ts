@@ -24,7 +24,6 @@ export type Experience = {
 export type ResumeProject = {
   title: string;
   summary: string;
-  href: string;
   slug: string;
 };
 
@@ -55,7 +54,6 @@ export type Resume = {
 };
 
 export type ShowcaseBlock = {
-  kind: "ui" | "diagram" | "diff" | "recording";
   label: string;
   caption: string;
   src: string;
@@ -94,6 +92,9 @@ export const identity: Identity = {
   ],
 };
 
+/** Shared heading for the Profile section on Home and Resume. */
+export const profileHeading = "Profile";
+
 /**
  * Canonical public origin for absolute links in the Resume PDF download.
  * Override with `VITE_SITE_ORIGIN` in Workers Builds when the hostname changes.
@@ -111,6 +112,8 @@ export const siteOrigin = (
  */
 export const positioning =
   "Product Engineer building custom web products end to end: design, web and mobile, data, and the infrastructure underneath. Client teams and independent products alike.";
+
+const resumeLocation = "Karachi, Pakistan";
 
 const experience: Experience[] = [
   {
@@ -210,9 +213,8 @@ const caseStudies: CaseStudy[] = [
       problem:
         "Reclaimed building materials are one-offs sold by the meter, and when a batch is gone it is gone. Buyers had to trust a stranger about condition, and sellers had to get paid for the part they actually handed over.",
       role: "Product Engineer. Listing review, checkout, handoffs, disputes, payouts.",
-      // TODO: replace the qualitative outcome with real numbers once available (listings published, orders fulfilled, GMV, dispute rate).
       outcome:
-        "A buyer pays once for a cart spanning several salvage yards, each seller is paid for each batch they hand over, and a dispute freezes only the units in dispute.",
+        "A buyer pays once for a cart spanning several salvage yards; sellers are paid per handed-over batch after a 48-hour dispute window, with an 8% platform fee; a dispute freezes only the units in dispute.",
     },
     body: [
       {
@@ -224,7 +226,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Marketplace browsing",
           caption:
             "Six results, six different quantities: 48 linear meters of beams here, 200 railway sleepers there. Buyers filter on condition, how the material was sourced, location, and price.",
@@ -243,7 +244,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Listing detail",
           caption:
             "R550 per linear meter, 48 available, two-meter minimum, with a demolition inventory attached as evidence. The price locks at checkout; the exact address waits for seller confirmation.",
@@ -262,7 +262,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Seller listing management",
           caption:
             "What the seller sees while review is pending: automatic checks passed, operator decision outstanding, their own copy still editable.",
@@ -281,7 +280,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Operator review",
           caption:
             "Approve for publication, request correction, or keep hidden. Every field the seller supplied is labelled as theirs, including the photos.",
@@ -300,7 +298,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Seller-scoped order",
           caption:
             "One seller’s slice of a paid cart, waiting on their confirmation. R6,600 of materials, 15% VAT added for the buyer, 8% platform fee deducted from the seller.",
@@ -319,7 +316,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Quantity-based payout",
           caption:
             "8 of 12 meters handed over, R4,400 gross against that batch, eligible in 48 hours if undisputed. The remaining 4 meters wait on their own handoff.",
@@ -340,9 +336,8 @@ const caseStudies: CaseStudy[] = [
       problem:
         "Booking a tradesperson means guessing. Clients could not tell who was qualified or what a job should cost, and artisans could not price a vague request or count on being paid once the work was done.",
       role: "Product Engineer, end to end: posting a job through to releasing the money.",
-      // TODO: replace the qualitative outcome with real numbers once available (jobs completed, quote-to-hire rate, average time to payout).
       outcome:
-        "Clients compare quotes split into labour and materials, the money sits secured until the client approves the finished work, and only disputed funds are held.",
+        "Clients compare quotes split into labour and materials (R4,050 to R5,600 in the sample), money sits secured with a 2.5% protection fee until the client approves within 72 hours, and only disputed funds are held.",
     },
     body: [
       {
@@ -354,7 +349,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Public artisan profile",
           caption:
             "4.8 across 86 reviews, 132 finished plumbing jobs, insurance valid until November. Full reviews need a sign-in; the phone number is nowhere on the page.",
@@ -373,7 +367,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Client job creation",
           caption:
             "Symptoms as tick-boxes, pipe diameter and accessible length, three photos and a video, plus where to park. Address and phone masked until payment.",
@@ -392,7 +385,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Quote comparison",
           caption:
             "Three quotes from R4,050 to R5,600, each showing labour against materials. The 2.5% protection fee is added where the client can see it before accepting.",
@@ -411,7 +403,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Funded engagement",
           caption:
             "R4,050 secured before the start date, with a code the client reads out when the artisan arrives. Address and number are now visible; the conversation stays in the app.",
@@ -430,7 +421,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Completion and review",
           caption:
             "Five scope items ticked, four photos stamped within seven minutes of each other, 72 hours left to approve. Ratings cover workmanship, communication, punctuality, and scope accuracy.",
@@ -449,7 +439,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Artisan dashboard",
           caption:
             "R4,050 sitting in pending, released once the client approves. The credential expiring in 42 days appears as an action, since an expired one stops new matches.",
@@ -483,7 +472,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Transfer creation",
           caption:
             "Four files, 2.72 GB, nothing uploaded yet. Expiry and a 3,000-visit download cap are still editable, and the upload goes up in 10 MB chunks, three at a time.",
@@ -502,7 +490,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Upload completion",
           caption:
             "All four files confirmed, and now there is a link. Emailing eight recipients is optional; the link works on its own.",
@@ -521,7 +508,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Public recipient transfer",
           caption:
             "No account, no countdown, no ad: just what is in the transfer and how long it lasts. 500 of 3,000 permitted visits remain.",
@@ -540,7 +526,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Download interstitial",
           caption:
             "Three seconds against one 24 MB file, with the download button disabled until the counter clears. The sender earns from this page, not the one before it.",
@@ -559,7 +544,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Sender dashboard",
           caption:
             "$0.004 per recipient visit at a $4 CPM, $10 minimum before cashing out. 2,500 of 3,000 visits used on the one active transfer.",
@@ -578,7 +562,6 @@ const caseStudies: CaseStudy[] = [
       {
         type: "showcase",
         showcase: {
-          kind: "ui",
           label: "Admin operations",
           caption:
             "12,480 users, 3,216 live transfers, 8.4 TB stored. A pending $10 payout waits on approval, and the $4 CPM is editable in place.",
@@ -602,12 +585,11 @@ export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
 
 export function getResume(): Resume {
   return {
-    location: "Karachi, Pakistan",
+    location: resumeLocation,
     experience,
     projects: caseStudies.map((study) => ({
       title: study.title,
       summary: study.indexSummary,
-      href: `/work/${study.slug}`,
       slug: study.slug,
     })),
     skills,

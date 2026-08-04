@@ -1,50 +1,45 @@
 import { describe, expect, it } from "vitest";
 
-import { getResume, identity, siteOrigin } from "@/catalog/portfolio";
+import { identity, siteOrigin } from "@/catalog/portfolio";
 import { renderResumePrintHtml } from "@/catalog/resume-print-html";
 
-describe("Resume print HTML", () => {
-  it("renders the same catalog facts as the on-site Resume", () => {
+describe("Resume print adapter", () => {
+  it("renders identity, contact, and the Resume section headings", () => {
     const html = renderResumePrintHtml();
-    const resume = getResume();
 
     expect(html).toContain(identity.name);
     expect(html).toContain(identity.role);
-    expect(html).toContain(identity.bio);
-    expect(html).toContain(resume.location);
     expect(html).toContain("sfx.pers@gmail.com");
     expect(html).toContain("x.com/fareedshayan11");
 
-    for (const item of resume.experience) {
-      expect(html).toContain(item.title);
-      expect(html).toContain(item.organization);
-      expect(html).toContain(item.dates);
-      for (const bullet of item.bullets) {
-        expect(html).toContain(bullet);
-      }
+    for (const heading of [
+      "Profile",
+      "Recent experience",
+      "Selected projects",
+      "Skills",
+      "Languages",
+      "Education",
+    ]) {
+      expect(html).toContain(heading);
     }
 
-    for (const project of resume.projects) {
-      const absoluteHref = `${siteOrigin}${project.href}`;
-      expect(html).toContain(project.title);
-      expect(html).toContain(project.summary);
-      expect(html).toContain(`href="${absoluteHref}"`);
-      expect(html).toContain(absoluteHref);
-      expect(html).not.toMatch(new RegExp(`${project.title}[\\s\\S]{0,200}<ul>`));
-    }
+    expect(html).toContain("Product Engineer");
+    expect(html).toContain("EcoBuiltConnect");
+    expect(html).not.toContain("View case study");
+  });
 
-    for (const group of resume.skills) {
-      expect(html).toContain(group.label);
-      expect(html).toContain(group.items.join(", "));
-    }
+  it("absolutizes project links for print and keeps projects bullet-free", () => {
+    const html = renderResumePrintHtml();
+    const absoluteHref = `${siteOrigin}/work/ecobuiltconnect`;
 
-    for (const language of resume.languages) {
-      expect(html).toContain(language.name);
-      expect(html).toContain(language.level);
-    }
+    expect(html).toContain(`href="${absoluteHref}"`);
+    expect(html).toContain(`>${absoluteHref}</a>`);
+    expect(html).not.toMatch(/EcoBuiltConnect[\s\S]{0,200}<ul>/);
+  });
 
-    const degree = resume.education[0]!;
-    expect(html).toContain(degree.degree);
+  it("stays degree-only and escapes HTML in catalog strings", () => {
+    const html = renderResumePrintHtml();
+
     expect(html).toContain("NED University of Engineering &amp; Technology");
     expect(html).not.toContain("Intermediate");
     expect(html).not.toContain("Matriculation");

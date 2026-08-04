@@ -6,13 +6,11 @@ export function IdentityHeader({ label, aside }: { label: string; aside?: ReactN
   return (
     <header className="mt-14 grid gap-2 sm:grid-cols-[minmax(0,11rem)_1fr] sm:items-end">
       <div>
-        <p className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-          {label}
-        </p>
+        <p className="label text-muted-foreground">{label}</p>
         <h1 className="mt-1 text-xl font-medium tracking-tight text-foreground">{identity.name}</h1>
       </div>
       <div className="flex flex-col gap-1 sm:items-end">
-        <p className="font-mono text-[12px] text-muted-foreground">{identity.role}</p>
+        <p className="meta">{identity.role}</p>
         {aside}
       </div>
     </header>

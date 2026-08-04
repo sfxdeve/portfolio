@@ -8,16 +8,16 @@ describe("Craft Logbook Home", () => {
   it("shows the identity strip, Profile section, and numbered work-index rows", () => {
     render(<HomePage />);
 
-    expect(screen.getByRole("heading", { name: identity.name })).toBeTruthy();
-    expect(screen.getByText(identity.role)).toBeTruthy();
-    expect(screen.getByText("Home")).toBeTruthy();
+    screen.getByRole("heading", { name: identity.name });
+    screen.getByText(identity.role);
+    screen.getByText("Home");
 
     const profile = screen.getByRole("region", { name: "Profile" });
-    expect(within(profile).getByText(identity.bio)).toBeTruthy();
+    within(profile).getByText(identity.bio);
     expect(within(profile).queryByText(/Karachi/)).toBeNull();
 
     const selectedWork = screen.getByRole("region", { name: "Selected work" });
-    expect(within(selectedWork).getByRole("list")).toBeTruthy();
+    within(selectedWork).getByRole("list");
 
     const caseStudies = listCaseStudies();
     for (const study of caseStudies) {
@@ -27,7 +27,7 @@ describe("Craft Logbook Home", () => {
       expect(link.textContent).toContain(study.year);
     }
 
-    expect(screen.getByText("01")).toBeTruthy();
+    screen.getByText("01");
   });
 
   it("exposes contact links in site chrome", () => {

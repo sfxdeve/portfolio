@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
 
 import type { CaseStudy } from "@/catalog/portfolio";
 import { PageShell } from "@/components/page-shell";
@@ -8,12 +7,8 @@ import { ShowcaseArtifact } from "@/components/showcase-artifact";
 export function CaseStudyPage({ study }: { study: CaseStudy }) {
   return (
     <PageShell>
-      <Link
-        to="/"
-        className="mt-14 inline-flex items-center gap-1 font-mono text-[11px] tracking-wide text-muted-foreground transition-colors hover:text-accent-ink focus-visible:text-accent-ink"
-      >
-        <ArrowLeft aria-hidden className="size-3" />
-        Home
+      <Link to="/" className="mt-14 microcopy-link nav-link">
+        ← Home
       </Link>
 
       <div className="mt-5 md:grid md:grid-cols-[minmax(12rem,14rem)_minmax(0,1fr)] md:gap-12 lg:gap-16">
@@ -30,16 +25,7 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
           {study.body.map((block, index) =>
             block.type === "text" ? (
               <section key={`text-${index}`} className="max-w-xl">
-                {block.depth === "technical" ? (
-                  <p className="font-mono text-[11px] tracking-wider text-accent-ink uppercase">
-                    Technical decision
-                  </p>
-                ) : null}
-                <h2
-                  className={`${block.depth === "technical" ? "mt-1" : ""} font-mono text-[11px] tracking-wider text-muted-foreground uppercase`}
-                >
-                  {block.heading}
-                </h2>
+                <h2 className="label text-muted-foreground">{block.heading}</h2>
                 <p className="mt-2 text-base leading-relaxed text-foreground/80">{block.body}</p>
               </section>
             ) : (
@@ -55,10 +41,8 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
 function CapsuleField({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
-        {label}
-      </dt>
-      <dd className="mt-1.5 text-sm leading-snug text-foreground">{value}</dd>
+      <dt className="label text-muted-foreground">{label}</dt>
+      <dd className="mt-1.5 text-sm leading-relaxed text-foreground/80">{value}</dd>
     </div>
   );
 }

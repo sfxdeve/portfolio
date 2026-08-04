@@ -1,52 +1,26 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --radius: 0.375rem;
   --background: oklch(0.985 0.004 250);
   --foreground: oklch(0.22 0.012 250);
-  --card: oklch(0.985 0.004 250);
-  --card-foreground: oklch(0.22 0.012 250);
-  --popover: oklch(0.985 0.004 250);
-  --popover-foreground: oklch(0.22 0.012 250);
-  --primary: oklch(0.28 0.02 250);
-  --primary-foreground: oklch(0.985 0.004 250);
-  --secondary: oklch(0.96 0.006 250);
-  --secondary-foreground: oklch(0.28 0.02 250);
   --muted: oklch(0.96 0.006 250);
   --muted-foreground: oklch(0.5 0.015 250);
-  --accent: oklch(0.96 0.01 195);
-  --accent-foreground: oklch(0.32 0.05 195);
   --accent-ink: oklch(0.42 0.07 195);
-  --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.9 0.008 250);
-  --input: oklch(0.9 0.008 250);
   --ring: oklch(0.42 0.07 195);
 }
 
 .dark {
   --background: oklch(0.18 0.012 250);
   --foreground: oklch(0.96 0.004 250);
-  --card: oklch(0.22 0.012 250);
-  --card-foreground: oklch(0.96 0.004 250);
-  --popover: oklch(0.22 0.012 250);
-  --popover-foreground: oklch(0.96 0.004 250);
-  --primary: oklch(0.92 0.01 250);
-  --primary-foreground: oklch(0.22 0.012 250);
-  --secondary: oklch(0.28 0.015 250);
-  --secondary-foreground: oklch(0.96 0.004 250);
   --muted: oklch(0.28 0.015 250);
   --muted-foreground: oklch(0.7 0.015 250);
-  --accent: oklch(0.28 0.03 195);
-  --accent-foreground: oklch(0.85 0.04 195);
   --accent-ink: oklch(0.72 0.07 195);
-  --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.72 0.07 195);
 }
 
@@ -55,27 +29,35 @@
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
   --color-accent-ink: var(--accent-ink);
-  --color-destructive: var(--destructive);
   --color-border: var(--border);
-  --color-input: var(--input);
   --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@utility label {
+  @apply font-mono text-[11px] tracking-wider uppercase;
+}
+
+@utility section-heading {
+  @apply label border-b border-border pb-2 text-muted-foreground;
+}
+
+@utility meta {
+  @apply font-mono text-[11px] text-muted-foreground;
+}
+
+@utility microcopy-link {
+  @apply meta tracking-wide inline-flex items-center gap-1 transition-colors;
+}
+
+@utility accent-link {
+  @apply microcopy-link text-accent-ink hover:text-foreground focus-visible:text-foreground;
+}
+
+@utility nav-link {
+  @apply transition-colors hover:text-accent-ink focus-visible:text-accent-ink;
 }
 
 @layer base {

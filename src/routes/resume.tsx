@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { identity, positioning } from "@/catalog/portfolio";
+import { identity } from "@/catalog/portfolio";
+import { resumeMetaDescription } from "@/catalog/resume-view";
 import { ResumePage } from "@/components/resume-page";
 
 export const Route = createFileRoute("/resume")({
@@ -9,7 +10,7 @@ export const Route = createFileRoute("/resume")({
       { title: `${identity.name} - Resume` },
       {
         name: "description",
-        content: `Recent experience, selected projects, and skills for ${identity.name}. ${positioning}`,
+        content: resumeMetaDescription(),
       },
     ],
   }),

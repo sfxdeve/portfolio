@@ -12,28 +12,26 @@ describe("Case Study page", () => {
 
     render(<CaseStudyPage study={study} />);
 
-    expect(screen.getByRole("heading", { name: study.title })).toBeTruthy();
+    screen.getByRole("heading", { name: study.title });
 
     const rail = screen.getByRole("complementary", { name: "Summary" });
-    expect(within(rail).getByText(study.capsule.problem)).toBeTruthy();
-    expect(within(rail).getByText(study.capsule.role)).toBeTruthy();
-    expect(within(rail).getByText(study.capsule.outcome)).toBeTruthy();
+    within(rail).getByText(study.capsule.problem);
+    within(rail).getByText(study.capsule.role);
+    within(rail).getByText(study.capsule.outcome);
 
     const showcases = study.body.filter((block) => block.type === "showcase");
     expect(showcases.length).toBeGreaterThan(0);
     for (const block of showcases) {
       if (block.type !== "showcase") continue;
-      expect(screen.getByText(block.showcase.label)).toBeTruthy();
-      expect(screen.getByText(block.showcase.caption)).toBeTruthy();
-      expect(screen.getByRole("img", { name: block.showcase.alt })).toBeTruthy();
-      expect(
-        screen.getByRole("link", {
-          name: `Open full-size ${block.showcase.label} image`,
-        }),
-      ).toBeTruthy();
+      screen.getByText(block.showcase.label);
+      screen.getByText(block.showcase.caption);
+      screen.getByRole("img", { name: block.showcase.alt });
+      screen.getByRole("link", {
+        name: `Open full-size ${block.showcase.label} image`,
+      });
     }
 
-    const homeLink = screen.getByRole("link", { name: "Home" });
+    const homeLink = screen.getByRole("link", { name: /Home/ });
     expect(homeLink.getAttribute("href")).toBe("/");
   });
 
@@ -46,13 +44,13 @@ describe("Case Study page", () => {
 
     for (const block of study.body) {
       if (block.type === "text") {
-        expect(screen.getByRole("heading", { name: block.heading })).toBeTruthy();
-        expect(screen.getByText(block.body)).toBeTruthy();
+        screen.getByRole("heading", { name: block.heading });
+        screen.getByText(block.body);
       }
     }
   });
 
-  it("marks technical decision blocks for peer-depth readers", () => {
+  it("renders technical peer-depth blocks with heading and body", () => {
     const study = listCaseStudies().find((entry) =>
       entry.body.some((block) => block.type === "text" && block.depth === "technical"),
     );
@@ -64,11 +62,11 @@ describe("Case Study page", () => {
     const technicalBlocks = study.body.filter(
       (block) => block.type === "text" && block.depth === "technical",
     );
-    expect(screen.getAllByText("Technical decision").length).toBe(technicalBlocks.length);
+    expect(screen.queryByText("Technical decision")).toBeNull();
     for (const block of technicalBlocks) {
       if (block.type !== "text") continue;
-      expect(screen.getByRole("heading", { name: block.heading })).toBeTruthy();
-      expect(screen.getByText(block.body)).toBeTruthy();
+      screen.getByRole("heading", { name: block.heading });
+      screen.getByText(block.body);
     }
   });
 });

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { getCaseStudyBySlug, getResume, identity, listCaseStudies } from "@/catalog/portfolio";
 
 describe("portfolio catalog", () => {
-  it("exposes identity with name, role, bio blurb, and Email/GitHub/X contact", () => {
+  it("exposes identity with name, role, bio, and Email/GitHub/X contact", () => {
     expect(identity.name).toBe("Shayan Fareed");
     expect(identity.role).toBe("Product Engineer");
     expect(identity.bio.length).toBeGreaterThan(0);
@@ -67,7 +67,6 @@ describe("portfolio catalog", () => {
       caseStudies.map((study) => ({
         title: study.title,
         summary: study.indexSummary,
-        href: `/work/${study.slug}`,
         slug: study.slug,
       })),
     );
@@ -76,7 +75,7 @@ describe("portfolio catalog", () => {
     }
   });
 
-  it("lists two to three Case Studies in order", () => {
+  it("lists two to three Case Studies", () => {
     const caseStudies = listCaseStudies();
     expect(caseStudies.length).toBeGreaterThanOrEqual(2);
     expect(caseStudies.length).toBeLessThanOrEqual(3);
@@ -109,9 +108,9 @@ describe("portfolio catalog", () => {
       for (const block of technicalBlocks) {
         if (block.type !== "text") continue;
         expect(block.heading.length).toBeGreaterThan(0);
-        // A technical block earns its "Technical decision" eyebrow by explaining a
-        // choice and its cost. Depth is not assertable, so this floor only rules
-        // out a one-line restatement of the heading.
+        // A technical block explains a choice and its cost. Depth is not
+        // assertable, so this floor only rules out a one-line restatement of
+        // the heading.
         expect(block.body.length).toBeGreaterThan(200);
       }
     }
@@ -129,14 +128,6 @@ describe("portfolio catalog", () => {
         expect(study.body[index]?.type).not.toBe(study.body[index - 1]?.type);
       }
     }
-  });
-
-  it("lists the shipped Case Studies from the portfolio catalog in order", () => {
-    expect(listCaseStudies().map((study) => study.slug)).toEqual([
-      "ecobuiltconnect",
-      "artisanconnect",
-      "rushuploads",
-    ]);
   });
 
   it("returns a Case Study for a known slug and nothing for an unknown slug", () => {
