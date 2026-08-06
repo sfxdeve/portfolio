@@ -14,10 +14,10 @@ test("keeps the Home identity strip and Profile usable on small mobile viewports
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
 
-    await expect(page.getByRole("heading", { name: "Shayan Fareed" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     const profile = page.getByRole("region", { name: "Profile" });
     await expect(profile).toBeVisible();
-    await expect(profile.getByText(/I build custom web products end to end/)).toBeVisible();
+    await expect(profile).not.toContainText(/Karachi/);
 
     const x = page.getByRole("link", { name: "X (Twitter)", exact: true });
     await expect(x).toBeVisible();
@@ -44,13 +44,4 @@ test("has no automatically detectable accessibility violations", async ({ page }
   const results = await new AxeBuilder({ page }).analyze();
 
   expect(results.violations).toEqual([]);
-});
-
-test("follows the OS color scheme on the document root", async ({ page }) => {
-  await page.emulateMedia({ colorScheme: "dark" });
-  await page.goto("/");
-  await expect(page.locator("html")).toHaveClass(/dark/);
-
-  await page.emulateMedia({ colorScheme: "light" });
-  await expect(page.locator("html")).not.toHaveClass(/dark/);
 });

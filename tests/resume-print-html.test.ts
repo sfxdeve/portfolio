@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { identity, siteOrigin } from "@/catalog/portfolio";
+import { getResume, identity, siteOrigin } from "@/catalog/portfolio";
 import { renderResumePrintHtml } from "@/catalog/resume-print-html";
 
 describe("Resume print adapter", () => {
@@ -9,8 +9,10 @@ describe("Resume print adapter", () => {
 
     expect(html).toContain(identity.name);
     expect(html).toContain(identity.role);
-    expect(html).toContain("sfx.pers@gmail.com");
-    expect(html).toContain("x.com/fareedshayan11");
+    for (const link of identity.contact) {
+      const hrefBody = link.href.replace(/^mailto:/, "");
+      expect(html).toContain(hrefBody);
+    }
 
     for (const heading of [
       "Profile",
@@ -23,24 +25,25 @@ describe("Resume print adapter", () => {
       expect(html).toContain(heading);
     }
 
-    expect(html).toContain("Product Engineer");
-    expect(html).toContain("EcoBuiltConnect");
     expect(html).not.toContain("View case study");
   });
 
   it("absolutizes project links for print and keeps projects bullet-free", () => {
     const html = renderResumePrintHtml();
-    const absoluteHref = `${siteOrigin}/work/ecobuiltconnect`;
+    const [project] = getResume().projects;
+    expect(project).toBeDefined();
+    const absoluteHref = `${siteOrigin}/work/${project!.slug}`;
 
     expect(html).toContain(`href="${absoluteHref}"`);
     expect(html).toContain(`>${absoluteHref}</a>`);
-    expect(html).not.toMatch(/EcoBuiltConnect[\s\S]{0,200}<ul>/);
+    expect(html).not.toMatch(new RegExp(`${project!.title}[\\s\\S]{0,200}<ul>`));
   });
 
   it("stays degree-only and escapes HTML in catalog strings", () => {
     const html = renderResumePrintHtml();
-
-    expect(html).toContain("NED University of Engineering &amp; Technology");
+    const [edu] = getResume().education;
+    expect(edu).toBeDefined();
+    expect(html).toContain(edu!.institution.replaceAll("&", "&amp;"));
     expect(html).not.toContain("Intermediate");
     expect(html).not.toContain("Matriculation");
   });

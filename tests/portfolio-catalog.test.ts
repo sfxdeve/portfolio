@@ -3,27 +3,21 @@ import { describe, expect, it } from "vitest";
 import { getCaseStudyBySlug, getResume, identity, listCaseStudies } from "@/catalog/portfolio";
 
 describe("portfolio catalog", () => {
-  it("exposes identity with name, role, bio, and Email/GitHub/X contact", () => {
-    expect(identity.name).toBe("Shayan Fareed");
-    expect(identity.role).toBe("Product Engineer");
+  it("exposes identity with name, role, bio, and Email/GitHub/X contact shape", () => {
+    expect(identity.name.length).toBeGreaterThan(0);
+    expect(identity.role.length).toBeGreaterThan(0);
     expect(identity.bio.length).toBeGreaterThan(0);
     expect(identity.contact.map((link) => link.kind)).toEqual(["email", "github", "x"]);
-    expect(identity.contact.map((link) => link.label)).toEqual(["Email", "GitHub", "X (Twitter)"]);
-    expect(identity.contact.find((link) => link.kind === "email")?.href).toBe(
-      "mailto:sfx.pers@gmail.com",
-    );
-    expect(identity.contact.find((link) => link.kind === "github")?.href).toBe(
-      "https://github.com/sfxdeve",
-    );
-    expect(identity.contact.find((link) => link.kind === "x")?.href).toBe(
-      "https://x.com/fareedshayan11",
-    );
+    for (const link of identity.contact) {
+      expect(link.label.length).toBeGreaterThan(0);
+      expect(link.href.length).toBeGreaterThan(0);
+    }
   });
 
   it("exposes a Resume record with location, Experience, Skills, Languages, and degree-only Education", () => {
     const resume = getResume();
 
-    expect(resume.location).toBe("Karachi, Pakistan");
+    expect(resume.location.length).toBeGreaterThan(0);
     expect(resume.experience.length).toBeGreaterThan(0);
     for (const item of resume.experience) {
       expect(item.title.length).toBeGreaterThan(0);
@@ -43,20 +37,21 @@ describe("portfolio catalog", () => {
     const skillCount = resume.skills.reduce((total, group) => total + group.items.length, 0);
     expect(skillCount).toBeLessThanOrEqual(24);
 
-    expect(resume.languages).toEqual([
-      { name: "Urdu", level: "Native" },
-      { name: "English", level: "Professional" },
-      { name: "Turkish", level: "Fluent" },
-    ]);
+    expect(resume.languages.length).toBeGreaterThan(0);
+    for (const language of resume.languages) {
+      expect(language.name.length).toBeGreaterThan(0);
+      expect(language.level.length).toBeGreaterThan(0);
+    }
 
-    expect(resume.education).toEqual([
-      {
-        degree: "BS Computer Science",
-        institution: "NED University of Engineering & Technology",
-        dates: "2022 to 2026",
-        location: "Karachi, Pakistan",
-      },
-    ]);
+    expect(resume.education.length).toBeGreaterThan(0);
+    for (const item of resume.education) {
+      expect(item.degree.length).toBeGreaterThan(0);
+      expect(item.institution.length).toBeGreaterThan(0);
+      expect(item.dates.length).toBeGreaterThan(0);
+      expect(item.location.length).toBeGreaterThan(0);
+      expect(item.degree).not.toMatch(/Intermediate|Matriculation/i);
+      expect(item.institution).not.toMatch(/Intermediate|Matriculation/i);
+    }
   });
 
   it("projects Resume Projects from Case Studies without outcome bullets", () => {

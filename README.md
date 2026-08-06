@@ -22,6 +22,8 @@ The project uses Node 24 LTS and pnpm 11. The committed lockfile makes installs 
 - `pnpm check` runs type checking, linting, formatting checks, and unit and end-to-end tests (the e2e run builds the app, so a broken production build fails `check`).
 - `pnpm resume:pdf` regenerates the committed Resume PDF after Catalog changes; `pnpm check` fails if it drifts.
 
+Testing policy (seam-first layers, what not to add): [`docs/testing.md`](docs/testing.md).
+
 ## Deploy
 
 Production runs on Cloudflare Workers at [shayanfareed.sfx-pers.workers.dev](https://shayanfareed.sfx-pers.workers.dev) (see `docs/adr/0004-cloudflare-workers-hosting.md`).
@@ -55,6 +57,6 @@ After changing `siteOrigin` or Catalog facts that appear in the PDF, run `pnpm r
 
 - TanStack Start with file-based routing on Cloudflare Workers (`@cloudflare/vite-plugin` + Wrangler)
 - Tailwind CSS with locally defined semantic tokens
-- Oxlint, Oxfmt, Vitest, Testing Library, Playwright, and axe
+- Oxlint, Oxfmt, Vitest, Playwright, and axe
 
 Domain language: `CONTEXT.md`. Product contract: `docs/adr/0001-craft-logbook-visual-direction.md`. Copy voice: `docs/adr/0003-plain-concrete-copy-voice.md`.
