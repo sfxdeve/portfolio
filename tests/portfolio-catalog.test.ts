@@ -3,11 +3,11 @@ import { describe, expect, it } from "vitest";
 import { getCaseStudyBySlug, getResume, identity, listCaseStudies } from "@/catalog/portfolio";
 
 describe("portfolio catalog", () => {
-  it("exposes identity with name, role, bio, and Email/GitHub/X contact shape", () => {
+  it("exposes identity with name, role, bio, and Email/GitHub/Threads/X contact shape", () => {
     expect(identity.name.length).toBeGreaterThan(0);
     expect(identity.role.length).toBeGreaterThan(0);
     expect(identity.bio.length).toBeGreaterThan(0);
-    expect(identity.contact.map((link) => link.kind)).toEqual(["email", "github", "x"]);
+    expect(identity.contact.map((link) => link.kind)).toEqual(["email", "github", "threads", "x"]);
     for (const link of identity.contact) {
       expect(link.label.length).toBeGreaterThan(0);
       expect(link.href.length).toBeGreaterThan(0);

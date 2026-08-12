@@ -1,4 +1,4 @@
-export type ContactKind = "email" | "github" | "x";
+export type ContactKind = "email" | "github" | "threads" | "x";
 
 export type ContactLink = {
   kind: ContactKind;
@@ -88,6 +88,7 @@ export const identity: Identity = {
   contact: [
     { kind: "email", label: "Email", href: "mailto:sfx.pers@gmail.com" },
     { kind: "github", label: "GitHub", href: "https://github.com/sfxdeve" },
+    { kind: "threads", label: "Threads", href: "https://www.threads.com/@fareedshayan1108" },
     { kind: "x", label: "X (Twitter)", href: "https://x.com/fareedshayan11" },
   ],
 };

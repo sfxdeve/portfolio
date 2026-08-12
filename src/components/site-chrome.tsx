@@ -16,7 +16,7 @@ export function SiteChrome() {
         </nav>
         <nav aria-label="Contact" className="flex flex-wrap gap-x-3 gap-y-1 sm:gap-x-5">
           {identity.contact.map((link) => {
-            const opensInNewTab = link.kind === "github" || link.kind === "x";
+            const opensInNewTab = link.kind !== "email";
             return (
               <a
                 key={link.kind}

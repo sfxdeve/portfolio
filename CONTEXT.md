@@ -41,7 +41,7 @@ scaffolding, Title Case in UI labels, a different positioning claim per page, a
 domain generalised from whichever Case Studies happen to be published
 
 **Identity**: The shared person record: name, “Product Engineer” role, bio, and
-chrome contact (Email, GitHub, X). Location is Resume-only and not part
+chrome contact (Email, GitHub, Threads, X). Location is Resume-only and not part
 of Identity. _Avoid_: About, author byline, personal brand blurb, “design
 engineer” as the primary role label
 
