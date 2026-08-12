@@ -13,7 +13,6 @@ test-results/
 
 # Local environment and tool state
 .env
-.env.*
 *.local
 *.tsbuildinfo
 
