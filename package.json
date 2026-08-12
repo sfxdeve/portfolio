@@ -4,18 +4,18 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test:unit && pnpm test:e2e",
+    "check": "nub run typecheck && nub run lint && nub run format:check && nub run test:unit && nub run test:e2e",
     "clean": "rm -rf .tanstack .wrangler coverage dist node_modules/.vite playwright-report test-results",
-    "deploy": "pnpm build && wrangler deploy",
-    "deploy:preview": "pnpm build && wrangler versions upload",
+    "deploy": "nub run build && wrangler deploy",
+    "deploy:preview": "nub run build && wrangler versions upload",
     "dev": "vite dev --port 3000",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
     "lint": "oxlint",
     "preview": "vite preview --port 4173",
-    "resume:pdf": "JITI_TSCONFIG_PATHS=1 jiti scripts/generate-resume-pdf.ts",
-    "test": "pnpm test:unit && pnpm test:e2e",
-    "test:e2e": "pnpm build && playwright test",
+    "resume:pdf": "nub scripts/generate-resume-pdf.ts",
+    "test": "nub run test:unit && nub run test:e2e",
+    "test:e2e": "nub run build && nubx playwright test",
     "test:unit": "vitest run",
     "typecheck": "tsc --noEmit"
   },
@@ -36,7 +36,6 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.0.5",
-    "jiti": "^2.7.0",
     "jsdom": "^30.0.1",
     "oxfmt": "^0.63.0",
     "oxlint": "^1.78.0",
@@ -47,9 +46,21 @@
     "vitest": "^4.1.10",
     "wrangler": "^4.121.0"
   },
-  "engines": {
-    "node": ">=24 <25",
-    "pnpm": ">=11 <12"
+  "devEngines": {
+    "packageManager": {
+      "name": "nub",
+      "version": "^0.7.5",
+      "onFail": "ignore"
+    }
   },
-  "packageManager": "pnpm@11.21.0"
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "packageManager": "nub@0.7.5",
+  "allowBuilds": {
+    "esbuild": true,
+    "lightningcss": true,
+    "sharp": true,
+    "workerd": true
+  }
 }

@@ -101,7 +101,7 @@ export const profileHeading = "Profile";
  * Override with `VITE_SITE_ORIGIN` in Workers Builds when the hostname changes.
  */
 export const siteOrigin = (
-  import.meta.env.VITE_SITE_ORIGIN ?? "https://shayanfareed.sfx-pers.workers.dev"
+  import.meta.env?.VITE_SITE_ORIGIN ?? "https://shayanfareed.sfx-pers.workers.dev"
 ).replace(/\/$/, "");
 
 /**

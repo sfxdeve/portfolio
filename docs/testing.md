@@ -7,7 +7,7 @@ Seam-first: Vitest covers public module seams; Playwright covers pages after a r
 - Catalog **product rules** (shape, bands, degree-only education, technical depth, body alternation) — not biography or URL literals
 - `COLOR_SCHEME_SCRIPT` behavior
 - Resume print-HTML smoke (headings, absolute project links, escapes, degree-only forbids)
-- Committed Resume PDF byte-lock (`pnpm resume:pdf` / `check` drift)
+- Committed Resume PDF byte-lock (`nub run resume:pdf` / `nub run check` drift)
 
 ## Playwright owns
 
