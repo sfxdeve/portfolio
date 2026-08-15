@@ -88,8 +88,8 @@ export const identity: Identity = {
   contact: [
     { kind: "email", label: "Email", href: "mailto:sfx.pers@gmail.com" },
     { kind: "github", label: "GitHub", href: "https://github.com/sfxdeve" },
-    { kind: "threads", label: "Threads", href: "https://www.threads.com/@fareedshayan1108" },
-    { kind: "x", label: "X (Twitter)", href: "https://x.com/fareedshayan11" },
+    { kind: "threads", label: "Threads", href: "https://threads.com/@shayanfareed1108" },
+    { kind: "x", label: "X (Twitter)", href: "https://x.com/shayanfareed1108" },
   ],
 };
 
