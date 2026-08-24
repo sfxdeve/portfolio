@@ -1,6 +1,6 @@
 # Craft Logbook
 
-Personal product-engineer portfolio for Shayan Fareed: Home (work index), Case Studies, and Resume.
+Personal product-engineer portfolio for Shayan: Home (work index), Case Studies, and Resume.
 
 ## Setup
 

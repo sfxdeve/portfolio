@@ -1,6 +1,6 @@
 # Portfolio
 
-Personal developer portfolio for Shayan Fareed: projects presented as Case
+Personal developer portfolio for Shayan: projects presented as Case
 Studies on a showcase-heavy Craft Logbook site, with a Resume credentials
 surface for hiring skim and a PDF download.
 

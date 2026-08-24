@@ -87,7 +87,7 @@ export type CaseStudy = {
 };
 
 export const identity: Identity = {
-  name: "Shayan Fareed",
+  name: "Shayan",
   role: "Product Engineer",
   bio: "I build custom web products end to end, and I mean the whole thing: the design decisions, the web and mobile clients, the data model, the infrastructure underneath. Some of it is client work that starts as an empty repository or as a codebase with history. Some is my own, shipped and running with real users. What I gravitate to is the complicated middle: who may do what, who owes whom money, and what happens when something goes wrong.",
   contact: [

@@ -9,11 +9,11 @@ test("navigates among Home, Resume, and a Case Study via chrome", async ({ page 
     .getByRole("link", { name: "Resume" })
     .click();
   await expect(page).toHaveURL(/\/resume$/);
-  await expect(page).toHaveTitle("Shayan Fareed - Resume");
+  await expect(page).toHaveTitle("Shayan - Resume");
 
-  await page.getByRole("link", { name: "Shayan Fareed" }).click();
+  await page.getByRole("link", { name: "Shayan" }).click();
   await expect(page).toHaveURL("/");
-  await expect(page).toHaveTitle("Shayan Fareed - Product Engineer");
+  await expect(page).toHaveTitle("Shayan - Product Engineer");
 
   await page.getByRole("link", { name: /EcoBuiltConnect/ }).click();
   await expect(page).toHaveURL(/\/work\/ecobuiltconnect$/);
