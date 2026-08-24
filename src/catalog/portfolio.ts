@@ -63,7 +63,12 @@ export type ShowcaseBlock = {
 };
 
 export type CaseBodyBlock =
-  | { type: "text"; depth: "product" | "technical"; heading: string; body: string }
+  | {
+      type: "text";
+      depth: "product" | "technical";
+      heading: string;
+      body: string;
+    }
   | { type: "showcase"; showcase: ShowcaseBlock };
 
 export type Capsule = {
@@ -88,8 +93,12 @@ export const identity: Identity = {
   contact: [
     { kind: "email", label: "Email", href: "mailto:sfx.pers@gmail.com" },
     { kind: "github", label: "GitHub", href: "https://github.com/sfxdeve" },
-    { kind: "threads", label: "Threads", href: "https://threads.com/@shayanfareed1108" },
-    { kind: "x", label: "X (Twitter)", href: "https://x.com/shayanfareed1108" },
+    {
+      kind: "threads",
+      label: "Threads",
+      href: "https://threads.com/@shayanameen1108",
+    },
+    { kind: "x", label: "X (Twitter)", href: "https://x.com/shayanameen1108" },
   ],
 };
 
@@ -100,9 +109,10 @@ export const profileHeading = "Profile";
  * Canonical public origin for absolute links in the Resume PDF download.
  * Override with `VITE_SITE_ORIGIN` in Workers Builds when the hostname changes.
  */
-export const siteOrigin = (
-  import.meta.env?.VITE_SITE_ORIGIN ?? "https://shayanfareed.sfx-pers.workers.dev"
-).replace(/\/$/, "");
+export const siteOrigin = (import.meta.env?.VITE_SITE_ORIGIN ?? "https://shayanameen.work").replace(
+  /\/$/,
+  "",
+);
 
 /**
  * Third-person positioning claim for meta descriptions. Single source so page
