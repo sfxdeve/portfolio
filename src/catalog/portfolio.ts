@@ -142,7 +142,7 @@ const experience: Experience[] = [
     title: "Freelance Software Engineer",
     organization: "Upwork",
     location: "Remote",
-    dates: "Apr 2024 to Jan 2026",
+    dates: "Apr 2025 to Present",
     bullets: [
       "I took client products from the first scoping call through release, deciding what to build as often as building it.",
       "I delivered each one whole: the interface, the API behind it, and the admin tooling that staff needed to run the thing once it was live.",
@@ -164,7 +164,7 @@ const experience: Experience[] = [
     title: "React.js Developer",
     organization: "AZ Code Arena",
     location: "Hybrid, Karachi, Pakistan",
-    dates: "Apr 2023 to Sep 2023",
+    dates: "Apr 2022 to Sep 2023",
     bullets: [
       "I turned Figma designs into responsive React interfaces built from reusable components.",
       "I wired those interfaces up to REST APIs and sign-in flows, and learned where a design stops answering questions and the engineer has to.",
